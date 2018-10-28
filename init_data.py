@@ -182,9 +182,6 @@ for country, val in changes_dict.items():
 
 # fillment1:fill missing data by 2013 or 2015 data
 
-alrate.ix[10360, '2014'] = alrate.ix[10360, '2015']
-alrate.ix[28180, '2014'] = alrate.ix[28180, '2013']
-
 # fillment2: fill by regression model
 # extra2 = extra_data[extra_data["Country Name"]=="Cabo Verde"]
 # extra2 = pd.pivot_table(extra2, index='Indicator Name')

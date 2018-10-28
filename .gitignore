@@ -175,18 +175,22 @@ fabric.properties
 
 # Word temporary
 ~$.doc
+~$.docx
 
 # Word Auto Backup File
 Backup of .doc
+Backup of .docx
 
 # Excel temporary
 ~$.xls
+~$.xlsx
 
 # Excel Backup File
 .xlk
 
 # PowerPoint temporary
 ~$.ppt
+~$.pptx
 
 # Visio autosave temporary files
 .~vsd

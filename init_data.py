@@ -206,3 +206,10 @@ data_set.update(homi_set.set_index('Country Code')
 
 
 central_africa1.to_excel(output_folder / 'clean_data.xlsx')
+
+"""
+subset dataframe for central africa1 only
+"""
+central_africa1 = data_set['Central Africa 1', : ]
+
+

@@ -6,7 +6,7 @@ Created on Sun Oct 21 14:43:31 2018
 For initializing datasets
 """
 
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
@@ -14,7 +14,6 @@ from pathlib import Path
 
 # Import libraries and base dataset (og_file); then filter out/subset central africa 1
 import pandas as pd
-import numpy as np
 
 base_folder = Path('data/base')
 processed_folder = Path('data/processed')
@@ -25,17 +24,22 @@ data_set = pd.read_excel(og_file)
 file2 = base_folder / 'API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls'
 homi_set = pd.read_excel(file2)
 
-data_set.info()
+# Ying's originals
+########################################################################
+# df_data_set = pd.DataFrame.copy(data_set)
+#
+# # locate the values in the data_set, where column 'Team Regions' == "Central Aftica"
+# central_africa1 = data_set[data_set['Hult_Team_Regions'] == "Central Aftica 1"]
+#
+# # within the new dataframe 'central_africa1', locate its 'hult team regions' column, and replace the values '...Aftica 1' with '...Africa 1'. Reflect the changes back in the dataframe 'central_africa1'
+# central_africa1.loc[:, 'Hult_Team_Regions'] = 'Central Africa 1'
+#
+# print(central_africa1.head())
+########################################################################
 
-df_data_set = pd.DataFrame.copy(data_set)
-
-# locate the values in the data_set, where column 'Team Regions' == "Central Aftica"
-central_africa1 = df_data_set[df_data_set['Hult_Team_Regions'] == "Central Aftica 1"]
-
-# within the new dataframe 'central_africa1', locate its 'hult team regions' column, and replace the values '...Aftica 1' with '...Africa 1'. Reflect the changes back in the dataframe 'central_africa1'
-central_africa1.loc[:, 'Hult_Team_Regions'] = 'Central Africa 1'
-
-print(central_africa1.head())
+central_africa1 = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
+central_africa1.loc[
+    central_africa1.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'  # fix typo from base file
 
 # flag columns with missing value
 for col in central_africa1:
@@ -52,14 +56,14 @@ print(central_africa1.isnull().sum())
 central_africa1['adult_literacy_pct'].isnull().sum() == central_africa1['m_adult_literacy_pct'].sum()
 
 # Import supplementary data set
-extra_file = 'MDGEXCEL.xlsx'
+extra_file = base_folder / 'MDGEXCEL.xlsx'
 extra_data = pd.read_excel(extra_file)
 
 # create an adult literacy rate dataframe
 # make a list (Series) with the country_code
 country_list = central_africa1['country_code']
 country_name_list = central_africa1['country_name']
-country_name_list.to_excel('country_name_list.xlsx')
+country_name_list.to_excel(output_folder / 'country_name_list.xlsx')
 # create a variable (var1) that equals rows that contain this string about adult literacy rate
 vari1 = "Literacy rate, adult total (% of people ages 15 and above)"
 
@@ -145,10 +149,25 @@ central_africa1.loc[23, 'adult_literacy_pct'] = 78.4
 # from Scholaro data, input missing Burundi compulsory education
 central_africa1.loc[29, 'compulsory_edu_yrs'] = 6
 
+################################################################################################
 # input tax_revenue_pct_gdp data
-tax_data = pd.read_excel(processed_folder / 'world_data_hult.xlsx')
-tax_data = tax_data.loc[tax_data['Hult_Team_Regions'] == "Central Aftica 1", ['tax_revenue_pct_gdp']]
-central_africa1.update(tax_data, overwrite=True)
+
+# data from ...
+changes_dict = {"Cabo Verde": 25.3,
+                "Ghana": 20.3,
+                "Sudan": 6.9,
+                "Nigeria": 3.5,
+                "Uganda": 19.7,
+                "Congo, Rep.": 32.3,
+                "Comoros": 22.6,
+                "Congo, Dem. Rep.": 8,
+                "Burundi": 17.9}
+
+for country, val in changes_dict.items():
+    central_africa1.at[central_africa1.country_name == country, 'tax_revenue_pct_gdp'] = val
+# tax_data = pd.read_excel(processed_folder / 'world_data_hult.xlsx')
+# tax_data = tax_data.loc[tax_data['Hult_Team_Regions'] == "Central Aftica 1", ['tax_revenue_pct_gdp']]
+# central_africa1.update(tax_data, overwrite=True)
 
 ##############################################################################################
 # alrate_transpose = alrate.transpose()

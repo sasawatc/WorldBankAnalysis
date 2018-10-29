@@ -15,6 +15,8 @@ output_folder = Path('output')
 #import clean data
 clean_data = pd.read_excel(processed_folder / 'clean_data.xlsx', index='country_code')
 country_data = clean_data.iloc[:, 2:]
+
+
 print(country_data.head())
 
 #check some data
@@ -36,6 +38,13 @@ data_describe[['gdp_usd']].quantile([0.20,
 data_describe[['gdp_usd']].quantile(1.00)-data_describe['gdp_usd'].quantile(0.8)
 
 #plot outliers
+for col in country_data.select_dtypes(include=['float64', 'int']):
+    country_data.boxplot(column = col, by = 'income_group')
+    plt.title(col)
+    plt.suptitle("")
+    plt.show()
+    
+    
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 
 data_corr =country_data.corr().round(2)

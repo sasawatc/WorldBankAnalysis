@@ -13,7 +13,7 @@ processed_folder = Path('data/processed')
 output_folder = Path('output')
 
 #import clean data
-clean_data = pd.read_excel(processed_folder / 'clean_data.xlsx', index='country_code')
+clean_data = pd.read_excel(output_folder / 'clean_data.xlsx', index='country_code')
 country_data = clean_data.iloc[:, 2:]
 
 

@@ -10,6 +10,8 @@ __version__ = '0.2.0'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
+from gni_extractor import *
+
 from pathlib import Path
 
 # Import libraries and base dataset (og_file); then filter out/subset central africa 1
@@ -37,23 +39,23 @@ homi_set = pd.read_excel(file2)
 # print(central_africa1.head())
 ########################################################################
 
-central_africa1 = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
-central_africa1.loc[
-    central_africa1.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'  # fix typo from base file
+processed_df = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
+processed_df.loc[
+    processed_df.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'  # fix typo from base file
 
 # flag columns with missing value
-for col in central_africa1:
+for col in processed_df:
 
     """ Create columns that are 0s if a value was not missing and 1 if
     a value is missing. """
 
-    if central_africa1[col].isnull().any():
-        central_africa1['m_' + col] = central_africa1[col].isnull().astype(int)
+    if processed_df[col].isnull().any():
+        processed_df['m_' + col] = processed_df[col].isnull().astype(int)
 
 # check if flag columns worked: shows missing values per column in absolute numbers; +1 for True (missing), +0 for False
-print(central_africa1.isnull().sum())
+print(processed_df.isnull().sum())
 # or
-central_africa1['adult_literacy_pct'].isnull().sum() == central_africa1['m_adult_literacy_pct'].sum()
+processed_df['adult_literacy_pct'].isnull().sum() == processed_df['m_adult_literacy_pct'].sum()
 
 # Import supplementary data set
 extra_file = base_folder / 'MDGEXCEL.xlsx'
@@ -61,8 +63,8 @@ extra_data = pd.read_excel(extra_file)
 
 # create an adult literacy rate dataframe
 # make a list (Series) with the country_code
-country_list = central_africa1['country_code']
-country_name_list = central_africa1['country_name']
+country_list = processed_df['country_code']
+country_name_list = processed_df['country_name']
 country_name_list.to_excel(output_folder / 'country_name_list.xlsx')
 # create a variable (var1) that equals rows that contain this string about adult literacy rate
 vari1 = "Literacy rate, adult total (% of people ages 15 and above)"
@@ -122,32 +124,32 @@ alrate.loc[32800, '2015'] = 78.4
 ##from CIA World Factbook data
 
 # input missing HIV incidence value for Cabo Verde (only 2016 data is available)
-central_africa1.loc[16, 'incidence_hiv'] = 0.05
+processed_df.loc[16, 'incidence_hiv'] = 0.05
 # input missing adult literacy rate for Cabo Verde
-central_africa1.loc[16, 'adult_literacy_pct'] = 86.8
+processed_df.loc[16, 'adult_literacy_pct'] = 86.8
 # input missing adult literacy rate for Comoros
-central_africa1.loc[27, 'adult_literacy_pct'] = 77.8
+processed_df.loc[27, 'adult_literacy_pct'] = 77.8
 # input missing adult literacy rate for Congo dem rep
-central_africa1.loc[28, 'adult_literacy_pct'] = 77.0
+processed_df.loc[28, 'adult_literacy_pct'] = 77.0
 # input missing Hadult literacy rate for Congo rep
-central_africa1.loc[26, 'adult_literacy_pct'] = 79.3
+processed_df.loc[26, 'adult_literacy_pct'] = 79.3
 # input missing adult literacy rate for Equatorial Guinea
-central_africa1.loc[21, 'adult_literacy_pct'] = 95.3
+processed_df.loc[21, 'adult_literacy_pct'] = 95.3
 # input missing adult literacy rate for Ghana
-central_africa1.loc[17, 'adult_literacy_pct'] = 76.6
+processed_df.loc[17, 'adult_literacy_pct'] = 76.6
 # input missing adult literacy rate for Nigeria
-central_africa1.loc[19, 'adult_literacy_pct'] = 59.6
+processed_df.loc[19, 'adult_literacy_pct'] = 59.6
 # input missing adult literacy rate for Rwanda
-central_africa1.loc[25, 'adult_literacy_pct'] = 70.5
+processed_df.loc[25, 'adult_literacy_pct'] = 70.5
 # input missing adult literacy rate for Senegal
-central_africa1.loc[22, 'adult_literacy_pct'] = 57.7
+processed_df.loc[22, 'adult_literacy_pct'] = 57.7
 # input missing adult literacy rate for Sudan
-central_africa1.loc[18, 'adult_literacy_pct'] = 75.9
+processed_df.loc[18, 'adult_literacy_pct'] = 75.9
 # input missing adult literacy rate for Uganda
-central_africa1.loc[23, 'adult_literacy_pct'] = 78.4
+processed_df.loc[23, 'adult_literacy_pct'] = 78.4
 
 # from Scholaro data, input missing Burundi compulsory education
-central_africa1.loc[29, 'compulsory_edu_yrs'] = 6
+processed_df.loc[29, 'compulsory_edu_yrs'] = 6
 
 ################################################################################################
 # input tax_revenue_pct_gdp data
@@ -164,7 +166,7 @@ changes_dict = {"Cabo Verde": 25.3,
                 "Burundi": 17.9}
 
 for country, val in changes_dict.items():
-    central_africa1.at[central_africa1.country_name == country, 'tax_revenue_pct_gdp'] = val
+    processed_df.at[processed_df.country_name == country, 'tax_revenue_pct_gdp'] = val
 # tax_data = pd.read_excel(processed_folder / 'world_data_hult.xlsx')
 # tax_data = tax_data.loc[tax_data['Hult_Team_Regions'] == "Central Aftica 1", ['tax_revenue_pct_gdp']]
 # central_africa1.update(tax_data, overwrite=True)
@@ -205,11 +207,20 @@ data_set.update(homi_set.set_index('Country Code')
 # schrate = pd.concat(schrate)
 
 
-central_africa1.to_excel(output_folder / 'clean_data.xlsx')
-
 """
 subset dataframe for central africa1 only
 """
-central_africa1 = data_set['Central Africa 1', : ]
+
+
+central_africa1 = processed_df[processed_df['Hult_Team_Regions'] == "Central Africa 1"].copy()
+
+gni_2014_df = extract_mdg_indicator(indicator_val='GNI per capita, Atlas method (current US$)',
+                                    indicator_title='gni_index',
+                                    mdg_file=base_folder / 'MDGData.csv')
+central_africa1_gni = pd.merge(gni_2014_df, central_africa1, left_on='Country Code', right_on='country_code').copy()
+
+
+central_africa1.to_excel(output_folder / 'clean_data.xlsx')
+
 
 

@@ -6,7 +6,7 @@ Created on Sun Oct 21 14:43:31 2018
 For initializing datasets
 """
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
@@ -83,7 +83,8 @@ central_africa1_df = replace_na(main_df=central_africa1_df,
                                 index_sub='Country Code')
 
 # missing adult_lit_rate based on CIA World Factbook 2015 data
-changes_dict = {"COM": 77.8,
+changes_dict = {"CPV": 86.8,  # (only 2016 data is available)
+                "COM": 77.8,
                 "COD": 77.0,
                 "COG": 79.3,
                 "GNQ": 95.3,

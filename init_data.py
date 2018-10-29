@@ -53,7 +53,7 @@ for col in processed_df:
         processed_df['m_' + col] = processed_df[col].isnull().astype(int)
 
 # check if flag columns worked: shows missing values per column in absolute numbers; +1 for True (missing), +0 for False
-print(processed_df.isnull().sum())
+# print(processed_df.isnull().sum())
 # or
 processed_df['adult_literacy_pct'].isnull().sum() == processed_df['m_adult_literacy_pct'].sum()
 
@@ -190,10 +190,10 @@ for country, val in changes_dict.items():
 # corr = extra2.corr(method='pearson', min_periods=1)
 # print(corr)
 
-# fillment3: homicede missing data
-data_set = data_set.set_index('country_code')
-data_set.update(homi_set.set_index('Country Code')
-                .rename(columns={'2014': 'homicides_per_100k'}))
+# # fillment3: homicede missing data
+# data_set = data_set.set_index('country_code')
+# data_set.update(homi_set.set_index('Country Code')
+#                 .rename(columns={'2014': 'homicides_per_100k'}))
 
 ##substract school enrollment rate
 #
@@ -217,7 +217,7 @@ central_africa1 = processed_df[processed_df['Hult_Team_Regions'] == "Central Afr
 gni_2014_df = extract_mdg_indicator(indicator_val='GNI per capita, Atlas method (current US$)',
                                     indicator_title='gni_index',
                                     mdg_file=base_folder / 'MDGData.csv')
-central_africa1_gni = pd.merge(gni_2014_df, central_africa1, left_on='Country Code', right_on='country_code').copy()
+central_africa1 = pd.merge(gni_2014_df, central_africa1, left_on='Country Code', right_on='country_code').copy()
 
 
 central_africa1.to_excel(output_folder / 'clean_data.xlsx')

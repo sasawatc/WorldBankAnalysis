@@ -63,6 +63,25 @@ sns.heatmap(data_corr, cmap='Blues',square = True,
 ###############################################################################
 # Distplots (without cutoffs)
 ###############################################################################
+## access_to_electricity_rural
+plt.subplot(2,2,1)
+sns.distplot(country_data['access_to_electricity_rural'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Access to Electricity(Rural)')
+
+## access_to_electricity_urban
+plt.subplot(2,2,2)
+sns.distplot(country_data['access_to_electricity_urban'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Access to Electricity(Urban)')
+
+## CO2_emissions_per_capita)
+plt.subplot(2,2,2)
+sns.distplot(country_data['CO2_emissions_per_capita)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('CO2 emissions per capita)')
+
+##gni_index
+plt.subplot(2,2,2)
+sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('GNI')
 
 ## pct_female_employment
 plt.subplot(2,2,1)
@@ -111,7 +130,11 @@ plt.show()
 ###############################################################################
 # outlier cutoffs
 ###############################################################################
-
+ele_r_lo = 9
+ele_u_lo = 65
+co2_hi = 1.2
+gni_hi = 12746
+gni_um = 4125
 femploy_limit_hi = 45
 memploy_limit_hi = 20
 servemploy_lo = 15
@@ -124,6 +147,30 @@ tax_rev_limit = 30
 ###############################################################################
 # distplots with cutoff points
 ###############################################################################
+## access_to_electricity_rural
+plt.subplot(2,2,1)
+sns.distplot(country_data['access_to_electricity_rural'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Access to Electricity(Rural)')
+plt.axvline(x = ele_r_lo, label = 'Outlier Threshold', linestyle = '--', color = 'y')
+
+## access_to_electricity_urban
+plt.subplot(2,2,2)
+sns.distplot(country_data['access_to_electricity_urban'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Access to Electricity(Urban)')
+plt.axvline(x = ele_u_lo, label = 'Outlier Threshold', linestyle = '--', color = 'y')
+
+## CO2_emissions_per_capita)
+plt.subplot(2,2,2)
+sns.distplot(country_data['CO2_emissions_per_capita)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('CO2 emissions per capita)')
+plt.axvline(x = co2_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
+
+##gni_index
+plt.subplot(2,2,2)
+sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('GNI')
+plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
+plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
 ## pct_female_employment
 plt.subplot(2,2,1)
@@ -187,6 +234,47 @@ plt.show()
 ###############################################################################
 # Flagging Outliers
 ###############################################################################
+## access_to_electricity_rural
+country_data['out_access_to_electricity_rural'] = 0
+
+for val in enumerate(country_data.loc[ : , 'access_to_electricity_rural']):
+    if val[1] < ele_r_lo:
+        country_data.loc[val[0], 'out_access_to_electricity_rural'] = 1
+
+country_data['out_access_to_electricity_rural'].abs().sum()
+check = (country_data.loc[ : , ['access_to_electricity_rural', 'out_access_to_electricity_rural']].sort_values('access_to_electricity_rural', ascending = False))
+
+## access_to_electricity_urban
+country_data['out_access_to_electricity_urban'] = 0
+
+for val in enumerate(country_data.loc[ : , 'access_to_electricity_urban']):
+    if val[1] < ele_u_lo:
+        country_data.loc[val[0], 'out_access_to_electricity_urban'] = 1
+
+country_data['out_access_to_electricity_urban'].abs().sum()
+check = (country_data.loc[ : , ['access_to_electricity_urban', 'out_access_to_electricity_urban']].sort_values('access_to_electricity_urban', ascending = False))
+
+
+## CO2_emissions_per_capita)
+country_data['out_CO2_emissions_per_capita)'] = 0
+
+for val in enumerate(country_data.loc[ : , 'CO2_emissions_per_capita)']):
+    if val[1] > co2_hi:
+        country_data.loc[val[0], 'out_CO2_emissions_per_capita)'] = 1
+
+country_data['out_CO2_emissions_per_capita)'].abs().sum()
+check = (country_data.loc[ : , ['CO2_emissions_per_capita)', 'out_CO2_emissions_per_capita)']].sort_values('CO2_emissions_per_capita)', ascending = False))
+
+
+##gni_index
+country_data['out_gni_index)'] = 0
+
+for val in enumerate(country_data.loc[ : , 'gni_index']):
+    if val[1] > co2_hi:
+        country_data.loc[val[0], 'out_gni_index)'] = 1
+
+country_data['out_gni_index'].abs().sum()
+check = (country_data.loc[ : , ['gni_index', 'out_gni_index']].sort_values('gni_index', ascending = False))
 
 ## pct_female_employment
 country_data['out_pct_female_employment'] = 0

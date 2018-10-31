@@ -70,10 +70,10 @@ plt.subplot(2,2,2)
 sns.distplot(country_data['access_to_electricity_urban'], bins = 'fd', kde = False, rug = True, color = 'dodgerblue')
 plt.xlabel('Access to Electricity(Urban)')
 
-## CO2_emissions_per_capita)
+## CO2_emissions_per_capita
 plt.subplot(2,2,3)
-sns.distplot(country_data['CO2_emissions_per_capita)'], bins = 'fd', kde = False, rug = True, color = 'gold')
-plt.xlabel('CO2 emissions per capita)')
+sns.distplot(country_data['CO2_emissions_per_capita'], bins = 'fd', kde = False, rug = True, color = 'gold')
+plt.xlabel('CO2 emissions per capita')
 
 ## avg_air_pollution
 plt.subplot(2,2,4)
@@ -186,10 +186,10 @@ sns.distplot(country_data['access_to_electricity_urban'], bins = 'fd', kde = Fal
 plt.xlabel('Access to Electricity(Urban)')
 plt.axvline(x = ele_u_lo, label = 'Outlier Threshold', linestyle = '--', color = 'r')
 
-## CO2_emissions_per_capita)
+## CO2_emissions_per_capita
 plt.subplot(2,2,3)
-sns.distplot(country_data['CO2_emissions_per_capita)'], bins = 'fd', kde = False, rug = True, color = 'gold')
-plt.xlabel('CO2 emissions per capita)')
+sns.distplot(country_data['CO2_emissions_per_capita'], bins = 'fd', kde = False, rug = True, color = 'gold')
+plt.xlabel('CO2 emissions per capita')
 plt.axvline(x = co2_hi, label = 'Outlier Threshold', linestyle = '--', color = 'g')
 
 ## avg_air_pollution
@@ -303,14 +303,14 @@ check = (country_data.loc[ : , ['access_to_electricity_urban', 'out_access_to_el
 
 
 ## CO2_emissions_per_capita)
-country_data['out_CO2_emissions_per_capita)'] = 0
+country_data['out_CO2_emissions_per_capita'] = 0
 
-for val in enumerate(country_data.loc[ : , 'CO2_emissions_per_capita)']):
+for val in enumerate(country_data.loc[ : , 'CO2_emissions_per_capita']):
     if val[1] > co2_hi:
-        country_data.loc[val[0], 'out_CO2_emissions_per_capita)'] = 1
+        country_data.loc[val[0], 'out_CO2_emissions_per_capita'] = 1
 
-country_data['out_CO2_emissions_per_capita)'].abs().sum()
-check = (country_data.loc[ : , ['CO2_emissions_per_capita)', 'out_CO2_emissions_per_capita)']].sort_values('CO2_emissions_per_capita)', ascending = False))
+country_data['out_CO2_emissions_per_capita'].abs().sum()
+check = (country_data.loc[ : , ['CO2_emissions_per_capita', 'out_CO2_emissions_per_capita']].sort_values('CO2_emissions_per_capita', ascending = False))
 
 ## pct_female_employment
 country_data['out_pct_female_employment'] = 0
@@ -521,9 +521,9 @@ plt.axvline(x = gni_index_limit,
 ###############################################################################
 # Analyze Outliers
 ###############################################################################
-country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita)'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index_y'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
+country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index_y'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
 
-check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita)', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index_y', 'out_gdp_usd', 'out_internet_usage_pct', 'out_adult_literacy_pct', 'out_avg_air_pollution', 'out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
+check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index_y', 'out_gdp_usd', 'out_internet_usage_pct', 'out_adult_literacy_pct', 'out_avg_air_pollution', 'out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
 
 
 ###############################################################################
@@ -549,7 +549,7 @@ plt.savefig('correlation matrix.png')
 GNI vs CO2
 """
 sns.lmplot(x = 'gni_index_y',
-           y = 'CO2_emissions_per_capita)',
+           y = 'CO2_emissions_per_capita',
            data = country_data,
            hue = 'income_group')
 plt.xlabel('Gross National Income')
@@ -559,7 +559,7 @@ plt.show()
 
 # no EG
 sns.lmplot(x = 'gni_index_y',
-           y = 'CO2_emissions_per_capita)',
+           y = 'CO2_emissions_per_capita',
            data = no_eg,
            hue = 'income_group')
 plt.xlabel('Gross National Income')

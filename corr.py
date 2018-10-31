@@ -43,10 +43,6 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
     plt.suptitle("")
     plt.tight_layout()
     plt.show()
-<<<<<<< Updated upstream
-    
-
-=======
 
 """
 Outlier for exports_pct_gdp
@@ -147,7 +143,6 @@ plt.show()
 
 
     
->>>>>>> Stashed changes
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 country_data.boxplot(column=['gni_index'], by = 'income_group')
 

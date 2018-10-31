@@ -29,9 +29,7 @@ homi_set = pd.read_excel(file2)
 # fix typo from base file
 data_set.loc[data_set.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'
 
-"""
-subset dataframe for central africa1 only
-"""
+
 # subset central_africa1
 central_africa1 = data_set[data_set['Hult_Team_Regions'] == "Central Africa 1"].copy()
 
@@ -120,7 +118,6 @@ central_africa1_df = replace_na(main_df=central_africa1_df,
 
 ##############################################################################################
 # extract gni_index
-
 extracted_df = extract_mdg_indicator(indicator_code='NY.GNP.PCAP.CD',
                                      indicator_title='gni_index',
                                      index_col="Country Code",
@@ -133,6 +130,10 @@ central_africa1_df = pd.merge(extracted_df, central_africa1_df,
 
 central_africa1_df = central_africa1_df.drop(columns=['Country Code'])
 
+# fill in the remaining NAs with median
+central_africa1_df.homicides_per_100k = central_africa1_df.homicides_per_100k.fillna(central_africa1_df.homicides_per_100k.median())
+
+##############################################################################################
 # reorder gni_index to be right before gdp_usd
 central_africa1_df = central_africa1_df[['country_index', 'Hult_Team_Regions', 'country_name',
                                          'country_code', 'income_group', 'access_to_electricity_pop',

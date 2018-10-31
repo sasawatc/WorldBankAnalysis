@@ -553,5 +553,159 @@ plt.title('GNI vs CO2 Emissions (Equatorial Guinea excluded)')
 plt.show()
 
 """
+female vs male employment
+(Kenya)
+"""
+sns.lmplot(x = 'pct_female_employment',
+           y = 'pct_male_employment',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Female employment')
+plt.ylabel('Male employment')
+plt.title('Female vs Male Employment')
+plt.show()
+
+# no EG
+#sns.lmplot(x = 'pct_female_employment',
+#           y = 'pct_male_employment',
+#           data = no_eg,
+#           hue = 'income_group')
+#plt.xlabel('Female employment')
+#plt.ylabel('Male employment')
+#plt.title('Female vs Male Employment (Equatorial Guinea excluded)')
+#plt.show()
+
+"""
+service vs agriculture
+"""
+sns.lmplot(x = 'pct_agriculture_employment',
+           y = 'pct_services_employment',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Agriculture Employment')
+plt.ylabel('Services employment')
+plt.title('Agriculture vs Services Employment')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'pct_agriculture_employment',
+           y = 'pct_services_employment',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Agriculture Employment')
+plt.ylabel('Services employment')
+plt.title('Agriculture vs Services Employment (Equatorial Guinea excluded)')
+plt.show()
+
+"""
+urban pop vs export gdp
+"""
+sns.lmplot(x = 'urban_population_pct',
+           y = 'exports_pct_gdp',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Urban Population (% of total population)')
+plt.ylabel('Export (% of GDP)')
+plt.title('Urban Population vs Export')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'urban_population_pct',
+           y = 'exports_pct_gdp',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Urban Population (% of total population)')
+plt.ylabel('Export (% of GDP)')
+plt.title('Urban Population vs Export (Equatorial Guinea excluded)')
+plt.show()
+
+"""
+HIV vs GNI
+"""
+sns.lmplot(x = 'gni_index',
+           y = 'incidence_hiv',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Gross National Income')
+plt.ylabel('Incidence of HIV')
+plt.title('GNI vs Incidence of HIV')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'gni_index',
+           y = 'incidence_hiv',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Gross National Income')
+plt.ylabel('Incidence of HIV')
+plt.title('GNI vs Incidence of HIV (Equatorial Guinea excluded)')
+plt.show()
+
+"""
+electricty rural vs GDP growth rate
+"""
+sns.lmplot(x = 'access_to_electricity_rural',
+           y = 'gdp_growth_pct',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Access to electricity, rural (% of rural population)')
+plt.ylabel('GDP growth (annual %)')
+plt.title('Access to Electricity, Eural vs GDP Growth Rate')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'access_to_electricity_rural',
+           y = 'gdp_growth_pct',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Access to electricity, rural (% of rural population)')
+plt.ylabel('GDP growth (annual %)')
+plt.title('Access to Electricity, Eural vs GDP Growth Rate (Equatorial Guinea excluded)')
+plt.show()
+
+"""
+electricty pop vs internet usage
+"""
+sns.lmplot(x = 'access_to_electricity_pop',
+           y = 'internet_usage_pct',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Access to electricity, population (% of population)')
+plt.ylabel('Individuals using the Internet (% of population)')
+plt.title('Access to Electricity, Population vs Individuals Using the Internet')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'access_to_electricity_pop',
+           y = 'internet_usage_pct',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Access to electricity, population (% of population)')
+plt.ylabel('Individuals using the Internet (% of population)')
+plt.title('Access to Electricity, Population vs Individuals Using the Internet (Equatorial Guinea excluded)')
+plt.show()
+
+"""
+fdi vs tax revenue
+"""
+sns.lmplot(x = 'fdi_pct_gdp',
+           y = 'tax_revenue_pct_gdp',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Access to electricity, population (% of population)')
+plt.ylabel('Foreign direct investment (% of GDP)')
+plt.title('Foreign Direct Investment vs Tax Revenue')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'fdi_pct_gdp',
+           y = 'tax_revenue_pct_gdp',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Access to electricity, population (% of population)')
+plt.ylabel('Foreign direct investment (% of GDP)')
+plt.title('Foreign Direct Investment vs Tax revenue (Equatorial Guinea excluded)')
+plt.show()
+
 
 

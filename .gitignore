@@ -195,3 +195,6 @@ Backup of .docx
 
 # Visio autosave temporary files
 .~vsd
+
+# macOS cache file
+.DS_Store

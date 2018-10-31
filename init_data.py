@@ -22,13 +22,14 @@ output_folder = Path('output')
 
 og_file = base_folder / 'world_data_hult_regions.xlsx'
 data_set = pd.read_excel(og_file)
-file2 = base_folder / 'API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls'
+file2 = base_folder / 'API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls' #homicide rate database
 homi_set = pd.read_excel(file2)
 
 # processed_df = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
-# fix typo from base file
-data_set.loc[data_set.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'
 
+# fix typos from base file
+data_set.loc[data_set.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'
+data_set.rename(columns ={'CO2_emissions_per_capita)' : 'CO2_emissions_per_capita'}, inplace = True)
 
 # subset central_africa1
 central_africa1 = data_set[data_set['Hult_Team_Regions'] == "Central Africa 1"].copy()
@@ -63,7 +64,7 @@ central_africa1_df = replace_na(main_df=central_africa1_df,
                                 index_sub='Country Code')
 
 # missing adult_lit_rate based on CIA World Factbook 2015 data
-changes_dict = {"CPV": 86.8,  # (only 2016 data is available)
+changes_dict = {"CPV": 86.8,  # (only 2015 data is available)
                 "COM": 77.8,
                 "COD": 77.0,
                 "COG": 79.3,

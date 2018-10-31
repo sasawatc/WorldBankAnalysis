@@ -547,7 +547,17 @@ sns.heatmap(data_corr, cmap='Blues',square = True,
 plt.savefig('correlation matrix.png')
 
 ###############################################################################
-# Plotting Correlations 
+# Creating separate datasets for each income group
+###############################################################################
+
+low_income_df = country_data[country_data['income_group'] == 'Low income']
+
+lowmid_income_df = country_data[country_data['income_group'] == 'Lower middle income']
+
+upmid_income_df = country_data[country_data['income_group'] == 'Upper middle income']
+
+###############################################################################
+# Plotting Correlations (Scatter)
 ###############################################################################
 
 """
@@ -570,6 +580,26 @@ sns.lmplot(x = 'gni_index_y',
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
 plt.title('GNI vs CO2 Emissions (Equatorial Guinea excluded)')
+plt.show()
+
+# just low income
+sns.lmplot(x = 'gni_index_y',
+           y = 'CO2_emissions_per_capita',
+           data = low_income_df,
+           hue = 'country_name')
+plt.xlabel('Gross National Income')
+plt.ylabel('CO2 Emissions (per capita)')
+plt.title('GNI vs CO2 Emissions for Low Income Group')
+plt.show()
+
+# just lower middle income
+sns.lmplot(x = 'gni_index_y',
+           y = 'CO2_emissions_per_capita',
+           data = lowmid_income_df,
+           hue = 'country_name')
+plt.xlabel('Gross National Income')
+plt.ylabel('CO2 Emissions (per capita)')
+plt.title('GNI vs CO2 Emissions for Lower Middle Income Group')
 plt.show()
 
 """
@@ -728,5 +758,12 @@ plt.title('Foreign Direct Investment vs Tax revenue (Equatorial Guinea excluded)
 plt.show()
 
 
+###############################################################################
+# Plotting Violinplots
+###############################################################################
+sns.violinplot(x = 'income_group',
+               y ='gni_index_y',
+               data = no_eg,
+               orient = 'v')
 
-
+plt.show()

@@ -40,6 +40,7 @@ homi_set = pd.read_excel(file2)
 # print(central_africa1.head())
 ########################################################################
 
+<<<<<<< Updated upstream
 
 # processed_df = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
 # fix typo from base file
@@ -52,6 +53,22 @@ subset dataframe for central africa1 only
 central_africa1 = data_set[data_set['Hult_Team_Regions'] == "Central Africa 1"].copy()
 
 central_africa1_df = central_africa1.copy()
+=======
+<<<<<<< Updated upstream
+processed_df = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
+processed_df.loc[
+    processed_df.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'  # fix typo from base file
+=======
+central_africa1 = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
+"""
+subset dataframe for central africa1 only
+"""
+central_africa1 = data_set['Central Africa 1', : ]
+
+central_africa1.loc[
+    central_africa1.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'  # fix typo from base file
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 # flag columns with missing value
 for col in central_africa1_df:
@@ -311,6 +328,60 @@ central_africa1_df.to_excel(output_folder / 'clean_data.xlsx')
 # schrate = pd.concat(schrate)
 
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+central_africa1.to_excel(output_folder / 'clean_data.xlsx')
 
 
+
+>>>>>>> Stashed changes
+"""
+plot data
+"""
+<<<<<<< Updated upstream
+
+# subset central_africa1
+central_africa1 = processed_df[processed_df['Hult_Team_Regions'] == "Central Africa 1"].copy()
+
+# extract gni_index
+gni_2014_df = extract_mdg_indicator(indicator_val='GNI per capita, Atlas method (current US$)',
+                                    indicator_title='gni_index',
+                                    mdg_file=base_folder / 'MDGData.csv')
+central_africa1 = pd.merge(gni_2014_df, central_africa1,
+                           left_on='Country Code',
+                           right_on='country_code').copy()
+central_africa1 = central_africa1.drop(columns=['Country Code'])
+
+# reorder gni_index to be right before gdp_usd
+central_africa1 = central_africa1[['country_index', 'Hult_Team_Regions', 'country_name',
+                                   'country_code', 'income_group', 'access_to_electricity_pop',
+                                   'access_to_electricity_rural', 'access_to_electricity_urban',
+                                   'CO2_emissions_per_capita)', 'compulsory_edu_yrs',
+                                   'pct_female_employment', 'pct_male_employment',
+                                   'pct_agriculture_employment', 'pct_industry_employment',
+                                   'pct_services_employment', 'exports_pct_gdp', 'fdi_pct_gdp',
+                                   'gni_index', 'gdp_usd', 'gdp_growth_pct', 'incidence_hiv',
+                                   'internet_usage_pct', 'homicides_per_100k', 'adult_literacy_pct',
+                                   'child_mortality_per_1k', 'avg_air_pollution', 'women_in_parliament',
+                                   'tax_revenue_pct_gdp', 'unemployment_pct', 'urban_population_pct',
+                                   'urban_population_growth_pct', 'm_income_group',
+                                   'm_access_to_electricity_pop', 'm_access_to_electricity_rural',
+                                   'm_access_to_electricity_urban', 'm_CO2_emissions_per_capita)',
+                                   'm_compulsory_edu_yrs', 'm_pct_female_employment', 'm_pct_male_employment',
+                                   'm_pct_agriculture_employment', 'm_pct_industry_employment',
+                                   'm_pct_services_employment', 'm_exports_pct_gdp', 'm_fdi_pct_gdp',
+                                   'm_gdp_usd', 'm_gdp_growth_pct', 'm_incidence_hiv', 'm_internet_usage_pct',
+                                   'm_homicides_per_100k', 'm_adult_literacy_pct', 'm_child_mortality_per_1k',
+                                   'm_avg_air_pollution', 'm_women_in_parliament', 'm_tax_revenue_pct_gdp',
+                                   'm_unemployment_pct', 'm_urban_population_pct', 'm_urban_population_growth_pct']]
+
+# export
+central_africa1.to_excel(output_folder / 'clean_data.xlsx')
+>>>>>>> Stashed changes
+
+
+=======
+>>>>>>> Stashed changes
 

@@ -44,141 +44,10 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
     plt.tight_layout()
     plt.show()
 
-"""
-Outlier for exports_pct_gdp
-"""
 
-country_data[country_data['income_group'] == 'Low income']['exports_pct_gdp']
-# flag: 30 is outlier threshold for low income country
-country_data['out_exports_pct_gdp'] = 0
-for index, value in enumerate(country_data['exports_pct_gdp']):
-    if value > 30 and country_data.loc[index, 'income_group'] == 'Low income':
-        country_data.loc[index, 'out_exports_pct_gdp'] = 1
-
-# histgram
-sns.distplot(country_data['exports_pct_gdp']) 
-plt.axvline(x = 30,
-            label = 'Outlier Thresholds (low income countries)')
-plt.show()
-
-# plot 
-
-sns.pairplot(x_vars=['exports_pct_gdp'],
-             y_vars=['country_name'],
-             data = country_data,
-             hue = 'income_group',
-             size = 5)
-plt.axvline(x = 30,
-            label = 'Outlier Thresholds (low income countries)')
-plt.title('Export of Goods and Services by Country')
-plt.xlabel('Export of Goods and Services (% of GDP)')
-plt.ylabel('')
-plt.show()
-"""
-Outlier for fdi_pct_gdp
-"""
-# overview
-country_data[country_data['income_group'] == 'Low income']['fdi_pct_gdp']
-
-# flag: 4.5 is outlier threshold for low income country
-country_data['out_fdi_pct_gdp'] = 0
-for index, value in enumerate(country_data['fdi_pct_gdp']):
-    if value > 4.5 and country_data.loc[index, 'income_group'] == 'Low income':
-        country_data.loc[index, 'out_fdi_pct_gdp'] = 1
-# histgram
-sns.distplot(country_data['fdi_pct_gdp']) 
-plt.axvline(x = 4.5,
-            label = 'Outlier Thresholds (low income countries)')
-plt.show()
-
-# plot 
-
-sns.pairplot(x_vars=['fdi_pct_gdp'],
-             y_vars=['country_name'],
-             data = country_data,
-             hue = 'income_group',
-             size = 5)
-plt.axvline(x = 4.5,
-            label = 'Outlier Thresholds (low income countries)')
-plt.title('Foreign Derict Investment by Country')
-plt.xlabel('Foreign Derict Investment (% of GDP)')
-plt.ylabel('')
-plt.show()
+no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
 
 
-"""
-Outlier for internet_usage_pct
-"""
-# overview
-country_data[country_data['income_group'] == 'Lower middle income']['internet_usage_pct']
-
-# flag: 27 is upper outlier threshold and 15 is lower outlier threshold for lower middle income country
-country_data['out_internet_usage_pct'] = 0
-for index, value in enumerate(country_data['internet_usage_pct']):
-    if value > 27 and country_data.loc[index, 'income_group'] == 'Lower middle income':
-        country_data.loc[index, 'out_internet_usage_pct'] = 1
-    elif value < 15 and country_data.loc[index, 'income_group'] == 'Lower middle income':
-        country_data.loc[index, 'out_internet_usage_pct'] = 1
-        
-        
-# histgram
-sns.distplot(country_data['internet_usage_pct']) 
-plt.axvline(x = 27,
-            label = 'Upper Outlier Thresholds (Lower middle income countries)')
-plt.axvline(x = 15,
-            label = 'Lower Outlier Thresholds (Lower middle income countries)')
-plt.show()
-
-# plot 
-sns.pairplot(x_vars=['internet_usage_pct'],
-             y_vars=['country_name'],
-             data = country_data,
-             hue = 'income_group',
-             size = 5)
-plt.axvline(x = 27,
-            label = 'Upper Outlier Thresholds (Lower middle income countries)',
-            color = 'orange')
-plt.axvline(x = 15,
-            label = 'Lower Outlier Thresholds (Lower middle income countries)',
-            color = 'orange')
-plt.title('Internet Usage by Country')
-plt.xlabel('Internet Usage')
-plt.ylabel('')
-plt.show()
-
-"""
-Outlier for gni_index
-"""
-# overview
-country_data[country_data['income_group'] == 'Low income']['gni_index']
-
-# flag: 1200 is upper outlier threshold for low income country
-country_data['out_gni_index'] = 0
-for index, value in enumerate(country_data['gni_index']):
-    if value > 1200 and country_data.loc[index, 'income_group'] == 'Low income':
-        country_data.loc[index, 'out_gni_index'] = 1
-        
-        
-# histgram
-sns.distplot(country_data['gni_index']) 
-plt.axvline(x = 1200,
-            label = 'Outlier Thresholds (low income countries)')
-
-plt.show()
-
-# plot 
-sns.pairplot(x_vars=['gni_index'],
-             y_vars=['country_name'],
-             data = country_data,
-             hue = 'income_group',
-             size = 5)
-plt.axvline(x = 1200,
-            label = 'Outlier Thresholds (low income countries)')
-
-plt.title('Gross National Income by Country')
-plt.xlabel('Gross National Income ($ per capita)')
-plt.ylabel('')
-plt.show()
 
     
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
@@ -215,7 +84,7 @@ plt.xlabel('CO2 emissions per capita)')
 
 ##gni_index
 plt.subplot(2,2,4)
-sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('GNI')
 
 ## pct_female_employment
@@ -277,38 +146,207 @@ gdp_usd_hi = 90000000000
 adult_lit_lo = 45
 airpoll_limit_lo = 22
 tax_rev_limit = 30
+exports_pct_gdp_limit = 30
+fdi_pct_gdp_limit = 4.5
+internet_usage_pct_up = 27
+internet_usage_pct_low = 15
+gni_index_limit = 1200
 
 
 ###############################################################################
 # distplots with cutoff points
 ###############################################################################
+"""
+Outlier for exports_pct_gdp
+"""
+
+country_data[country_data['income_group'] == 'Low income']['exports_pct_gdp']
+# flag: 30 is outlier threshold for low income country
+country_data['out_exports_pct_gdp'] = 0
+for index, value in enumerate(country_data['exports_pct_gdp']):
+    if value > exports_pct_gdp_limit and country_data.loc[index, 'income_group'] == 'Low income':
+        country_data.loc[index, 'out_exports_pct_gdp'] = 1
+
+# histgram
+sns.distplot(country_data['exports_pct_gdp']) 
+
+plt.show()
+
+# plot 
+
+sns.pairplot(x_vars=['exports_pct_gdp'],
+             y_vars=['country_name'],
+             data = country_data,
+             hue = 'income_group',
+             size = 5)
+plt.axvline(x = exports_pct_gdp_limit,
+            label = 'Outlier Thresholds (low income countries)')
+plt.title('Export of Goods and Services by Country')
+plt.xlabel('Export of Goods and Services (% of GDP)')
+plt.ylabel('')
+plt.show()
+
+# no Equatorial Guinea
+sns.pairplot(x_vars=['exports_pct_gdp'],
+             y_vars=['country_name'],
+             data = no_eg,
+             hue = 'income_group',
+             size = 5)
+plt.axvline(x = exports_pct_gdp_limit,
+            label = 'Outlier Thresholds (low income countries)')
+plt.title('Export of Goods and Services by Country (Equatorial Guinea excluded)')
+plt.xlabel('Export of Goods and Services (% of GDP)')
+plt.ylabel('')
+plt.show()
+
+
+"""
+Outlier for fdi_pct_gdp
+"""
+# overview
+country_data[country_data['income_group'] == 'Low income']['fdi_pct_gdp']
+
+# flag: 4.5 is outlier threshold for low income country
+country_data['out_fdi_pct_gdp'] = 0
+for index, value in enumerate(country_data['fdi_pct_gdp']):
+    if value > fdi_pct_gdp_limit and country_data.loc[index, 'income_group'] == 'Low income':
+        country_data.loc[index, 'out_fdi_pct_gdp'] = 1
+# histgram
+sns.distplot(country_data['fdi_pct_gdp']) 
+
+plt.show()
+
+# plot 
+
+sns.pairplot(x_vars=['fdi_pct_gdp'],
+             y_vars=['country_name'],
+             data = country_data,
+             hue = 'income_group',
+             size = 5)
+plt.axvline(x = fdi_pct_gdp_limit,
+            label = 'Outlier Thresholds (low income countries)')
+plt.title('Foreign Derict Investment by Country')
+plt.xlabel('Foreign Derict Investment (% of GDP)')
+plt.ylabel('')
+plt.show()
+
+
+"""
+Outlier for internet_usage_pct
+"""
+# overview
+country_data[country_data['income_group'] == 'Lower middle income']['internet_usage_pct']
+
+# flag: 27 is upper outlier threshold and 15 is lower outlier threshold for lower middle income country
+country_data['out_internet_usage_pct'] = 0
+for index, value in enumerate(country_data['internet_usage_pct']):
+    if value > internet_usage_pct_up and country_data.loc[index, 'income_group'] == 'Lower middle income':
+        country_data.loc[index, 'out_internet_usage_pct'] = 1
+    elif value < internet_usage_pct_low and country_data.loc[index, 'income_group'] == 'Lower middle income':
+        country_data.loc[index, 'out_internet_usage_pct'] = 1
+        
+        
+# histgram
+sns.distplot(country_data['internet_usage_pct']) 
+
+plt.show()
+
+# plot 
+sns.pairplot(x_vars=['internet_usage_pct'],
+             y_vars=['country_name'],
+             data = country_data,
+             hue = 'income_group',
+             size = 5)
+plt.axvline(x = internet_usage_pct_up,
+            label = 'Upper Outlier Thresholds (Lower middle income countries)',
+            color = 'orange')
+plt.axvline(x = internet_usage_pct_low,
+            label = 'Lower Outlier Thresholds (Lower middle income countries)',
+            color = 'orange')
+plt.title('Internet Usage by Country')
+plt.xlabel('Internet Usage')
+plt.ylabel('')
+plt.show()
+
+"""
+Outlier for gni_index
+"""
+# overview
+country_data[country_data['income_group'] == 'Low income']['gni_index']
+
+# flag: 1200 is upper outlier threshold for low income country
+country_data['out_gni_index'] = 0
+for index, value in enumerate(country_data['gni_index']):
+    if value > gni_index_limit and country_data.loc[index, 'income_group'] == 'Low income':
+        country_data.loc[index, 'out_gni_index'] = 1
+        
+        
+# histgram
+sns.distplot(country_data['gni_index']) 
+
+
+plt.show()
+
+# plot 
+sns.pairplot(x_vars=['gni_index'],
+             y_vars=['country_name'],
+             data = country_data,
+             hue = 'income_group',
+             size = 5)
+plt.axvline(x = gni_index_limit,
+            label = 'Outlier Thresholds (low income countries)')
+
+plt.title('Gross National Income by Country')
+plt.xlabel('Gross National Income ($ per capita)')
+plt.ylabel('')
+plt.show()
+
+# no EG
+sns.pairplot(x_vars=['gni_index'],
+             y_vars=['country_name'],
+             data = no_eg,
+             hue = 'income_group',
+             size = 5)
+plt.axvline(x = gni_index_limit,
+            label = 'Outlier Thresholds (low income countries)')
+
+plt.title('Gross National Income by Country (Equatorial Guinea excluded)')
+plt.xlabel('Gross National Income ($ per capita)')
+plt.ylabel('')
+plt.show()
+
 ## access_to_electricity_rural
-plt.subplot(2,2,1)
+plt.subplot(3,3,1)
 sns.distplot(country_data['access_to_electricity_rural'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('Access to Electricity(Rural)')
 plt.axvline(x = ele_r_lo, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
 ## access_to_electricity_urban
-plt.subplot(2,2,2)
+plt.subplot(3,3,2)
 sns.distplot(country_data['access_to_electricity_urban'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('Access to Electricity(Urban)')
 plt.axvline(x = ele_u_lo, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
 ## CO2_emissions_per_capita)
-plt.subplot(2,2,2)
+plt.subplot(3,3,3)
 sns.distplot(country_data['CO2_emissions_per_capita)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('CO2 emissions per capita)')
 plt.axvline(x = co2_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
 ##gni_index
+<<<<<<< Updated upstream
 plt.subplot(2,2,2)
 sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+=======
+plt.subplot(3,3,4)
+sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+>>>>>>> Stashed changes
 plt.xlabel('GNI')
 plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
 ## pct_female_employment
-plt.subplot(2,2,1)
+plt.subplot(3,3,5)
 sns.distplot(country_data['pct_female_employment'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('Female Employment')
 
@@ -316,21 +354,21 @@ plt.axvline(x = femploy_limit_hi, label = 'Outlier Threshold', linestyle = '--',
 
 
 ## pct_male_employment 
-plt.subplot(2,2,2)
+plt.subplot(3,3,6)
 sns.distplot(country_data['pct_male_employment'], bins = 'fd', kde = False, rug = True, color = 'forestgreen')
 plt.xlabel('Male Employment')
 
 plt.axvline(x = memploy_limit_hi, label = 'Outlier Threshold', linestyle = '--', color = 'b')
 
 ## pct_services_employment 
-plt.subplot(2,2,3)
+plt.subplot(3,3,7)
 sns.distplot(country_data['pct_services_employment'], bins = 'fd', kde = False, rug = True, color = 'cornflowerblue')
 plt.xlabel('Services Employment')
 
 plt.axvline(x = servemploy_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'orangered')
 
 ##gdp_usd
-plt.subplot(2,2,4)
+plt.subplot(3,3,8)
 sns.distplot(country_data['gdp_usd'], bins = 'fd', kde = False, rug = True, color = 'slategrey')
 plt.xlabel('GDP (USD)')
 

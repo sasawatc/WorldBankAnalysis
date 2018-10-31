@@ -240,9 +240,7 @@ central_africa1_df = replace_na(main_df=central_africa1_df,
                                 index_sub='Country Code')
 
     
-if central_africa1[col].isnull().any():
-        col_median = central_africa1[col].median()
-        central_africa1[col] = central_africa1[col].fillna(col_median)
+
 
 ##############################################################################################
 
@@ -275,7 +273,9 @@ central_africa1_df = central_africa1_df[['country_index', 'Hult_Team_Regions', '
                                          'urban_population_pct', 'urban_population_growth_pct', 'm_compulsory_edu_yrs',
                                          'm_incidence_hiv', 'm_homicides_per_100k', 'm_adult_literacy_pct',
                                          'm_tax_revenue_pct_gdp']]
-
+if central_africa1['homicides_per_100k'].isnull().any():
+        col_median = central_africa1['homicides_per_100k'].median()
+        central_africa1['homicides_per_100k'] = central_africa1['homicides_per_100k'].fillna(col_median)
 # export
 central_africa1_df.to_excel(output_folder / 'clean_data.xlsx')
 

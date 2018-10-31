@@ -232,7 +232,7 @@ plt.savefig('Employment & Literacy Histograms with cutoffs.png')
 plt.show()
 
 ##tax_revenue_pct_gdp
-plt.subplot(2,2,3)
+plt.subplot(2,2,1)
 sns.distplot(country_data['tax_revenue_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'orange')
 plt.xlabel('Tax Revenue PCT GDP')
 plt.axvline(x = tax_rev_limit, label = 'Outlier Thresholds', linestyle = '--', color = 'k')
@@ -245,7 +245,7 @@ plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = '
 plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'r')
 
 ##gdp_usd
-plt.subplot(2,2,1)
+plt.subplot(2,2,3)
 sns.distplot(country_data['gdp_usd'], bins = 'fd', kde = False, rug = True, color = 'slategrey')
 plt.xlabel('GDP (USD)')
 plt.axvline(x = gdp_usd_hi, label = 'Outlier Thresholds', linestyle = '--', color = 'green')
@@ -262,18 +262,19 @@ plt.show()
 
 
 ## fdi_pct_gdp
-plt.subplot(1,2,1)
+plt.subplot(2,1,1)
 sns.distplot(country_data['fdi_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'c')
 plt.xlabel('Foreign Direct Investment, net inflows (% of GDP)')
 plt.axvline(x = tax_rev_limit, label = 'Outlier Thresholds', linestyle = '--', color = 'b')
 
 ## internet_usage_pct
-plt.subplot(1,2,2)
+plt.subplot(2,1,2)
 sns.distplot(country_data['internet_usage_pct'], bins = 'fd', kde = False, rug = True, color = 'indigo')
 plt.xlabel('Individuals using the Internet (% of population)')
 plt.axvline(x = internet_usage_pct_up, label = 'Outlier Thresholds', linestyle = '--', color = 'r')
 plt.axvline(x = internet_usage_pct_low, label = 'Outlier Thresholds', linestyle = '--', color = 'r') 
 
+plt.tight_layout()
 plt.savefig('FDI & Internet Histograms with cutoffs.png')
 plt.show()
 
@@ -518,6 +519,10 @@ sns.pairplot(x_vars=['gni_index_y'],
 plt.axvline(x = gni_index_limit,
             label = 'Outlier Thresholds (low income countries)')
 
+plt.title('Gross National Income by Country (Equatorial Guinea excluded)')
+plt.xlabel('Gross National Income ($ per capita)')
+plt.ylabel('')
+plt.show()
 ###############################################################################
 # Analyze Outliers
 ###############################################################################

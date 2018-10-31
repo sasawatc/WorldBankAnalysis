@@ -334,13 +334,13 @@ plt.xlabel('CO2 emissions per capita)')
 plt.axvline(x = co2_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
 ##gni_index
-<<<<<<< Updated upstream
+
 plt.subplot(2,2,2)
 sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
-=======
+
 plt.subplot(3,3,4)
-sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
->>>>>>> Stashed changes
+sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+
 plt.xlabel('GNI')
 plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'y')
@@ -525,3 +525,33 @@ check = (country_data.loc[ : , ['tax_revenue_pct_gdp', 'out_tax_revenue_pct_gdp'
 #country_data['out_sum'] = (country_data['out_1'] + country_data['out_2'] + country_data['out_3'] + country_data['out_pct_female_employment'] + country_data['out_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_7'] + country_data['out_8'] + country_data['out_9'] + country_data['out_gdp_usd'] + country_data['out_11'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
 
 #check = (country_data.loc[ : , ['out_1'] + ['out_2'] + ['out_3'] +['out_pct_female_employment'] +['out_pct_male_employment'] + ['out_pct_services_employment'] + ['out_7'] + ['out_8'] + ['out_9'] +['out_gdp_usd'] + ['out_11'] + ['out_adult_literacy_pct'] +['out_avg_air_pollution'] +['out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
+
+###############################################################################
+# corelation 
+###############################################################################
+
+"""
+GNI vs CO2
+"""
+sns.lmplot(x = 'gni_index',
+           y = 'CO2_emissions_per_capita)',
+           data = country_data,
+           hue = 'income_group')
+plt.xlabel('Gross National Income')
+plt.ylabel('CO2 Emissions (per capita)')
+plt.title('GNI vs CO2 Emissions')
+plt.show()
+
+# no EG
+sns.lmplot(x = 'gni_index',
+           y = 'CO2_emissions_per_capita)',
+           data = no_eg,
+           hue = 'income_group')
+plt.xlabel('Gross National Income')
+plt.ylabel('CO2 Emissions (per capita)')
+plt.title('GNI vs CO2 Emissions (Equatorial Guinea excluded)')
+plt.show()
+
+"""
+
+

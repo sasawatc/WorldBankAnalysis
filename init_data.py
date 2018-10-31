@@ -239,6 +239,10 @@ central_africa1_df = replace_na(main_df=central_africa1_df,
                                 index_main='country_code',
                                 index_sub='Country Code')
 
+    
+if central_africa1[col].isnull().any():
+        col_median = central_africa1[col].median()
+        central_africa1[col] = central_africa1[col].fillna(col_median)
 
 ##############################################################################################
 

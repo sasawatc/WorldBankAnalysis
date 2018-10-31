@@ -301,6 +301,7 @@ plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
 plt.show()
 
+<<<<<<< Updated upstream
 # no EG
 sns.pairplot(x_vars=['gni_index'],
              y_vars=['country_name'],
@@ -309,6 +310,88 @@ sns.pairplot(x_vars=['gni_index'],
              size = 5)
 plt.axvline(x = gni_index_limit,
             label = 'Outlier Thresholds (low income countries)')
+=======
+    
+country_data.boxplot(column=['gdp_usd'], by = 'income_group')
+country_data.boxplot(column=['gni_index'], by = 'income_group')
+
+# Boxplot for homicides to see if we should use mean or median to fill in last 2 missing values. Use median!
+country_data.boxplot(column=['homicides_per_100k'], by = 'income_group')
+
+###############################################################################
+# Correlation Matrix for all variables   --->>> how to take out the missing values
+###############################################################################    
+data_corr =country_data.corr().round(2)
+print(data_corr)
+
+sns.heatmap(data_corr, cmap='Blues',square = True,
+            annot = False,
+            linecolor = 'black',
+            linewidths = 0.5)
+
+###############################################################################
+# Distplots (without cutoffs)
+###############################################################################
+## access_to_electricity_rural
+plt.subplot(2,2,1)
+sns.distplot(country_data['access_to_electricity_rural'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Access to Electricity(Rural)')
+
+## access_to_electricity_urban
+plt.subplot(2,2,2)
+sns.distplot(country_data['access_to_electricity_urban'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Access to Electricity(Urban)')
+
+## CO2_emissions_per_capita)
+plt.subplot(2,2,3)
+sns.distplot(country_data['CO2_emissions_per_capita)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('CO2 emissions per capita)')
+
+##gni_index
+plt.subplot(2,2,4)
+sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('GNI')
+
+## pct_female_employment
+plt.subplot(2,2,1)
+sns.distplot(country_data['pct_female_employment'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+plt.xlabel('Female Employment')
+
+## pct_male_employment 
+plt.subplot(2,2,2)
+sns.distplot(country_data['pct_male_employment'], bins = 'fd', kde = False, rug = True, color = 'forestgreen')
+plt.xlabel('Male Employment')
+
+## pct_services_employment 
+plt.subplot(2,2,3)
+sns.distplot(country_data['pct_services_employment'], bins = 'fd', kde = False, rug = True, color = 'cornflowerblue')
+plt.xlabel('Services Employment')
+
+##gdp_usd
+plt.subplot(2,2,4)
+sns.distplot(country_data['gdp_usd'], bins = 'fd', kde = False, rug = True, color = 'slategrey')
+plt.xlabel('GDP (USD)')
+
+plt.tight_layout()
+plt.savefig('4 5 6 10 Histograms w/o cutoffs.png')
+plt.show()
+
+
+##adult_literacy_pct
+plt.subplot(2,2,1)
+sns.distplot(country_data['adult_literacy_pct'], bins = 'fd', kde = False, rug = True, color = 'coral')
+plt.xlabel('Adult Literacy Rate')
+
+## avg_air_pollution
+plt.subplot(2,2,2)
+sns.distplot(country_data['avg_air_pollution'], bins = 'fd', kde = False, rug = True, color = 'plum')
+plt.xlabel('Avg Air Pollution')
+
+##tax_revenue_pct_gdp
+plt.subplot(2,2,3)
+sns.distplot(country_data['tax_revenue_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'orange')
+plt.xlabel('Tax Revenue PCT GDP')
+>>>>>>> Stashed changes
 
 plt.title('Gross National Income by Country (Equatorial Guinea excluded)')
 plt.xlabel('Gross National Income ($ per capita)')

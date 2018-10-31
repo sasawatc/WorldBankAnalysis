@@ -12,7 +12,7 @@ processed_folder = Path('data/processed')
 output_folder = Path('output')
 
 #import clean data
-clean_data = pd.read_excel(output_folder / 'clean_data.xlsx', index='country_code')
+clean_data = pd.read_excel(processed_folder / 'clean_data.xlsx', index='country_code')
 country_data = clean_data.iloc[:, 2:]
 
 
@@ -566,8 +566,6 @@ plt.ylabel('CO2 Emissions (per capita)')
 plt.title('GNI vs CO2 Emissions (Equatorial Guinea excluded)')
 plt.show()
 
-<<<<<<< HEAD
-=======
 """
 female vs male employment
 (Kenya)
@@ -722,7 +720,7 @@ plt.xlabel('Access to electricity, population (% of population)')
 plt.ylabel('Foreign direct investment (% of GDP)')
 plt.title('Foreign Direct Investment vs Tax revenue (Equatorial Guinea excluded)')
 plt.show()
->>>>>>> master
+
 
 
 

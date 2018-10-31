@@ -302,7 +302,7 @@ plt.axvline(x = co2_hi, label = 'Outlier Threshold', linestyle = '--', color = '
 
 ##gni_index
 plt.subplot(2,2,2)
-sns.distplot(country_data['gni_index)'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
+sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('GNI')
 plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'y')
@@ -402,11 +402,11 @@ check = (country_data.loc[ : , ['CO2_emissions_per_capita)', 'out_CO2_emissions_
 
 
 ##gni_index
-country_data['out_gni_index)'] = 0
+country_data['out_gni_index'] = 0
 
 for val in enumerate(country_data.loc[ : , 'gni_index']):
-    if val[1] > co2_hi:
-        country_data.loc[val[0], 'out_gni_index)'] = 1
+    if val[1] > gni_hi:
+        country_data.loc[val[0], 'out_gni_index'] = 1
 
 country_data['out_gni_index'].abs().sum()
 check = (country_data.loc[ : , ['gni_index', 'out_gni_index']].sort_values('gni_index', ascending = False))

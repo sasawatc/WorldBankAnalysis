@@ -48,12 +48,8 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
 
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 
-country_data.boxplot(column=['gni_index_y'], by = 'income_group')
+country_data.boxplot(column=['gni_index'], by = 'income_group')
 """Use gni instead of gdp because gni correlates more with the corresponding income groups; it has less extreme outliers"""
-
-# ------> homicides boxplot
-country_data.boxplot(column = 'homicides_per_100k', by = 'income_group')
-plt.show()
 
 ###############################################################################
 # Create variables for country_data excluding Equatorial Guinea (possibly doesn't belong in Central Africa 1)
@@ -120,7 +116,7 @@ plt.xlabel('Tax Revenue PCT GDP')
 
 ## gni_index
 plt.subplot(2,2,2)
-sns.distplot(country_data['gni_index_y'], bins = 'fd', kde = False, rug = True, color = 'cadetblue')
+sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'cadetblue')
 plt.xlabel('Gross National Income ($ per capita)')
 
 ## gdp_usd
@@ -242,7 +238,7 @@ plt.axvline(x = tax_rev_limit, label = 'Outlier Thresholds', linestyle = '--', c
 
 ##gni_index
 plt.subplot(2,2,2)
-sns.distplot(country_data['gni_index_y'], bins = 'fd', kde = False, rug = True, color = 'cadetblue')
+sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'cadetblue')
 plt.xlabel('GNI')
 plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = 'r')
 plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'r')
@@ -484,22 +480,22 @@ plt.ylabel('')
 plt.show()
 
 ## gni_index
-country_data[country_data['income_group'] == 'Low income']['gni_index_y']
+country_data[country_data['income_group'] == 'Low income']['gni_index']
 """ flag: 1200 is upper outlier threshold for low income country """
-country_data['out_gni_index_y'] = 0
-for index, value in enumerate(country_data['gni_index_y']):
+country_data['out_gni_index'] = 0
+for index, value in enumerate(country_data['gni_index']):
     if value > gni_index_limit and country_data.loc[index, 'income_group'] == 'Low income':
-        country_data.loc[index, 'out_gni_index_y'] = 1       
+        country_data.loc[index, 'out_gni_index'] = 1       
 
-country_data['out_gni_index_y'].abs().sum()
-check = (country_data.loc[ : , ['gni_index_y', 'out_gni_index_y']].sort_values('gni_index_y', ascending = False))
+country_data['out_gni_index'].abs().sum()
+check = (country_data.loc[ : , ['gni_index', 'out_gni_index']].sort_values('gni_index', ascending = False))
         
 # histogram
-sns.distplot(country_data['gni_index_y']) 
+sns.distplot(country_data['gni_index']) 
 plt.show()
 
 # plot 
-sns.pairplot(x_vars=['gni_index_y'],
+sns.pairplot(x_vars=['gni_index'],
              y_vars=['country_name'],
              data = country_data,
              hue = 'income_group',
@@ -513,7 +509,7 @@ plt.ylabel('')
 plt.show()
 
 # no EG
-sns.pairplot(x_vars=['gni_index_y'],
+sns.pairplot(x_vars=['gni_index'],
              y_vars=['country_name'],
              data = no_eg,
              hue = 'income_group',
@@ -528,9 +524,9 @@ plt.show()
 ###############################################################################
 # Analyze Outliers
 ###############################################################################
-country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index_y'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
+country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
 
-check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index_y', 'out_gdp_usd', 'out_internet_usage_pct', 'out_adult_literacy_pct', 'out_avg_air_pollution', 'out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
+check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_adult_literacy_pct', 'out_avg_air_pollution', 'out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
 
 
 ###############################################################################
@@ -589,7 +585,7 @@ sns.heatmap(lowmid_income_corr, cmap='Blues',square = True,
 """
 GNI vs CO2
 """
-sns.lmplot(x = 'gni_index_y',
+sns.lmplot(x = 'gni_index',
            y = 'CO2_emissions_per_capita',
            data = country_data,
            hue = 'income_group')
@@ -599,7 +595,7 @@ plt.title('GNI vs CO2 Emissions')
 plt.show()
 
 # no EG
-sns.lmplot(x = 'gni_index_y',
+sns.lmplot(x = 'gni_index',
            y = 'CO2_emissions_per_capita',
            data = no_eg,
            hue = 'income_group')
@@ -609,7 +605,7 @@ plt.title('GNI vs CO2 Emissions (Equatorial Guinea excluded)')
 plt.show()
 
 # just low income
-sns.lmplot(x = 'gni_index_y',
+sns.lmplot(x = 'gni_index',
            y = 'CO2_emissions_per_capita',
            data = low_income_df,
            hue = 'country_name')
@@ -619,7 +615,7 @@ plt.title('GNI vs CO2 Emissions for Low Income Group')
 plt.show()
 
 # just lower middle income
-sns.lmplot(x = 'gni_index_y',
+sns.lmplot(x = 'gni_index',
            y = 'CO2_emissions_per_capita',
            data = lowmid_income_df,
            hue = 'country_name')
@@ -698,7 +694,7 @@ plt.show()
 """
 HIV vs GNI
 """
-sns.lmplot(x = 'gni_index_y',
+sns.lmplot(x = 'gni_index',
            y = 'incidence_hiv',
            data = country_data,
            hue = 'income_group')
@@ -708,7 +704,7 @@ plt.title('GNI vs Incidence of HIV')
 plt.show()
 
 # no EG
-sns.lmplot(x = 'gni_index_y',
+sns.lmplot(x = 'gni_index',
            y = 'incidence_hiv',
            data = no_eg,
            hue = 'income_group')
@@ -788,7 +784,7 @@ plt.show()
 # Compare regions
 ###############################################################################
 sns.violinplot(x = 'income_group',
-               y ='gni_index_y',
+               y ='gni_index',
                data = no_eg,
                orient = 'v')
 
@@ -822,7 +818,7 @@ gni_x_list = ['access_to_electricity_pop',
 
 for x in gni_x_list:
     sns.pairplot(x_vars = x,
-                 y_vars = ['gni_index_y'],
+                 y_vars = ['gni_index'],
                  data = country_data,
                  hue = 'income_group',
                  size = 5)
@@ -854,7 +850,7 @@ x_list = ['access_to_electricity_pop',
           'women_in_parliament',
           'urban_population_pct',
           'urban_population_growth_pct',
-          'gni_index_y']
+          'gni_index']
 
 for x_var in x_list:
     sns.pairplot(x_vars = x_var,

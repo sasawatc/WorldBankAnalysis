@@ -7,7 +7,7 @@ For initializing datasets
 
 from pandas import DataFrame
 
-__version__ = '0.6.5'
+__version__ = '0.6.6'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
@@ -69,12 +69,12 @@ data_set = data_set.drop(columns=['Country Code'])
 # for group in data_set.income_group.unique():
 #     group_df = data_set[data_set.income_group == group]
 
-for col in data_set.select_dtypes(include=['float64', 'int']).columns:
-    data_set[col] = replace_na_mean_median(col_series=data_set[col])
-
-# fill in the remaining NAs in numeric columns with mean/median based on skewness
 # for col in data_set.select_dtypes(include=['float64', 'int']).columns:
 #     data_set[col] = replace_na_mean_median(col_series=data_set[col])
+
+# fill in the remaining NAs in numeric columns with mean/median based on skewness
+for col in data_set.select_dtypes(include=['float64', 'int']).columns:
+    data_set[col] = replace_na_mean_median(col_series=data_set[col])
 
 ##############################################################################################
 # reorder gni_index to be right before gdp_usd
@@ -100,7 +100,8 @@ data_set = data_set[['country_index', 'Hult_Team_Regions', 'country_name', 'coun
 data_set.to_excel(output_folder / 'clean_data.xlsx')
 
 # subset central_africa1 and export
-central_africa1_df: DataFrame = data_set[data_set['Hult_Team_Regions'] == "Central Africa 1"].copy()
+central_africa1_df: DataFrame = data_set[data_set['Hult_Team_Regions'] == "Central Africa 1"]
+central_africa1_df.reset_index(drop=True, inplace=True)
 central_africa1_df.to_excel(output_folder / "clean_data_central_africa.xlsx")
 
 ##############################################################################################

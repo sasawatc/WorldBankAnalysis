@@ -14,7 +14,34 @@ output_folder = Path('output')
 #import clean data
 clean_data = pd.read_excel(processed_folder / 'clean_data.xlsx', index='country_code')
 country_data = clean_data.iloc[:, 2:]
+"""
+subset dataset
+"""
+# low income worldwide 
+low_income_world = country_data[country_data.income_group == 'Low income']
 
+# lower middle income worldwide 
+lower_middle_income_world = country_data[country_data.income_group == 'Lower middle income']
+
+# upper middle income worldwide
+upper_middle_income_world = country_data[country_data.income_group == 'Upper middle income']
+
+# Central Africa 1
+df = clean_data[clean_data.Hult_Team_Regions == 'Central Africa 1']
+cent_africa = df.iloc[:, 2:]
+cent_africa.reset_index(drop = True, inplace = True)
+
+# low income Central Africa 1 (CA)
+low_income_ca = cent_africa[cent_africa.income_group == 'Low income']
+
+# lower middle income CA
+lower_middle_income_ca = cent_africa[cent_africa.income_group == 'Lower middle income']
+
+# upper middle income CA
+upper_middle_income_ca = cent_africa[cent_africa.income_group == 'Upper middle income']
+
+# no Equatorial Guinea
+no_eg = cent_africa[cent_africa['country_name'] != 'Equatorial Guinea']
 
 print(country_data.head())
 
@@ -51,10 +78,14 @@ country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 country_data.boxplot(column=['gni_index'], by = 'income_group')
 """Use gni instead of gdp because gni correlates more with the corresponding income groups; it has less extreme outliers"""
 
+# ------> homicides boxplot
+# country_data.boxplot(column = 'homicides_per_100k', by = 'income_group')
+# plt.show()
+
 ###############################################################################
 # Create variables for country_data excluding Equatorial Guinea (possibly doesn't belong in Central Africa 1)
 ###############################################################################
-no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
+
 
 ###############################################################################
 # Distplots (without cutoffs)
@@ -80,7 +111,7 @@ sns.distplot(country_data['avg_air_pollution'], bins = 'fd', kde = False, rug = 
 plt.xlabel('Avg Air Pollution')
 
 plt.tight_layout()
-plt.savefig('electricity & pollution Histograms w/o cutoffs.png')
+plt.savefig(output_folder / 'electricity & pollution Histograms without cutoffs.png')
 plt.show()
 
 
@@ -100,37 +131,38 @@ sns.distplot(country_data['pct_services_employment'], bins = 'fd', kde = False, 
 plt.xlabel('Services Employment')
 
 ## adult_literacy_pct
-plt.subplot(2,2,4)
-sns.distplot(country_data['adult_literacy_pct'], bins = 'fd', kde = False, rug = True, color = 'coral')
-plt.xlabel('Adult Literacy Rate')
+# plt.subplot(2,2,4)
+# sns.distplot(country_data['adult_literacy_pct'], bins = 'fd', kde = False, rug = True, color = 'coral')
+# plt.xlabel('Adult Literacy Rate')
 
 plt.tight_layout()
-plt.savefig('Employment & Literacy Histograms w/o cutoffs.png')
+plt.savefig(output_folder / 'Employment & Literacy Histograms without cutoffs.png')
 plt.show()
 
 
 ##tax_revenue_pct_gdp
-plt.subplot(2,2,1)
-sns.distplot(country_data['tax_revenue_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'orange')
-plt.xlabel('Tax Revenue PCT GDP')
+#plt.subplot(2,2,1)
+#sns.distplot(country_data['tax_revenue_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'orange')
+#plt.xlabel('Tax Revenue PCT GDP')
 
 ## gni_index
-plt.subplot(2,2,2)
+
+plt.subplot(2,2,1)
 sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'cadetblue')
 plt.xlabel('Gross National Income ($ per capita)')
 
 ## gdp_usd
-plt.subplot(2,2,3)
+plt.subplot(2,2,2)
 sns.distplot(country_data['gdp_usd'], bins = 'fd', kde = False, rug = True, color = 'slategrey')
 plt.xlabel('Gross Domestic Product ($)')
 
 ## exports_pct_gdp
-plt.subplot(2,2,4)
+plt.subplot(2,2,3)
 sns.distplot(country_data['exports_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'green')
 plt.xlabel('Exports')
 
 plt.tight_layout()
-plt.savefig('Money Histograms w/o cutoffs.png')
+plt.savefig(output_folder / 'Money Histograms without cutoffs.png')
 plt.show()
 
 
@@ -144,7 +176,7 @@ plt.subplot(1,2,2)
 sns.distplot(country_data['internet_usage_pct'], bins = 'fd', kde = False, rug = True, color = 'indigo')
 plt.xlabel('Individuals using the Internet (% of population)')
 
-plt.savefig('FDI & Internet Histograms w/o cutoffs.png')
+plt.savefig(output_folder / 'FDI & Internet Histograms without cutoffs.png')
 plt.show()
 
 ###############################################################################
@@ -198,7 +230,7 @@ plt.xlabel('Avg Air Pollution')
 plt.axvline(x = airpoll_limit_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'darkturquoise')
 
 plt.tight_layout()
-plt.savefig('electricity & pollution Histograms with cutoffs.png')
+plt.savefig(output_folder / 'electricity & pollution Histograms with cutoffs.png')
 plt.show()
 
 
@@ -221,42 +253,44 @@ plt.xlabel('Services Employment')
 plt.axvline(x = servemploy_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'orangered')
 
 ##adult_literacy_pct
-plt.subplot(2,2,4)
-sns.distplot(country_data['adult_literacy_pct'], bins = 'fd', kde = False, rug = True, color = 'coral')
-plt.xlabel('Adult Literacy Rate')
-plt.axvline(x = adult_lit_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'darkmagenta')
+# plt.subplot(2,2,4)
+# sns.distplot(country_data['adult_literacy_pct'], bins = 'fd', kde = False, rug = True, color = 'coral')
+# plt.xlabel('Adult Literacy Rate')
+# plt.axvline(x = adult_lit_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'darkmagenta')
 
 plt.tight_layout()
-plt.savefig('Employment & Literacy Histograms with cutoffs.png')
+plt.savefig(output_folder / 'Employment & Literacy Histograms with cutoffs.png')
 plt.show()
 
 ##tax_revenue_pct_gdp
-plt.subplot(2,2,1)
-sns.distplot(country_data['tax_revenue_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'orange')
-plt.xlabel('Tax Revenue PCT GDP')
-plt.axvline(x = tax_rev_limit, label = 'Outlier Thresholds', linestyle = '--', color = 'k')
+#plt.subplot(2,2,1)
+#sns.distplot(country_data['tax_revenue_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'orange')
+#plt.xlabel('Tax Revenue PCT GDP')
+#plt.axvline(x = tax_rev_limit, label = 'Outlier Thresholds', linestyle = '--', color = 'k')
 
 ##gni_index
-plt.subplot(2,2,2)
+
+plt.subplot(2,2,1)
+
 sns.distplot(country_data['gni_index'], bins = 'fd', kde = False, rug = True, color = 'cadetblue')
 plt.xlabel('GNI')
 plt.axvline(x = gni_hi, label = 'Outlier Threshold', linestyle = '--', color = 'r')
 plt.axvline(x = gni_um, label = 'Outlier Threshold', linestyle = '--', color = 'r')
 
 ##gdp_usd
-plt.subplot(2,2,3)
+plt.subplot(2,2,2)
 sns.distplot(country_data['gdp_usd'], bins = 'fd', kde = False, rug = True, color = 'slategrey')
 plt.xlabel('GDP (USD)')
 plt.axvline(x = gdp_usd_hi, label = 'Outlier Thresholds', linestyle = '--', color = 'green')
 
 ## exports_pct_gdp
-plt.subplot(2,2,4)
+plt.subplot(2,2,3)
 sns.distplot(country_data['exports_pct_gdp'], bins = 'fd', kde = False, rug = True, color = 'green')
 plt.xlabel('Exports')
 plt.axvline(x = exports_pct_gdp_limit, label = 'Outlier Thresholds', linestyle = '--', color = 'b')
 
 plt.tight_layout()
-plt.savefig('Money Histograms with cutoffs.png')
+plt.savefig(output_folder / 'Money Histograms with cutoffs.png')
 plt.show()
 
 ## fdi_pct_gdp
@@ -273,7 +307,7 @@ plt.axvline(x = internet_usage_pct_up, label = 'Outlier Thresholds', linestyle =
 plt.axvline(x = internet_usage_pct_low, label = 'Outlier Thresholds', linestyle = '--', color = 'r') 
 
 plt.tight_layout()
-plt.savefig('FDI & Internet Histograms with cutoffs.png')
+plt.savefig(output_folder / 'FDI & Internet Histograms with cutoffs.png')
 plt.show()
 
 
@@ -352,14 +386,14 @@ country_data['out_gdp_usd'].abs().sum()
 check = (country_data.loc[ : , ['gdp_usd', 'out_gdp_usd']].sort_values('gdp_usd', ascending = False))
 
 ## adult_literacy_pct
-country_data['out_adult_literacy_pct'] = 0
-
-for val in enumerate(country_data.loc[ : , 'adult_literacy_pct']):
-    if val[1] < adult_lit_lo:
-        country_data.loc[val[0], 'out_adult_literacy_pct'] = 1
-
-country_data['out_adult_literacy_pct'].abs().sum()
-check = (country_data.loc[ : , ['adult_literacy_pct', 'out_adult_literacy_pct']].sort_values('adult_literacy_pct', ascending = False))
+#country_data['out_adult_literacy_pct'] = 0
+#
+#for val in enumerate(country_data.loc[ : , 'adult_literacy_pct']):
+#    if val[1] < adult_lit_lo:
+#        country_data.loc[val[0], 'out_adult_literacy_pct'] = 1
+#
+#country_data['out_adult_literacy_pct'].abs().sum()
+#check = (country_data.loc[ : , ['adult_literacy_pct', 'out_adult_literacy_pct']].sort_values('adult_literacy_pct', ascending = False))
 
 ## avg_air_pollution
 country_data['out_avg_air_pollution'] = 0
@@ -372,14 +406,14 @@ country_data['out_avg_air_pollution'].abs().sum()
 check = (country_data.loc[ : , ['avg_air_pollution', 'out_avg_air_pollution']].sort_values('avg_air_pollution', ascending = False))
 
 ## tax_revenue_pct_gdp
-country_data['out_tax_revenue_pct_gdp'] = 0
-
-for val in enumerate(country_data.loc[ : , 'tax_revenue_pct_gdp']):
-    if val[1] > tax_rev_limit:
-        country_data.loc[val[0], 'out_tax_revenue_pct_gdp'] = 1
-
-country_data['out_tax_revenue_pct_gdp'].abs().sum()
-check = (country_data.loc[ : , ['tax_revenue_pct_gdp', 'out_tax_revenue_pct_gdp']].sort_values('tax_revenue_pct_gdp', ascending = False))
+#country_data['out_tax_revenue_pct_gdp'] = 0
+#
+#for val in enumerate(country_data.loc[ : , 'tax_revenue_pct_gdp']):
+#    if val[1] > tax_rev_limit:
+#        country_data.loc[val[0], 'out_tax_revenue_pct_gdp'] = 1
+#
+#country_data['out_tax_revenue_pct_gdp'].abs().sum()
+#check = (country_data.loc[ : , ['tax_revenue_pct_gdp', 'out_tax_revenue_pct_gdp']].sort_values('tax_revenue_pct_gdp', ascending = False))
 
 ### Kai Yi's part ###
 
@@ -524,9 +558,15 @@ plt.show()
 ###############################################################################
 # Analyze Outliers
 ###############################################################################
+
 country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
 
 check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_adult_literacy_pct', 'out_avg_air_pollution', 'out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
+
+country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
+
+check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
+
 
 
 ###############################################################################
@@ -542,7 +582,7 @@ sns.heatmap(data_corr, cmap='Blues',square = True,
             annot = False,
             linecolor = 'black',
             linewidths = 0.5)
-plt.savefig('correlation matrix.png')
+plt.savefig(output_folder / 'correlation matrix.png')
 
 ###############################################################################
 # Creating separate datasets for each income group
@@ -760,24 +800,24 @@ plt.show()
 """
 fdi vs tax revenue
 """
-sns.lmplot(x = 'fdi_pct_gdp',
-           y = 'tax_revenue_pct_gdp',
-           data = country_data,
-           hue = 'income_group')
-plt.xlabel('Access to electricity, population (% of population)')
-plt.ylabel('Foreign direct investment (% of GDP)')
-plt.title('Foreign Direct Investment vs Tax Revenue')
-plt.show()
-
-# no EG
-sns.lmplot(x = 'fdi_pct_gdp',
-           y = 'tax_revenue_pct_gdp',
-           data = no_eg,
-           hue = 'income_group')
-plt.xlabel('Access to electricity, population (% of population)')
-plt.ylabel('Foreign direct investment (% of GDP)')
-plt.title('Foreign Direct Investment vs Tax revenue (Equatorial Guinea excluded)')
-plt.show()
+#sns.lmplot(x = 'fdi_pct_gdp',
+#           y = 'tax_revenue_pct_gdp',
+#           data = country_data,
+#           hue = 'income_group')
+#plt.xlabel('Access to electricity, population (% of population)')
+#plt.ylabel('Foreign direct investment (% of GDP)')
+#plt.title('Foreign Direct Investment vs Tax Revenue')
+#plt.show()
+#
+## no EG
+#sns.lmplot(x = 'fdi_pct_gdp',
+#           y = 'tax_revenue_pct_gdp',
+#           data = no_eg,
+#           hue = 'income_group')
+#plt.xlabel('Access to electricity, population (% of population)')
+#plt.ylabel('Foreign direct investment (% of GDP)')
+#plt.title('Foreign Direct Investment vs Tax revenue (Equatorial Guinea excluded)')
+#plt.show()
 
 
 ###############################################################################

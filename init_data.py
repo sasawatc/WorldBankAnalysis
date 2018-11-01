@@ -22,14 +22,14 @@ output_folder = Path('output')
 
 og_file = base_folder / 'world_data_hult_regions.xlsx'
 data_set = pd.read_excel(og_file)
-file2 = base_folder / 'API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls' #homicide rate database
+file2 = base_folder / 'API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls'  # homicide rate database
 homi_set = pd.read_excel(file2)
 
 # processed_df = data_set  # Ham edit: trying to get the whole df instead of subsetting only ours
 
 # fix typos from base file
 data_set.loc[data_set.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Regions'] = 'Central Africa 1'
-data_set.rename(columns ={'CO2_emissions_per_capita)' : 'CO2_emissions_per_capita'}, inplace = True)
+data_set.rename(columns={'CO2_emissions_per_capita)': 'CO2_emissions_per_capita'}, inplace=True)
 
 # subset central_africa1
 central_africa1 = data_set[data_set['Hult_Team_Regions'] == "Central Africa 1"].copy()
@@ -53,7 +53,7 @@ central_africa1_df['adult_literacy_pct'].isnull().sum() == central_africa1_df['m
 extracted_df = extract_mdg_indicator(indicator_code="SE.ADT.LITR.ZS",
                                      indicator_title="adult_lit_rate",
                                      index_col="Country Code",
-                                     mdg_file=base_folder / "MDGData.csv",
+                                     mdg_file_path=base_folder / "MDGData.csv",
                                      year="2015")
 
 central_africa1_df = replace_na(main_df=central_africa1_df,
@@ -107,7 +107,7 @@ for country, val in changes_dict.items():
 extracted_df = extract_mdg_indicator(indicator_code="VC.IHR.PSRC.P5",
                                      indicator_title="homicides_per_100k",
                                      index_col="Country Code",
-                                     mdg_file=base_folder / "API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls",
+                                     mdg_file_path=base_folder / "API_VC.IHR.PSRC.P5_DS2_en_excel_v2_10181485.xls",
                                      year="2015")
 
 central_africa1_df = replace_na(main_df=central_africa1_df,
@@ -117,15 +117,15 @@ central_africa1_df = replace_na(main_df=central_africa1_df,
                                 index_main='country_code',
                                 index_sub='Country Code')
 
-# fill in the remaining NAs with median
-central_africa1_df.homicides_per_100k = central_africa1_df.homicides_per_100k.fillna(central_africa1_df.homicides_per_100k.median())
+# fill in the remaining NAs with mean/median based on skewness
+central_africa1_df.homicides_per_100k = replace_na_mean_median(central_africa1_df.homicides_per_100k)
 
 ##############################################################################################
 # extract gni_index
 extracted_df = extract_mdg_indicator(indicator_code='NY.GNP.PCAP.CD',
                                      indicator_title='gni_index',
                                      index_col="Country Code",
-                                     mdg_file=base_folder / 'MDGData.csv',
+                                     mdg_file_path=base_folder / 'MDGData.csv',
                                      year='2014')
 
 central_africa1_df = pd.merge(extracted_df, central_africa1_df,

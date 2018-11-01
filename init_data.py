@@ -7,7 +7,7 @@ For initializing datasets
 
 from pandas import DataFrame
 
-__version__ = '0.5.1'
+__version__ = '0.6.0'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
@@ -34,7 +34,7 @@ data_set.rename(columns={'CO2_emissions_per_capita)': 'CO2_emissions_per_capita'
 
 ##############################################################################################
 # drop bad columns
-data_set = data_set.drop(columns=['adult_literacy_pct', 'homicides_per_100k', 'tax_revenue_pct_gdp']).copy()
+# data_set = data_set.drop(columns=['adult_literacy_pct', 'homicides_per_100k', 'tax_revenue_pct_gdp']).copy()
 
 ##############################################################################################
 # flag columns with missing value

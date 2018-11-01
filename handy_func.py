@@ -60,7 +60,11 @@ def replace_na_mean_median(col_series: pd.Series, mode: str = 'auto') -> pd.Seri
 
     if mode == 'auto':
         print("Skewness:", col_series.skew())
+<<<<<<< Updated upstream
         if -0.2 <= col_series.skew() <= 0.2:
+=======
+        if -0.3 <= col_series.skew() <= 0.3:
+>>>>>>> Stashed changes
             print("Using MEAN")
             return col_series.fillna(col_series.mean())
         else:

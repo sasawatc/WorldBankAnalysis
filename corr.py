@@ -46,11 +46,14 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
     plt.tight_layout()
     plt.show()
 
-
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 
 country_data.boxplot(column=['gni_index_y'], by = 'income_group')
 """Use gni instead of gdp because gni correlates more with the corresponding income groups; it has less extreme outliers"""
+
+# ------> homicides boxplot
+country_data.boxplot(column = 'homicides_per_100k', by = 'income_group')
+plt.show()
 
 ###############################################################################
 # Create variables for country_data excluding Equatorial Guinea (possibly doesn't belong in Central Africa 1)
@@ -259,7 +262,6 @@ plt.axvline(x = exports_pct_gdp_limit, label = 'Outlier Thresholds', linestyle =
 plt.tight_layout()
 plt.savefig('Money Histograms with cutoffs.png')
 plt.show()
-
 
 ## fdi_pct_gdp
 plt.subplot(2,1,1)
@@ -759,11 +761,24 @@ plt.show()
 
 
 ###############################################################################
-# Plotting Violinplots
+# Compare regions
 ###############################################################################
-sns.violinplot(x = 'income_group',
-               y ='gni_index_y',
-               data = no_eg,
-               orient = 'v')
-
-plt.show()
+my_pal = {"Central Africa 2": "b",
+          "Central Africa 1": "r",
+          "Central Asia and some Europe":"b",
+          "Europe":"b",
+          "Greater Mediteranian Region":"b",
+          "Middle East & North Africa":"b",
+          "Northern Europe and Northern Americas":"b",
+          "Northern Latin America / Caribbean":"b",
+          "Nothern Asia and Northern Pacific":"b",
+          "Southern Africa":"b",
+          "Southern Asia and Southern Pacific":"b",
+          "Southern Latin America / Caribbean":"b"
+          }
+sns.boxplot(x=data_set["Hult_Team_Regions"], y=data_set["unemployment_pct"], palette=my_pal)
+plt.xticks(rotation=90)
+plt.xlabel('')
+plt.title('')
+plt.ylabel('Unemployment Rate (%)')
+sns.plt.show()

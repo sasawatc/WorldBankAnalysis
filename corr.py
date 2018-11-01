@@ -559,6 +559,30 @@ lowmid_income_df = country_data[country_data['income_group'] == 'Lower middle in
 upmid_income_df = country_data[country_data['income_group'] == 'Upper middle income']
 
 ###############################################################################
+# Correlation Matrix for all variables without flags
+###############################################################################    
+
+#low income group correlations
+low_income_corr =low_income_df.corr().round(2)
+print(low_income_corr)
+
+fig, ax = plt.subplots(figsize=(8,8))
+sns.heatmap(low_income_corr, cmap='Blues',square = True,
+            annot = False,
+            linecolor = 'black',
+            linewidths = 0.5)
+
+#lower middle income group correlations
+lowmid_income_corr =lowmid_income_df.corr().round(2)
+print(lowmid_income_corr)
+
+fig, ax = plt.subplots(figsize=(8,8))
+sns.heatmap(lowmid_income_corr, cmap='Blues',square = True,
+            annot = False,
+            linecolor = 'black',
+            linewidths = 0.5)
+
+###############################################################################
 # Plotting Correlations (Scatter)
 ###############################################################################
 

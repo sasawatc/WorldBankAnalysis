@@ -7,7 +7,7 @@ For initializing datasets
 
 from pandas import DataFrame
 
-__version__ = '0.6.0'
+__version__ = '0.6.5'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
@@ -33,8 +33,12 @@ data_set.loc[data_set.Hult_Team_Regions == "Central Aftica 1", 'Hult_Team_Region
 data_set.rename(columns={'CO2_emissions_per_capita)': 'CO2_emissions_per_capita'}, inplace=True)
 
 ##############################################################################################
+# drop unwanted row
+data_set = data_set.drop(data_set.loc[data_set.country_name == 'World'].index).copy()
+
+##############################################################################################
 # drop bad columns
-# data_set = data_set.drop(columns=['adult_literacy_pct', 'homicides_per_100k', 'tax_revenue_pct_gdp']).copy()
+data_set = data_set.drop(columns=['adult_literacy_pct', 'homicides_per_100k', 'tax_revenue_pct_gdp']).copy()
 
 ##############################################################################################
 # flag columns with missing value
@@ -59,28 +63,37 @@ data_set = pd.merge(extracted_df, data_set,
 data_set = data_set.drop(columns=['Country Code'])
 
 ##############################################################################################
-# fill in the remaining NAs in numeric columns with mean/median based on skewness
+# separate by income_group
+# data_set.income_group.unique()
+#
+# for group in data_set.income_group.unique():
+#     group_df = data_set[data_set.income_group == group]
+
 for col in data_set.select_dtypes(include=['float64', 'int']).columns:
     data_set[col] = replace_na_mean_median(col_series=data_set[col])
+
+# fill in the remaining NAs in numeric columns with mean/median based on skewness
+# for col in data_set.select_dtypes(include=['float64', 'int']).columns:
+#     data_set[col] = replace_na_mean_median(col_series=data_set[col])
 
 ##############################################################################################
 # reorder gni_index to be right before gdp_usd
 data_set = data_set[['country_index', 'Hult_Team_Regions', 'country_name', 'country_code',
                      'income_group', 'access_to_electricity_pop', 'access_to_electricity_rural',
                      'access_to_electricity_urban', 'CO2_emissions_per_capita', 'compulsory_edu_yrs',
-                     'pct_female_employment', 'pct_male_employment', 'pct_agriculture_employment', 'gni_index',
-                     'pct_industry_employment', 'pct_services_employment', 'exports_pct_gdp', 'fdi_pct_gdp',
-                     'gdp_usd', 'gdp_growth_pct', 'incidence_hiv', 'internet_usage_pct',
-                     'child_mortality_per_1k', 'avg_air_pollution', 'women_in_parliament', 'unemployment_pct',
-                     'urban_population_pct', 'urban_population_growth_pct', 'm_income_group',
-                     'm_access_to_electricity_pop', 'm_access_to_electricity_rural',
-                     'm_access_to_electricity_urban', 'm_CO2_emissions_per_capita', 'm_compulsory_edu_yrs',
-                     'm_pct_female_employment', 'm_pct_male_employment', 'm_pct_agriculture_employment',
-                     'm_pct_industry_employment', 'm_pct_services_employment', 'm_exports_pct_gdp',
-                     'm_fdi_pct_gdp', 'm_gdp_usd', 'm_gdp_growth_pct', 'm_incidence_hiv', 'm_internet_usage_pct',
-                     'm_homicides_per_100k', 'm_adult_literacy_pct', 'm_child_mortality_per_1k',
-                     'm_avg_air_pollution', 'm_women_in_parliament', 'm_tax_revenue_pct_gdp', 'm_unemployment_pct',
-                     'm_urban_population_pct', 'm_urban_population_growth_pct']]
+                     'pct_female_employment', 'pct_male_employment', 'pct_agriculture_employment',
+                     'pct_industry_employment', 'pct_services_employment', 'exports_pct_gdp',
+                     'fdi_pct_gdp', 'gni_index', 'gdp_usd', 'gdp_growth_pct', 'incidence_hiv',
+                     'internet_usage_pct', 'child_mortality_per_1k',
+                     'avg_air_pollution', 'women_in_parliament', 'unemployment_pct',
+                     'urban_population_pct', 'urban_population_growth_pct', 'm_access_to_electricity_pop',
+                     'm_access_to_electricity_rural', 'm_access_to_electricity_urban',
+                     'm_CO2_emissions_per_capita', 'm_compulsory_edu_yrs', 'm_pct_female_employment',
+                     'm_pct_male_employment', 'm_pct_agriculture_employment', 'm_pct_industry_employment',
+                     'm_pct_services_employment', 'm_exports_pct_gdp', 'm_fdi_pct_gdp', 'm_gdp_usd',
+                     'm_gdp_growth_pct', 'm_incidence_hiv', 'm_internet_usage_pct', 'm_child_mortality_per_1k',
+                     'm_avg_air_pollution', 'm_women_in_parliament', 'm_unemployment_pct', 'm_urban_population_pct',
+                     'm_urban_population_growth_pct']]
 
 ##############################################################################################
 # export

@@ -787,22 +787,105 @@ plt.show()
 ###############################################################################
 # Compare regions
 ###############################################################################
-my_pal = {"Central Africa 2": "b",
-          "Central Africa 1": "r",
-          "Central Asia and some Europe":"b",
-          "Europe":"b",
-          "Greater Mediteranian Region":"b",
-          "Middle East & North Africa":"b",
-          "Northern Europe and Northern Americas":"b",
-          "Northern Latin America / Caribbean":"b",
-          "Nothern Asia and Northern Pacific":"b",
-          "Southern Africa":"b",
-          "Southern Asia and Southern Pacific":"b",
-          "Southern Latin America / Caribbean":"b"
-          }
-sns.boxplot(x=data_set["Hult_Team_Regions"], y=data_set["unemployment_pct"], palette=my_pal)
-plt.xticks(rotation=90)
-plt.xlabel('')
-plt.title('')
-plt.ylabel('Unemployment Rate (%)')
-sns.plt.show()
+sns.violinplot(x = 'income_group',
+               y ='gni_index_y',
+               data = no_eg,
+               orient = 'v')
+
+plt.show()
+
+"""
+scatter plot countries with GNI by income group
+"""
+gni_x_list = ['access_to_electricity_pop',
+          'access_to_electricity_rural',
+          'access_to_electricity_urban',
+          'CO2_emissions_per_capita',
+          'compulsory_edu_yrs',
+          'pct_female_employment',
+          'pct_male_employment',
+          'pct_agriculture_employment',
+          'pct_industry_employment',
+          'pct_services_employment',
+          'exports_pct_gdp',
+          'fdi_pct_gdp',
+          'gdp_usd',
+          'gdp_growth_pct',
+          'incidence_hiv',
+          'internet_usage_pct',
+          'unemployment_pct',
+          'child_mortality_per_1k',
+          'avg_air_pollution',
+          'women_in_parliament',
+          'urban_population_pct',
+          'urban_population_growth_pct']
+
+for x in gni_x_list:
+    sns.pairplot(x_vars = x,
+                 y_vars = ['gni_index_y'],
+                 data = country_data,
+                 hue = 'income_group',
+                 size = 5)
+    plt.ylabel('GNI Index')
+    plt.show()
+    
+"""
+scatter plot x variables with country
+"""
+x_list = ['access_to_electricity_pop',
+          'access_to_electricity_rural',
+          'access_to_electricity_urban',
+          'CO2_emissions_per_capita',
+          'compulsory_edu_yrs',
+          'pct_female_employment',
+          'pct_male_employment',
+          'pct_agriculture_employment',
+          'pct_industry_employment',
+          'pct_services_employment',
+          'exports_pct_gdp',
+          'fdi_pct_gdp',
+          'gdp_usd',
+          'gdp_growth_pct',
+          'incidence_hiv',
+          'internet_usage_pct',
+          'unemployment_pct',
+          'child_mortality_per_1k',
+          'avg_air_pollution',
+          'women_in_parliament',
+          'urban_population_pct',
+          'urban_population_growth_pct',
+          'gni_index_y']
+
+for x_var in x_list:
+    sns.pairplot(x_vars = x_var,
+                 y_vars = ['country_name'],
+                 data = country_data,
+                 hue = 'income_group',
+                 size = 5)
+    plt.ylabel('')
+    plt.show()
+    
+"""
+corr between unemployment and [pct_agriculture_employment', 'pct_industry_employment','pct_services_employment]
+"""
+corr_list = ['pct_agriculture_employment',
+             'pct_industry_employment',
+             'pct_services_employment']
+
+for x_v in corr_list:
+    sns.pairplot(x_vars = x_v,
+                 y_vars = ['unemployment_pct'],
+                 data = country_data,
+                 kind = 'reg',
+                 size = 5,
+                 hue = 'income_group')
+    plt.ylabel('Unemployment Rate')
+    plt.show()
+    
+
+sns.pairplot(country_data)
+plt.show()
+
+    
+
+

@@ -1476,12 +1476,15 @@ plt.savefig(output_folder / 'region by income group')
 <<<<<<< HEAD
 plt.show()
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 plt.show()
 >>>>>>> master
 =======
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> master
 
 """
 Lower middle income)  
@@ -1596,24 +1599,24 @@ plt.show()
 Low income countries
 Increased urban population → Less access to electricity for everyone
 """
-sns.pairplot(x_vars = ['urban_population_pct'],
+sns.pairplot(x_vars = ['urban_population_growth_pct'],
              y_vars = ['access_to_electricity_pop'],
              data = low_income_ca,
              kind ='reg',
              size = 8)
 for line in range(0, low_income_ca.shape[0]):
-    plt.text(low_income_ca.urban_population_pct[line] - 2, 
+    plt.text(low_income_ca.urban_population_growth_pct[line], 
              low_income_ca.access_to_electricity_pop[line] + 1,
              low_income_ca.country_name[line], 
              horizontalalignment='left',
              size='medium', 
              color='black', 
              weight='semibold')
-plt.title('Urban Population vs Access to Electricity - Low Income Group', fontsize = 18)
-plt.xlabel('Urban population (% of total)')
+plt.title('Urban Population Growth Ratevs Access to Electricity - Low Income Group', fontsize = 13)
+plt.xlabel('Urban Population Growth (Annual %)')
 plt.ylabel('Access to electricity (% of population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'Urban Population vs FAccess to Electricity (low).png')
+plt.savefig(output_folder / 'Urban Population growth vs Access to Electricity (low).png')
 plt.show()
 
 
@@ -1625,5 +1628,9 @@ plt.show()
 
 
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+>>>>>>> master
+=======
+
 >>>>>>> master

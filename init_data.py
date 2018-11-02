@@ -37,16 +37,17 @@ data_set.rename(columns={'CO2_emissions_per_capita)': 'CO2_emissions_per_capita'
 data_set = data_set.drop(data_set.loc[data_set.country_name == 'World'].index).copy()
 
 ##############################################################################################
-# drop bad columns
-data_set = data_set.drop(columns=['adult_literacy_pct', 'homicides_per_100k', 'tax_revenue_pct_gdp']).copy()
-
-##############################################################################################
 # flag columns with missing value
 """ Create columns that are 0s if a value was not missing and 1 if
 a value is missing. """
 for col in data_set:
     if data_set[col].isnull().any():
         data_set['m_' + col] = data_set[col].isnull().astype(int)
+
+
+##############################################################################################
+# drop bad columns
+data_set = data_set.drop(columns=['adult_literacy_pct', 'homicides_per_100k', 'tax_revenue_pct_gdp']).copy()
 
 ##############################################################################################
 # extract gni_index and add gni_index
@@ -85,7 +86,8 @@ data_set = data_set[['country_index', 'Hult_Team_Regions', 'country_name', 'coun
                      'm_pct_services_employment', 'm_exports_pct_gdp', 'm_fdi_pct_gdp', 'm_gdp_usd',
                      'm_gdp_growth_pct', 'm_incidence_hiv', 'm_internet_usage_pct', 'm_child_mortality_per_1k',
                      'm_avg_air_pollution', 'm_women_in_parliament', 'm_unemployment_pct', 'm_urban_population_pct',
-                     'm_urban_population_growth_pct']]
+                     'm_urban_population_growth_pct', 'm_adult_literacy_pct', 'm_homicides_per_100k',
+                     'm_tax_revenue_pct_gdp']]
 
 ##############################################################################################
 # export

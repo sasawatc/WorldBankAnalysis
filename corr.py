@@ -13,35 +13,25 @@ output_folder = Path('output')
 
 #import clean data
 clean_data = pd.read_excel(processed_folder / 'clean_data.xlsx', index='country_code')
-country_data = clean_data.iloc[:, 2:]
+world_data = clean_data.iloc[:, 2:]
 """
 subset dataset
 """
 # low income worldwide 
-low_income_world = country_data[country_data.income_group == 'Low income']
+low_income_world = world_data[world_data.income_group == 'Low income']
 
 # lower middle income worldwide 
-lower_middle_income_world = country_data[country_data.income_group == 'Lower middle income']
+lower_middle_income_world = world_data[world_data.income_group == 'Lower middle income']
 
 # upper middle income worldwide
-upper_middle_income_world = country_data[country_data.income_group == 'Upper middle income']
+upper_middle_income_world = world_data[world_data.income_group == 'Upper middle income']
 
 # Central Africa 1
 df = clean_data[clean_data.Hult_Team_Regions == 'Central Africa 1']
-cent_africa = df.iloc[:, 2:]
-cent_africa.reset_index(drop = True, inplace = True)
+country_data = df.iloc[:, 2:]
+country_data.reset_index(drop = True, inplace = True)
 
-# low income Central Africa 1 (CA)
-low_income_ca = cent_africa[cent_africa.income_group == 'Low income']
 
-# lower middle income CA
-lower_middle_income_ca = cent_africa[cent_africa.income_group == 'Lower middle income']
-
-# upper middle income CA
-upper_middle_income_ca = cent_africa[cent_africa.income_group == 'Upper middle income']
-
-# no Equatorial Guinea
-no_eg = cent_africa[cent_africa['country_name'] != 'Equatorial Guinea']
 
 print(country_data.head())
 
@@ -416,7 +406,7 @@ check = (country_data.loc[ : , ['avg_air_pollution', 'out_avg_air_pollution']].s
 #check = (country_data.loc[ : , ['tax_revenue_pct_gdp', 'out_tax_revenue_pct_gdp']].sort_values('tax_revenue_pct_gdp', ascending = False))
 
 ### Kai Yi's part ###
-
+no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
 ## exports_pct_gdp
 country_data[country_data['income_group'] == 'Low income']['exports_pct_gdp']
 """ flag: 30 is outlier threshold for low income country """
@@ -559,7 +549,7 @@ plt.show()
 # Analyze Outliers
 ###############################################################################
 
-country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_adult_literacy_pct'] + country_data['out_avg_air_pollution'] + country_data['out_tax_revenue_pct_gdp'])
+country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
 
 check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_adult_literacy_pct', 'out_avg_air_pollution', 'out_tax_revenue_pct_gdp']].sort_values(['out_sum'], ascending = False))
 
@@ -567,22 +557,151 @@ country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + cou
 
 check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
 
+# low income Central Africa 1 (CA)
+low_income_ca = country_data[country_data.income_group == 'Low income']
 
+# lower middle income CA
+lower_middle_income_ca = country_data[country_data.income_group == 'Lower middle income']
+
+# upper middle income CA
+upper_middle_income_ca = country_data[country_data.income_group == 'Upper middle income']
+
+# no Equatorial Guinea
+no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
 
 ###############################################################################
 # Correlation Matrix for all variables without flags
 ###############################################################################    
-no_flags = country_data.iloc[:, 0:29]
+world_cor = world_data.loc[:,['access_to_electricity_pop',
+                       'access_to_electricity_rural',
+                       'access_to_electricity_urban',
+                       'CO2_emissions_per_capita',
+                       'compulsory_edu_yrs',
+                       'pct_female_employment',
+                       'pct_male_employment',
+                       'pct_agriculture_employment',
+                       'pct_industry_employment',
+                       'pct_services_employment',
+                       'exports_pct_gdp',
+                       'fdi_pct_gdp',
+                       'gdp_usd',
+                       'gdp_growth_pct',
+                       'incidence_hiv',
+                       'internet_usage_pct',
+                       'unemployment_pct',
+                       'child_mortality_per_1k',
+                       'avg_air_pollution',
+                       'women_in_parliament',
+                       'urban_population_pct',
+                       'urban_population_growth_pct',
+                       'gni_index']].corr()
+world_lower_mid_cor = lower_middle_income_world.loc[:,['access_to_electricity_pop',
+                                                       'access_to_electricity_rural',
+                                                       'access_to_electricity_urban',
+                                                       'CO2_emissions_per_capita',
+                                                       'compulsory_edu_yrs',
+                                                       'pct_female_employment',
+                                                       'pct_male_employment',
+                                                       'pct_agriculture_employment',
+                                                       'pct_industry_employment',
+                                                       'pct_services_employment',
+                                                       'exports_pct_gdp',
+                                                       'fdi_pct_gdp',
+                                                       'gdp_usd',
+                                                       'gdp_growth_pct',
+                                                       'incidence_hiv',
+                                                       'internet_usage_pct',
+                                                       'unemployment_pct',
+                                                       'child_mortality_per_1k',
+                                                       'avg_air_pollution',
+                                                       'women_in_parliament',
+                                                       'urban_population_pct',
+                                                       'urban_population_growth_pct',
+                                                       'gni_index']].corr()
+central_africa_corr = country_data.loc[:,['access_to_electricity_pop',
+                                                       'access_to_electricity_rural',
+                                                       'access_to_electricity_urban',
+                                                       'CO2_emissions_per_capita',
+                                                       'compulsory_edu_yrs',
+                                                       'pct_female_employment',
+                                                       'pct_male_employment',
+                                                       'pct_agriculture_employment',
+                                                       'pct_industry_employment',
+                                                       'pct_services_employment',
+                                                       'exports_pct_gdp',
+                                                       'fdi_pct_gdp',
+                                                       'gdp_usd',
+                                                       'gdp_growth_pct',
+                                                       'incidence_hiv',
+                                                       'internet_usage_pct',
+                                                       'unemployment_pct',
+                                                       'child_mortality_per_1k',
+                                                       'avg_air_pollution',
+                                                       'women_in_parliament',
+                                                       'urban_population_pct',
+                                                       'urban_population_growth_pct',
+                                                       'gni_index']].corr()
+ca_lower_mid_cor = lower_middle_income_ca.loc[:,['access_to_electricity_pop',
+                                                       'access_to_electricity_rural',
+                                                       'access_to_electricity_urban',
+                                                       'CO2_emissions_per_capita',
+                                                       'compulsory_edu_yrs',
+                                                       'pct_female_employment',
+                                                       'pct_male_employment',
+                                                       'pct_agriculture_employment',
+                                                       'pct_industry_employment',
+                                                       'pct_services_employment',
+                                                       'exports_pct_gdp',
+                                                       'fdi_pct_gdp',
+                                                       'gdp_usd',
+                                                       'gdp_growth_pct',
+                                                       'incidence_hiv',
+                                                       'internet_usage_pct',
+                                                       'unemployment_pct',
+                                                       'child_mortality_per_1k',
+                                                       'avg_air_pollution',
+                                                       'women_in_parliament',
+                                                       'urban_population_pct',
+                                                       'urban_population_growth_pct',
+                                                       'gni_index']].corr()
 
-data_corr =no_flags.corr().round(2)
-print(data_corr)
+fig, ax = plt.subplots(figsize=(25,35))
+plt.subplot(2,2,1)
+# fig, ax = plt.subplots(figsize=(10,10))
+sns.heatmap(world_cor, 
+            cmap = 'coolwarm', 
+            yticklabels = True, 
+            xticklabels = True,
+            linewidths = 1)
+plt.title('worldwide -- all')
 
-fig, ax = plt.subplots(figsize=(8,8))
-sns.heatmap(data_corr, cmap='Blues',square = True,
-            annot = False,
-            linecolor = 'black',
-            linewidths = 0.5)
-plt.savefig(output_folder / 'correlation matrix.png')
+plt.subplot(2,2,2)
+# fig, ax = plt.subplots(figsize=(10,10))
+sns.heatmap(world_lower_mid_cor, 
+            cmap = 'coolwarm',
+            yticklabels = True, 
+            xticklabels = True,
+            linewidths = 1)
+plt.title('worldwide -- lower middle income')
+
+plt.subplot(2,2,3)
+# fig, ax = plt.subplots(figsize=(10,10))
+sns.heatmap(central_africa_corr, 
+            cmap = 'coolwarm', 
+            yticklabels = True, 
+            xticklabels = True,
+            linewidths = 1)
+plt.xlabel('Central Africa 1 -- all')
+          
+plt.subplot(2,2,4)
+# fig, ax = plt.subplots(figsize=(10,10))
+sns.heatmap(ca_lower_mid_cor, 
+            cmap = 'coolwarm',
+            yticklabels = True, 
+            xticklabels = True,
+            linewidths = 1)
+plt.xlabel('Central Africa 1 -- lower middle income')
+plt.show()
 
 ###############################################################################
 # Creating separate datasets for each income group
@@ -863,6 +982,7 @@ for x in gni_x_list:
                  hue = 'income_group',
                  size = 5)
     plt.ylabel('GNI Index')
+    plt.savefig(output_folder / f'{x} vs GNI.png')
     plt.show()
     
 """
@@ -899,6 +1019,7 @@ for x_var in x_list:
                  hue = 'income_group',
                  size = 5)
     plt.ylabel('')
+    plt.savefig(output_folder / f'{x_var} by country.png')
     plt.show()
     
 """
@@ -916,12 +1037,298 @@ for x_v in corr_list:
                  size = 5,
                  hue = 'income_group')
     plt.ylabel('Unemployment Rate')
+    plt.savefig(output_folder / f'{x_v} vs unemployment rate.png')
     plt.show()
     
 
-sns.pairplot(country_data)
+"""
+air pollution for lower middle income group
+"""
+### compulsory education year 
+# worldwide
+sns.pairplot(x_vars = ['compulsory_edu_yrs'],
+             y_vars = ['avg_air_pollution'],
+             data = lower_middle_income_world,
+             size = 5)
+plt.title('Education (year) vs Air Pollution. Worldwide Lower Middle Income Country')
 plt.show()
 
+
+# central Africa 1
+sns.pairplot(x_vars = ['compulsory_edu_yrs'],
+             y_vars = ['avg_air_pollution'],
+             data = lower_middle_income_ca,
+             size = 5)
+plt.title('Education (year) vs Air Pollution. Central Africa 1 Lower Middle Income Country')
+plt.show()
     
+### male empolyment
+sns.pairplot(x_vars = ['pct_male_employment'],
+             y_vars = ['avg_air_pollution'],
+             data = lower_middle_income_world,
+             size = 5)
+plt.title('Male Employment Rate vs Air Pollution. Worldwide Lower Middle Income Country')
+plt.show()
+
+
+# central Africa 1
+sns.pairplot(x_vars = ['pct_male_employment'],
+             y_vars = ['avg_air_pollution'],
+             data = lower_middle_income_ca,
+             size = 5)
+plt.title('Male Employment Rate vs Air Pollution. Central Africa 1 Lower Middle Income Country')
+plt.show()
+  
+"""
+women in parliament for lower middle income group
+"""
+### gdp growth rate
+#worldwide
+sns.pairplot(x_vars = ['gdp_growth_pct'],
+             y_vars = ['women_in_parliament'],
+             data = lower_middle_income_world,
+             size = 5)
+plt.title('GDP Growth Rate vs Women in Parliament (%). Worldwide Lower Middle Income Country')
+plt.show()
+
+
+# central Africa 1
+sns.pairplot(x_vars = ['gdp_growth_pct'],
+             y_vars = ['women_in_parliament'],
+             data = lower_middle_income_ca,
+             size = 5)
+plt.title('GDP Growth Rate vs Women in Parliament (%). Central Africa 1 Lower Middle Income Country')
+plt.show()
+
+### unemployment rate
+# worldwide
+sns.pairplot(x_vars = ['unemployment_pct'],
+             y_vars = ['women_in_parliament'],
+             data = lower_middle_income_world,
+             size = 5)
+plt.title('Unemployment Rate vs Women in Parliament (%). Worldwide Lower Middle Income Country')
+plt.show()
+
+
+# central Africa 1
+sns.pairplot(x_vars = ['unemployment_pct'],
+             y_vars = ['women_in_parliament'],
+             data = lower_middle_income_ca,
+             size = 5)
+plt.title('Unemployment Rate vs Women in Parliament (%). Central Africa 1 Lower Middle Income Country')
+plt.show()
+
+"""
+Congo Rep
+"""
+low_no_congo = low_income_ca[low_income_ca['country_name'] != 'Congo, Rep.']
+congo = low_income_ca[low_income_ca['country_name'] == 'Congo, Rep.']
+
+# GNI
+plt.axvline(x = lower_middle_income_ca['gni_index'].median(),
+            label = 'median gni for lower middle income country',
+            color = 'orange')
+plt.scatter(x = 'gni_index',
+            y = 'country_name',
+            data = lower_middle_income_ca,
+            color = 'orange',
+            alpha = 0.3)
+plt.scatter(x = 'gni_index',
+            y = 'country_name',
+            data = low_no_congo,
+            color = 'blue',
+            alpha = 0.2)
+plt.scatter(x = 'gni_index',
+            y = 'country_name',
+            data = congo,
+            color = 'blue')
+t = '''
+Median GNI of 
+Lower Middle Income coutries'''
+plt.annotate(t,
+             xy = (1600, 'Comoros'),
+             xytext = (2000, 'Rwanda'),
+             arrowprops = {'color': 'orange'})
+plt.annotate('Congo, Rep.',
+             xy = (2600, 'Congo, Rep.'))
+plt.title('Gross National Income by Country (Equatorial Guinea excluded)')
+plt.xlabel('Gross National Income ($ per capita)')
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+plt.savefig(output_folder / 'GNI for congo.png')
+
+# Foreign direct investment
+plt.axvline(x = lower_middle_income_ca['fdi_pct_gdp'].median(),
+            label = 'median Foreign direct investment of lower middle income',
+            color = 'orange')
+plt.scatter(x = 'fdi_pct_gdp',
+            y = 'country_name',
+            data = lower_middle_income_ca,
+            color = 'orange',
+            alpha = 0.3)
+plt.scatter(x = 'fdi_pct_gdp',
+            y = 'country_name',
+            data = low_no_congo,
+            color = 'blue',
+            alpha = 0.2)
+plt.scatter(x = 'fdi_pct_gdp',
+            y = 'country_name',
+            data = congo,
+            color = 'blue')
+t = '''
+Median foreign direct investment of 
+Lower Middle Income coutries'''
+plt.annotate(t,
+             xy = (1.7, 'Nigeria'),
+             xytext = (5, 'Burundi'),
+             arrowprops = {'color': 'orange'})
+plt.annotate('Congo, Rep.',
+             xy = (16, 'Uganda'))
+plt.title('Foreign direct investment by Country (Equatorial Guinea excluded)')
+plt.xlabel('Foreign direct investment (% of GDP)')
+plt.ylabel('')
+plt.tight_layout
+plt.show()
+plt.savefig(output_folder / 'Foreign direct investment for congo.png')
+
+# Exports of goods and services
+plt.axvline(x = lower_middle_income_ca['exports_pct_gdp'].median(),
+            label = 'median Exports of goods and services of lower middle income',
+            color = 'orange')
+plt.scatter(x = 'exports_pct_gdp',
+            y = 'country_name',
+            data = lower_middle_income_ca,
+            color = 'orange',
+            alpha = 0.3)
+plt.scatter(x = 'exports_pct_gdp',
+            y = 'country_name',
+            data = low_no_congo,
+            color = 'blue',
+            alpha = 0.2)
+plt.scatter(x = 'exports_pct_gdp',
+            y = 'country_name',
+            data = congo,
+            color = 'blue')
+t = '''
+Median exports of 
+Lower Middle Income coutries'''
+plt.annotate(t,
+             xy = (37, 'Nigeria'),
+             xytext = (40, 'Burundi'),
+             arrowprops = {'color': 'orange'})
+plt.annotate('Congo, Rep.',
+             xy = (60, 'Uganda'))
+plt.title('Exports of goods and services by Country (Equatorial Guinea excluded)')
+plt.xlabel('Exports of Goods and Services (% of GDP)')
+plt.ylabel('')
+plt.tight_layout
+plt.show()
+plt.savefig(output_folder / 'Exports of goods and services for congo.png')
+
+############################################################################
+# Interesting Correlations for Low Income Countries (Central Africa 1)
+############################################################################
+
+# higher urban pop % = lesser access to electricity (rural)
+sns.pairplot(data = low_income_ca,
+             x_vars = ['urban_population_pct'],
+             y_vars = ['access_to_electricity_rural'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Urban Population (% of total)')
+plt.ylabel('Access to Electricity, Rural (% of rural population)')
+plt.tight_layout()
+plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.png')
+plt.show()   
+
+# higher urban pop growth vs. lesser access to electricity (population)
+sns.pairplot(data = low_income_ca,
+             x_vars = ['urban_population_growth_pct'],
+             y_vars = ['access_to_electricity_pop'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Urban Population Growth (annual %)')
+plt.ylabel('Access to Electricity (% of population)')
+plt.tight_layout()
+plt.savefig(output_folder / 'low - urban pop growth vs. population access to electricity.png')
+plt.show() 
+
+# higher air pollution = higher hiv incidence
+sns.pairplot(data = low_income_ca,
+             x_vars = ['avg_air_pollution'],
+             y_vars = ['incidence_hiv'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
+plt.ylabel('HIV incidence (% of uninfected population ages 15-49)')
+plt.tight_layout()
+plt.savefig(output_folder/ 'low - avg air pollution vs. HIV incidence.png')
+plt.show() 
+
+# higher air pollution % vs. lesser access to electricity (urban)
+sns.pairplot(data = low_income_ca,
+             x_vars = ['avg_air_pollution'],
+             y_vars = ['access_to_electricity_urban'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
+plt.ylabel('Access to Electricity, urban (% of urban population)')
+plt.tight_layout()
+plt.savefig(output_folder / 'low - avg air pollution % vs. urban access to electricity.png')
+plt.show() 
+
+
+############################################################################
+# Interesting Correlations for Lower Middle Income Countries (Central Africa 1)
+############################################################################
+
+# higher compulsory education years % = higher air pollution
+sns.pairplot(data = lower_middle_income_ca,
+             x_vars = ['compulsory_edu_yrs'],
+             y_vars = ['avg_air_pollution'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Compulsory education, duration (years)')
+plt.ylabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
+plt.tight_layout()
+plt.savefig(output_folder / 'lowmid - compulsory edu yrs % vs. air pollution.png')
+plt.show() 
+
+# higher urban pop = lesser female employment
+sns.pairplot(data = lower_middle_income_ca,
+             x_vars = ['urban_population_pct'],
+             y_vars = ['pct_female_employment'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Urban Population (% of total)')
+plt.ylabel('Female Employment (% of female population)')
+plt.tight_layout()
+plt.savefig(output_folder / 'lowmid - Urban pop vs. female employment.png')
+plt.show() 
+
+#  higher air pollution = lesser male employment
+sns.pairplot(data = lower_middle_income_ca,
+             x_vars = ['avg_air_pollution'],
+             y_vars = ['pct_male_employment'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
+plt.ylabel('Male Employment (% of male population)')
+plt.tight_layout()
+plt.savefig(output_folder / 'lowmid - Air pollution vs male employment.png')
+plt.show()
+
+# higher urban pop = lower industry employment
+sns.pairplot(data = lower_middle_income_ca,
+             x_vars = ['urban_population_pct'],
+             y_vars = ['pct_industry_employment'],
+             size = 5,
+             palette = 'plasma')
+plt.xlabel('Urban Population (% of total)')
+plt.ylabel('Employment in Industry (% of total employment)')
+plt.tight_layout()
+plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.png')
+plt.show()
 
 

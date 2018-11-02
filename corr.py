@@ -61,7 +61,6 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
     plt.tight_layout()
     plt.savefig(f'{col}')
     plt.show()
-    
 
 country_data.boxplot(column=['gdp_usd'], by='income_group')
 
@@ -397,8 +396,6 @@ check = (country_data.loc[:, ['avg_air_pollution', 'out_avg_air_pollution']].sor
 # check = (country_data.loc[ : , ['tax_revenue_pct_gdp', 'out_tax_revenue_pct_gdp']].sort_values('tax_revenue_pct_gdp', ascending = False))
 
 
-
-
 ### Kai Yi's part ###
 no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
 ## exports_pct_gdp
@@ -542,42 +539,39 @@ plt.show()
 ############################################################################### ---------->> take out removed columns
 # count outliers
 country_data['out_total'] = country_data[['out_avg_air_pollution',
-                                                 'out_gdp_usd', 
-                                                 'out_pct_services_employment',
-                                                 'out_pct_male_employment',
-                                                 'out_pct_female_employment',
-                                                 'out_CO2_emissions_per_capita',
-                                                 'out_access_to_electricity_urban',
-                                                 'out_access_to_electricity_rural',
-                                                 'out_gni_index',
-                                                 'out_internet_usage_pct',
-                                                 'out_fdi_pct_gdp',
-                                                 'out_exports_pct_gdp']].sum(axis=1)
+                                          'out_gdp_usd',
+                                          'out_pct_services_employment',
+                                          'out_pct_male_employment',
+                                          'out_pct_female_employment',
+                                          'out_CO2_emissions_per_capita',
+                                          'out_access_to_electricity_urban',
+                                          'out_access_to_electricity_rural',
+                                          'out_gni_index',
+                                          'out_internet_usage_pct',
+                                          'out_fdi_pct_gdp',
+                                          'out_exports_pct_gdp']].sum(axis=1)
 
 # plot outliers
-sns.pairplot(x_vars = ['out_total'],
-             y_vars = ["country_name"],
-             data = country_data,
-             hue = 'income_group',
-             size = 6,
+sns.pairplot(x_vars=['out_total'],
+             y_vars=["country_name"],
+             data=country_data,
+             hue='income_group',
+             size=6,
              plot_kws={"s": 100})
 plt.xticks([0, 1, 2, 3, 4])
 plt.xlabel('Total Outliers')
 plt.ylabel('')
-plt.title("Total Outliers by Country", fontsize = 15)
+plt.title("Total Outliers by Country", fontsize=15)
 plt.tight_layout()
 plt.savefig(output_folder / 'total outlier layout.png')
 plt.show()
 
-
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 country_data['out_sum'] = (
-            country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
-            country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data[
-                'out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data[
-                'out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data[
-                'out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
+        country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
+        country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data[
+            'out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data[
+            'out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data[
+            'out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
 
 check = (country_data.loc[:, ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban',
                               'out_CO2_emissions_per_capita', 'out_pct_female_employment', 'out_pct_male_employment',
@@ -587,28 +581,17 @@ check = (country_data.loc[:, ['out_sum', 'out_access_to_electricity_rural', 'out
                                                                                                ascending=False))
 
 country_data['out_sum'] = (
-            country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
-            country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data[
-                'out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data[
-                'out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data[
-                'out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
+        country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
+        country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data[
+            'out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data[
+            'out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data[
+            'out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
 
 check = (country_data.loc[:, ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban',
                               'out_CO2_emissions_per_capita', 'out_pct_female_employment', 'out_pct_male_employment',
                               'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index',
                               'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(
     ['out_sum'], ascending=False))
-=======
-country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
-
-check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
-
-country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
-
-check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
->>>>>>> Stashed changes
-=======
->>>>>>> master
 
 # low income Central Africa 1 (CA)
 low_income_ca = country_data[country_data.income_group == 'Low income']
@@ -1174,7 +1157,7 @@ low_no_congo = low_income_ca[low_income_ca['country_name'] != 'Congo, Rep.']
 congo = low_income_ca[low_income_ca['country_name'] == 'Congo, Rep.']
 
 # GNI
-fig, ax = plt.subplots(figsize=(8,5))
+fig, ax = plt.subplots(figsize=(8, 5))
 plt.axvline(x=lower_middle_income_ca['gni_index'].median(),
             label='median gni for lower middle income country',
             color='orange')
@@ -1183,18 +1166,18 @@ plt.scatter(x='gni_index',
             data=lower_middle_income_ca,
             color='orange',
             alpha=0.3,
-            s = 100)
+            s=100)
 plt.scatter(x='gni_index',
             y='country_name',
             data=low_no_congo,
             color='blue',
             alpha=0.2,
-            s = 100)
+            s=100)
 plt.scatter(x='gni_index',
             y='country_name',
             data=congo,
             color='blue',
-            s = 100)
+            s=100)
 t = '''
 Median GNI of 
 Lower Middle Income countries'''
@@ -1204,7 +1187,7 @@ plt.annotate(t,
              arrowprops={'color': 'orange'})
 plt.annotate('Congo, Rep.',
              xy=(2600, 'Congo, Rep.'))
-plt.title('Gross National Income by Country (Equatorial Guinea excluded)',fontsize = 15)
+plt.title('Gross National Income by Country (Equatorial Guinea excluded)', fontsize=15)
 plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
 plt.tight_layout()
@@ -1212,7 +1195,7 @@ plt.savefig(output_folder / 'GNI for congo.png')
 plt.show()
 
 # Foreign direct investment
-fig, ax = plt.subplots(figsize=(8,5))
+fig, ax = plt.subplots(figsize=(8, 5))
 plt.axvline(x=lower_middle_income_ca['fdi_pct_gdp'].median(),
             label='median Foreign direct investment of lower middle income',
             color='orange')
@@ -1221,18 +1204,18 @@ plt.scatter(x='fdi_pct_gdp',
             data=lower_middle_income_ca,
             color='orange',
             alpha=0.3,
-            s = 100)
+            s=100)
 plt.scatter(x='fdi_pct_gdp',
             y='country_name',
             data=low_no_congo,
             color='blue',
             alpha=0.2,
-            s = 100)
+            s=100)
 plt.scatter(x='fdi_pct_gdp',
             y='country_name',
             data=congo,
             color='blue',
-            s = 100)
+            s=100)
 t = '''
 Median foreign direct investment of 
 Lower Middle Income coutries'''
@@ -1242,16 +1225,15 @@ plt.annotate(t,
              arrowprops={'color': 'orange'})
 plt.annotate('Congo, Rep.',
              xy=(16, 'Uganda'))
-plt.title('Foreign direct investment by Country (Equatorial Guinea excluded)',fontsize = 15)
+plt.title('Foreign direct investment by Country (Equatorial Guinea excluded)', fontsize=15)
 plt.xlabel('Foreign direct investment (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
 plt.savefig(output_folder / 'Foreign direct investment for congo.png')
 plt.show()
 
-
 # Exports of goods and services
-fig, ax = plt.subplots(figsize=(8,5))
+fig, ax = plt.subplots(figsize=(8, 5))
 plt.axvline(x=lower_middle_income_ca['exports_pct_gdp'].median(),
             label='median Exports of goods and services of lower middle income',
             color='orange')
@@ -1260,18 +1242,18 @@ plt.scatter(x='exports_pct_gdp',
             data=lower_middle_income_ca,
             color='orange',
             alpha=0.3,
-            s = 100)
+            s=100)
 plt.scatter(x='exports_pct_gdp',
             y='country_name',
             data=low_no_congo,
             color='blue',
             alpha=0.2,
-            s = 100)
+            s=100)
 plt.scatter(x='exports_pct_gdp',
             y='country_name',
             data=congo,
             color='blue',
-            s = 100)
+            s=100)
 t = '''
 Median exports of 
 Lower Middle Income coutries'''
@@ -1279,13 +1261,12 @@ plt.annotate(t,
              xy=(37, 'Nigeria'),
              xytext=(40, 'Burundi'),
              arrowprops={'color': 'orange'})
-plt.title('Exports of goods and services by Country (Equatorial Guinea excluded)', fontsize = 15)
+plt.title('Exports of goods and services by Country (Equatorial Guinea excluded)', fontsize=15)
 plt.xlabel('Exports of Goods and Services (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
 plt.savefig(output_folder / 'Exports of goods and services for congo.png')
 plt.show()
-
 
 """
 Equatorial Guinea
@@ -1293,49 +1274,47 @@ Equatorial Guinea
 # public spending
 eg = country_data[country_data.country_name == 'Equatorial Guinea']
 
-fig, ax = plt.subplots(figsize=(8,5))
-plt.scatter(x = 'compulsory_edu_yrs',
-            y = 'incidence_hiv',
-            data = no_eg,
-            cmap = 'summer',
-            alpha = 0.3,
-            s = 100)
-plt.scatter(x = 'compulsory_edu_yrs',
-            y = 'incidence_hiv',
-            data = eg,
-            cmap = 'summer',
-            color = 'red',
-            s = 100)
+fig, ax = plt.subplots(figsize=(8, 5))
+plt.scatter(x='compulsory_edu_yrs',
+            y='incidence_hiv',
+            data=no_eg,
+            cmap='summer',
+            alpha=0.3,
+            s=100)
+plt.scatter(x='compulsory_edu_yrs',
+            y='incidence_hiv',
+            data=eg,
+            cmap='summer',
+            color='red',
+            s=100)
 plt.ylabel('Incidence of HIV')
 plt.xlabel('Compulsory Education, Duration (year)')
-plt.title("Public Spending by Country", fontsize = 20)
+plt.title("Public Spending by Country", fontsize=20)
 plt.annotate('Equatorial Guinea',
-             xy = (6.2, 0.48))
-plt.savefig(output_folder / 'Public Spending for Equatorial Guinea.png' )
+             xy=(6.2, 0.48))
+plt.savefig(output_folder / 'Public Spending for Equatorial Guinea.png')
 plt.show()
 
-
 # gni
-fig, ax = plt.subplots(figsize=(8,5))
-plt.scatter(x = 'gni_index',
-            y = 'country_name',
-            data = no_eg,
-            cmap = 'summer',
-            alpha = 0.3,
-            s = 100)
-plt.scatter(x = 'gni_index',
-            y = 'country_name',
-            data = eg,
-            cmap = 'summer',
-            color = 'red',
-            s = 100)
+fig, ax = plt.subplots(figsize=(8, 5))
+plt.scatter(x='gni_index',
+            y='country_name',
+            data=no_eg,
+            cmap='summer',
+            alpha=0.3,
+            s=100)
+plt.scatter(x='gni_index',
+            y='country_name',
+            data=eg,
+            cmap='summer',
+            color='red',
+            s=100)
 plt.ylabel('')
 plt.xlabel('Gross National Income ($ per capita)')
-plt.title("Gross National Income by Country", fontsize = 20)
+plt.title("Gross National Income by Country", fontsize=20)
 plt.tight_layout()
 plt.savefig(output_folder / 'GNI for Equatorial Guinea.png')
 plt.show()
-
 
 ############################################################################
 # Interesting Correlations for Low Income Countries (Central Africa 1)
@@ -1475,25 +1454,15 @@ sns.swarmplot(x='income_group',
               hue='Hult_Team_Regions',
               cmap='summer',
               alpha=0.2,
-              size = 15)
+              size=15)
 sns.swarmplot(x='income_group',
               y='gni_index',
               data=country_data,
               color='red',
-              size = 15)
+              size=15)
 
 plt.xlabel('Income Group')
 plt.ylabel('GNI (per capita)')
-plt.title('Gross National Income for Each Country by Income Group', fontsize = 20)
+plt.title('Gross National Income for Each Country by Income Group', fontsize=20)
 plt.savefig(output_folder / 'region by income group')
 plt.show()
-
-
-
-
-
-
-
-
-
-

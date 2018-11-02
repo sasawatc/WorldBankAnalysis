@@ -92,7 +92,7 @@ sns.distplot(country_data['avg_air_pollution'], bins = 'fd', kde = False, rug = 
 plt.xlabel('Avg Air Pollution')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'electricity & pollution Histograms without cutoffs.png')
+plt.savefig(output_folder / 'electricity & pollution Histograms without cutoffs.svg')
 plt.show()
 
 
@@ -117,7 +117,7 @@ plt.xlabel('Services Employment')
 # plt.xlabel('Adult Literacy Rate')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Employment & Literacy Histograms without cutoffs.png')
+plt.savefig(output_folder / 'Employment & Literacy Histograms without cutoffs.svg')
 plt.show()
 
 
@@ -143,7 +143,7 @@ sns.distplot(country_data['exports_pct_gdp'], bins = 'fd', kde = False, rug = Tr
 plt.xlabel('Exports')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Money Histograms without cutoffs.png')
+plt.savefig(output_folder / 'Money Histograms without cutoffs.svg')
 plt.show()
 
 
@@ -157,7 +157,7 @@ plt.subplot(1,2,2)
 sns.distplot(country_data['internet_usage_pct'], bins = 'fd', kde = False, rug = True, color = 'indigo')
 plt.xlabel('Individuals using the Internet (% of population)')
 
-plt.savefig(output_folder / 'FDI & Internet Histograms without cutoffs.png')
+plt.savefig(output_folder / 'FDI & Internet Histograms without cutoffs.svg')
 plt.show()
 
 ###############################################################################
@@ -211,7 +211,7 @@ plt.xlabel('Avg Air Pollution')
 plt.axvline(x = airpoll_limit_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'darkturquoise')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'electricity & pollution Histograms with cutoffs.png')
+plt.savefig(output_folder / 'electricity & pollution Histograms with cutoffs.svg')
 plt.show()
 
 
@@ -240,7 +240,7 @@ plt.axvline(x = servemploy_lo, label = 'Outlier Thresholds', linestyle = '--', c
 # plt.axvline(x = adult_lit_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'darkmagenta')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Employment & Literacy Histograms with cutoffs.png')
+plt.savefig(output_folder / 'Employment & Literacy Histograms with cutoffs.svg')
 plt.show()
 
 ##tax_revenue_pct_gdp
@@ -271,7 +271,7 @@ plt.xlabel('Exports')
 plt.axvline(x = exports_pct_gdp_limit, label = 'Outlier Thresholds', linestyle = '--', color = 'b')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Money Histograms with cutoffs.png')
+plt.savefig(output_folder / 'Money Histograms with cutoffs.svg')
 plt.show()
 
 ## fdi_pct_gdp
@@ -288,7 +288,7 @@ plt.axvline(x = internet_usage_pct_up, label = 'Outlier Thresholds', linestyle =
 plt.axvline(x = internet_usage_pct_low, label = 'Outlier Thresholds', linestyle = '--', color = 'r') 
 
 plt.tight_layout()
-plt.savefig(output_folder / 'FDI & Internet Histograms with cutoffs.png')
+plt.savefig(output_folder / 'FDI & Internet Histograms with cutoffs.svg')
 plt.show()
 
 
@@ -748,7 +748,7 @@ plt.show()
 # just low income
 sns.lmplot(x = 'gni_index',
            y = 'CO2_emissions_per_capita',
-           data = low_income_df,
+           data = low_income_ca,
            hue = 'country_name')
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
@@ -758,7 +758,7 @@ plt.show()
 # just lower middle income
 sns.lmplot(x = 'gni_index',
            y = 'CO2_emissions_per_capita',
-           data = lowmid_income_df,
+           data = lower_middle_income_ca,
            hue = 'country_name')
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
@@ -964,7 +964,7 @@ for x in gni_x_list:
                  hue = 'income_group',
                  size = 5)
     plt.ylabel('GNI Index')
-    plt.savefig(output_folder / f'{x} vs GNI.png')
+    plt.savefig(output_folder / f'{x} vs GNI.svg')
     plt.show()
     
 """
@@ -1001,7 +1001,7 @@ for x_var in x_list:
                  hue = 'income_group',
                  size = 5)
     plt.ylabel('')
-    plt.savefig(output_folder / f'{x_var} by country.png')
+    plt.savefig(output_folder / f'{x_var} by country.svg')
     plt.show()
     
 """
@@ -1019,7 +1019,7 @@ for x_v in corr_list:
                  size = 5,
                  hue = 'income_group')
     plt.ylabel('Unemployment Rate')
-    plt.savefig(output_folder / f'{x_v} vs unemployment rate.png')
+    plt.savefig(output_folder / f'{x_v} vs unemployment rate.svg')
     plt.show()
     
 
@@ -1035,7 +1035,6 @@ sns.pairplot(x_vars = ['compulsory_edu_yrs'],
 plt.title('Education (year) vs Air Pollution. Worldwide Lower Middle Income Country')
 plt.show()
 
-<<<<<<< Updated upstream
 
 # central Africa 1
 sns.pairplot(x_vars = ['compulsory_edu_yrs'],
@@ -1139,7 +1138,7 @@ plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
 plt.tight_layout()
 plt.show()
-plt.savefig(output_folder / 'GNI for congo.png')
+plt.savefig(output_folder / 'GNI for congo.svg')
 
 # Foreign direct investment
 plt.axvline(x = lower_middle_income_ca['fdi_pct_gdp'].median(),
@@ -1173,7 +1172,7 @@ plt.xlabel('Foreign direct investment (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
 plt.show()
-plt.savefig(output_folder / 'Foreign direct investment for congo.png')
+plt.savefig(output_folder / 'Foreign direct investment for congo.svg')
 
 # Exports of goods and services
 plt.axvline(x = lower_middle_income_ca['exports_pct_gdp'].median(),
@@ -1207,7 +1206,7 @@ plt.xlabel('Exports of Goods and Services (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
 plt.show()
-plt.savefig(output_folder / 'Exports of goods and services for congo.png')
+plt.savefig(output_folder / 'Exports of goods and services for congo.svg')
 
 ############################################################################
 # Interesting Correlations for Low Income Countries (Central Africa 1)
@@ -1223,7 +1222,7 @@ plt.title('Urban Population % vs. Rural Access to Electricity')
 plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Access to Electricity, Rural (% of rural population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.png')
+plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.svg')
 plt.show()   
 
 # higher urban pop growth vs. lesser access to electricity (population)
@@ -1236,7 +1235,7 @@ plt.title('Urban Population Growth vs. Population Access to Electricity')
 plt.xlabel('Urban Population Growth (annual %)')
 plt.ylabel('Access to Electricity (% of population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - urban pop growth vs. population access to electricity.png')
+plt.savefig(output_folder / 'low - urban pop growth vs. population access to electricity.svg')
 plt.show() 
 
 # higher air pollution = higher hiv incidence
@@ -1249,7 +1248,7 @@ plt.title('Air Pollution (mean) vs. HIV Incidence')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('HIV incidence (% of uninfected population ages 15-49)')
 plt.tight_layout()
-plt.savefig(output_folder/ 'low - avg air pollution vs. HIV incidence.png')
+plt.savefig(output_folder/ 'low - avg air pollution vs. HIV incidence.svg')
 plt.show() 
 
 # higher air pollution % vs. lesser access to electricity (urban)
@@ -1262,7 +1261,7 @@ plt.title('Air Pollution (mean) vs. Urban Access to Electricity')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Access to Electricity, urban (% of urban population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - avg air pollution % vs. urban access to electricity.png')
+plt.savefig(output_folder / 'low - avg air pollution % vs. urban access to electricity.svg')
 plt.show() 
 
 
@@ -1278,8 +1277,9 @@ sns.pairplot(data = lower_middle_income_ca,
              palette = 'plasma')
 plt.xlabel('Compulsory education, duration (years)')
 plt.ylabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
+plt.title('Compulsory Education vs Air Pollution')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - compulsory edu yrs % vs. air pollution.png')
+plt.savefig(output_folder / 'lowmid - compulsory edu yrs % vs. air pollution.svg')
 plt.show() 
 
 # higher urban pop = lesser female employment
@@ -1291,7 +1291,8 @@ sns.pairplot(data = lower_middle_income_ca,
 plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Female Employment (% of female population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - Urban pop vs. female employment.png')
+plt.title('Urban Population vs Female Employment')
+plt.savefig(output_folder / 'lowmid - Urban pop vs. female employment.svg')
 plt.show() 
 
 #  higher air pollution = lesser male employment
@@ -1302,8 +1303,9 @@ sns.pairplot(data = lower_middle_income_ca,
              palette = 'plasma')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Male Employment (% of male population)')
+plt.title('Air Pollution vs Male Employment')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - Air pollution vs male employment.png')
+plt.savefig(output_folder / 'lowmid - Air pollution vs male employment.svg')
 plt.show()
 
 # higher urban pop = lower industry employment
@@ -1314,7 +1316,8 @@ sns.pairplot(data = lower_middle_income_ca,
              palette = 'plasma')
 plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Employment in Industry (% of total employment)')
+plt.title('Employment in Industry vs Urban Population')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.png')
+plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.svg')
 plt.show()
 

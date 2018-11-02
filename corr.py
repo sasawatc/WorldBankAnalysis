@@ -59,8 +59,9 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
     plt.title(col)
     plt.suptitle("")
     plt.tight_layout()
-    plt.show()
     plt.savefig(f'{col}')
+    plt.show()
+    
 
 country_data.boxplot(column=['gdp_usd'], by='income_group')
 
@@ -90,7 +91,7 @@ sns.distplot(country_data['avg_air_pollution'], bins='fd', kde=False, rug=True, 
 plt.xlabel('Avg Air Pollution')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'electricity & pollution Histograms without cutoffs.svg')
+plt.savefig(output_folder / 'electricity & pollution Histograms without cutoffs.png')
 plt.show()
 
 ## pct_female_employment
@@ -114,7 +115,7 @@ plt.xlabel('Services Employment')
 # plt.xlabel('Adult Literacy Rate')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Employment & Literacy Histograms without cutoffs.svg')
+plt.savefig(output_folder / 'Employment & Literacy Histograms without cutoffs.png')
 plt.show()
 
 ##tax_revenue_pct_gdp
@@ -139,7 +140,7 @@ sns.distplot(country_data['exports_pct_gdp'], bins='fd', kde=False, rug=True, co
 plt.xlabel('Exports')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Money Histograms without cutoffs.svg')
+plt.savefig(output_folder / 'Money Histograms without cutoffs.png')
 plt.show()
 
 ## fdi_pct_gdp
@@ -152,7 +153,7 @@ plt.subplot(1, 2, 2)
 sns.distplot(country_data['internet_usage_pct'], bins='fd', kde=False, rug=True, color='indigo')
 plt.xlabel('Individuals using the Internet (% of population)')
 
-plt.savefig(output_folder / 'FDI & Internet Histograms without cutoffs.svg')
+plt.savefig(output_folder / 'FDI & Internet Histograms without cutoffs.png')
 plt.show()
 
 ###############################################################################
@@ -205,7 +206,7 @@ plt.xlabel('Avg Air Pollution')
 plt.axvline(x=airpoll_limit_lo, label='Outlier Thresholds', linestyle='--', color='darkturquoise')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'electricity & pollution Histograms with cutoffs.svg')
+plt.savefig(output_folder / 'electricity & pollution Histograms with cutoffs.png')
 plt.show()
 
 ## pct_female_employment
@@ -233,7 +234,7 @@ plt.axvline(x=servemploy_lo, label='Outlier Thresholds', linestyle='--', color='
 # plt.axvline(x = adult_lit_lo, label = 'Outlier Thresholds', linestyle = '--', color = 'darkmagenta')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Employment & Literacy Histograms with cutoffs.svg')
+plt.savefig(output_folder / 'Employment & Literacy Histograms with cutoffs.png')
 plt.show()
 
 ##tax_revenue_pct_gdp
@@ -264,7 +265,7 @@ plt.xlabel('Exports')
 plt.axvline(x=exports_pct_gdp_limit, label='Outlier Thresholds', linestyle='--', color='b')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'Money Histograms with cutoffs.svg')
+plt.savefig(output_folder / 'Money Histograms with cutoffs.png')
 plt.show()
 
 ## fdi_pct_gdp
@@ -281,7 +282,7 @@ plt.axvline(x=internet_usage_pct_up, label='Outlier Thresholds', linestyle='--',
 plt.axvline(x=internet_usage_pct_low, label='Outlier Thresholds', linestyle='--', color='r')
 
 plt.tight_layout()
-plt.savefig(output_folder / 'FDI & Internet Histograms with cutoffs.svg')
+plt.savefig(output_folder / 'FDI & Internet Histograms with cutoffs.png')
 plt.show()
 
 ###############################################################################
@@ -984,7 +985,7 @@ for x in gni_x_list:
     plt.ylabel('GNI Index')
     txt = generate_title(str(x) + ' vs ' + 'gni_index')
     plt.title(txt)
-    #    plt.savefig(output_folder / f'{x} vs GNI.svg')
+    plt.savefig(output_folder / f'{x} vs GNI.png')
     plt.show()
 
 """
@@ -1021,10 +1022,10 @@ for x_var in x_list:
                  hue='income_group',
                  size=5)
     plt.ylabel('')
-    #    plt.savefig(output_folder / f'{x_var} by country.svg')
     txt = generate_title(str(x_var) + ' by ' + 'country_name')
     plt.title(txt)
     plt.tight_layout()
+    plt.savefig(output_folder / f'{x_var} by country.png')
     plt.show()
 
 """
@@ -1044,7 +1045,7 @@ for x_v in corr_list:
     plt.ylabel('Unemployment Rate')
     txt = generate_title(str(x_v) + ' vs ' + 'unemployment_pct')
     plt.title(txt)
-    plt.savefig(output_folder / f'{x_v} vs unemployment rate.svg')
+    plt.savefig(output_folder / f'{x_v} vs unemployment rate.png')
     plt.tight_layout()
     plt.show()
 
@@ -1128,6 +1129,7 @@ low_no_congo = low_income_ca[low_income_ca['country_name'] != 'Congo, Rep.']
 congo = low_income_ca[low_income_ca['country_name'] == 'Congo, Rep.']
 
 # GNI
+fig, ax = plt.subplots(figsize=(8,5))
 plt.axvline(x=lower_middle_income_ca['gni_index'].median(),
             label='median gni for lower middle income country',
             color='orange')
@@ -1135,16 +1137,19 @@ plt.scatter(x='gni_index',
             y='country_name',
             data=lower_middle_income_ca,
             color='orange',
-            alpha=0.3)
+            alpha=0.3,
+            s = 100)
 plt.scatter(x='gni_index',
             y='country_name',
             data=low_no_congo,
             color='blue',
-            alpha=0.2)
+            alpha=0.2,
+            s = 100)
 plt.scatter(x='gni_index',
             y='country_name',
             data=congo,
-            color='blue')
+            color='blue',
+            s = 100)
 t = '''
 Median GNI of 
 Lower Middle Income countries'''
@@ -1154,14 +1159,15 @@ plt.annotate(t,
              arrowprops={'color': 'orange'})
 plt.annotate('Congo, Rep.',
              xy=(2600, 'Congo, Rep.'))
-plt.title('Gross National Income by Country (Equatorial Guinea excluded)')
+plt.title('Gross National Income by Country (Equatorial Guinea excluded)',fontsize = 15)
 plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
 plt.tight_layout()
+plt.savefig(output_folder / 'GNI for congo.png')
 plt.show()
-plt.savefig(output_folder / 'GNI for congo.svg')
 
 # Foreign direct investment
+fig, ax = plt.subplots(figsize=(8,5))
 plt.axvline(x=lower_middle_income_ca['fdi_pct_gdp'].median(),
             label='median Foreign direct investment of lower middle income',
             color='orange')
@@ -1169,16 +1175,19 @@ plt.scatter(x='fdi_pct_gdp',
             y='country_name',
             data=lower_middle_income_ca,
             color='orange',
-            alpha=0.3)
+            alpha=0.3,
+            s = 100)
 plt.scatter(x='fdi_pct_gdp',
             y='country_name',
             data=low_no_congo,
             color='blue',
-            alpha=0.2)
+            alpha=0.2,
+            s = 100)
 plt.scatter(x='fdi_pct_gdp',
             y='country_name',
             data=congo,
-            color='blue')
+            color='blue',
+            s = 100)
 t = '''
 Median foreign direct investment of 
 Lower Middle Income coutries'''
@@ -1188,14 +1197,16 @@ plt.annotate(t,
              arrowprops={'color': 'orange'})
 plt.annotate('Congo, Rep.',
              xy=(16, 'Uganda'))
-plt.title('Foreign direct investment by Country (Equatorial Guinea excluded)')
+plt.title('Foreign direct investment by Country (Equatorial Guinea excluded)',fontsize = 15)
 plt.xlabel('Foreign direct investment (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
+plt.savefig(output_folder / 'Foreign direct investment for congo.png')
 plt.show()
-plt.savefig(output_folder / 'Foreign direct investment for congo.svg')
+
 
 # Exports of goods and services
+fig, ax = plt.subplots(figsize=(8,5))
 plt.axvline(x=lower_middle_income_ca['exports_pct_gdp'].median(),
             label='median Exports of goods and services of lower middle income',
             color='orange')
@@ -1203,16 +1214,19 @@ plt.scatter(x='exports_pct_gdp',
             y='country_name',
             data=lower_middle_income_ca,
             color='orange',
-            alpha=0.3)
+            alpha=0.3,
+            s = 100)
 plt.scatter(x='exports_pct_gdp',
             y='country_name',
             data=low_no_congo,
             color='blue',
-            alpha=0.2)
+            alpha=0.2,
+            s = 100)
 plt.scatter(x='exports_pct_gdp',
             y='country_name',
             data=congo,
-            color='blue')
+            color='blue',
+            s = 100)
 t = '''
 Median exports of 
 Lower Middle Income coutries'''
@@ -1220,14 +1234,63 @@ plt.annotate(t,
              xy=(37, 'Nigeria'),
              xytext=(40, 'Burundi'),
              arrowprops={'color': 'orange'})
-plt.annotate('Congo, Rep.',
-             xy=(60, 'Uganda'))
-plt.title('Exports of goods and services by Country (Equatorial Guinea excluded)')
+plt.title('Exports of goods and services by Country (Equatorial Guinea excluded)', fontsize = 15)
 plt.xlabel('Exports of Goods and Services (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
+plt.savefig(output_folder / 'Exports of goods and services for congo.png')
 plt.show()
-plt.savefig(output_folder / 'Exports of goods and services for congo.svg')
+
+
+"""
+Equatorial Guinea
+"""
+# public spending
+eg = country_data[country_data.country_name == 'Equatorial Guinea']
+
+fig, ax = plt.subplots(figsize=(8,5))
+plt.scatter(x = 'compulsory_edu_yrs',
+            y = 'incidence_hiv',
+            data = no_eg,
+            cmap = 'summer',
+            alpha = 0.3,
+            s = 100)
+plt.scatter(x = 'compulsory_edu_yrs',
+            y = 'incidence_hiv',
+            data = eg,
+            cmap = 'summer',
+            color = 'red',
+            s = 100)
+plt.ylabel('Incidence of HIV')
+plt.xlabel('Compulsory Education, Duration (year)')
+plt.title("Public Spending by Country", fontsize = 20)
+plt.annotate('Equatorial Guinea',
+             xy = (6.2, 0.48))
+plt.savefig(output_folder / 'Public Spending for Equatorial Guinea.png' )
+plt.show()
+
+
+# gni
+fig, ax = plt.subplots(figsize=(8,5))
+plt.scatter(x = 'gni_index',
+            y = 'country_name',
+            data = no_eg,
+            cmap = 'summer',
+            alpha = 0.3,
+            s = 100)
+plt.scatter(x = 'gni_index',
+            y = 'country_name',
+            data = eg,
+            cmap = 'summer',
+            color = 'red',
+            s = 100)
+plt.ylabel('')
+plt.xlabel('Gross National Income ($ per capita)')
+plt.title("Gross National Income by Country", fontsize = 20)
+plt.tight_layout()
+plt.savefig(output_folder / 'GNI for Equatorial Guinea.png')
+plt.show()
+
 
 ############################################################################
 # Interesting Correlations for Low Income Countries (Central Africa 1)
@@ -1248,7 +1311,7 @@ plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Access to Electricity, Rural (% of rural population)')
 plt.tight_layout()
 plt.subplots_adjust(right=0.65)
-# plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.svg')
+plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.png')
 plt.show()
 
 # higher urban pop growth vs. lesser access to electricity (population)
@@ -1266,7 +1329,7 @@ plt.title('Urban Population Growth vs. Population Access to Electricity')
 plt.xlabel('Urban Population Growth (annual %)')
 plt.ylabel('Access to Electricity (% of population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - urban pop growth vs. population access to electricity.svg')
+plt.savefig(output_folder / 'low - urban pop growth vs. population access to electricity.png')
 plt.show()
 
 # higher air pollution = higher hiv incidence
@@ -1279,7 +1342,7 @@ plt.title('Air Pollution (mean) vs. HIV Incidence')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('HIV incidence (% of uninfected population ages 15-49)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - avg air pollution vs. HIV incidence.svg')
+plt.savefig(output_folder / 'low - avg air pollution vs. HIV incidence.png')
 plt.show()
 
 # higher air pollution % vs. lesser access to electricity (urban)
@@ -1292,7 +1355,7 @@ plt.title('Air Pollution (mean) vs. Urban Access to Electricity')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Access to Electricity, urban (% of urban population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - avg air pollution % vs. urban access to electricity.svg')
+plt.savefig(output_folder / 'low - avg air pollution % vs. urban access to electricity.png')
 plt.show()
 
 ############################################################################
@@ -1309,7 +1372,7 @@ plt.xlabel('Compulsory education, duration (years)')
 plt.ylabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.title('Compulsory Education vs Air Pollution')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - compulsory edu yrs % vs. air pollution.svg')
+plt.savefig(output_folder / 'lowmid - compulsory edu yrs % vs. air pollution.png')
 plt.show()
 
 # higher urban pop = lesser female employment
@@ -1322,7 +1385,7 @@ plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Female Employment (% of female population)')
 plt.tight_layout()
 plt.title('Urban Population vs Female Employment')
-plt.savefig(output_folder / 'lowmid - Urban pop vs. female employment.svg')
+plt.savefig(output_folder / 'lowmid - Urban pop vs. female employment.png')
 plt.show()
 
 #  higher air pollution = lesser male employment
@@ -1335,7 +1398,7 @@ plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Male Employment (% of male population)')
 plt.title('Air Pollution vs Male Employment')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - Air pollution vs male employment.svg')
+plt.savefig(output_folder / 'lowmid - Air pollution vs male employment.png')
 plt.show()
 
 # higher urban pop = lower industry employment
@@ -1348,7 +1411,7 @@ plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Employment in Industry (% of total employment)')
 plt.title('Employment in Industry vs Urban Population')
 plt.tight_layout()
-plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.svg')
+plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.png')
 plt.show()
 
 """"
@@ -1366,17 +1429,20 @@ sns.swarmplot(x='income_group',
               data=no_us,
               hue='Hult_Team_Regions',
               cmap='summer',
-              alpha=0.2)
+              alpha=0.2,
+              size = 15)
 sns.swarmplot(x='income_group',
               y='gni_index',
               data=country_data,
-              color='red')
+              color='red',
+              size = 15)
 
 plt.xlabel('Income Group')
 plt.ylabel('GNI (per capita)')
-plt.title('Gross National Income for Each Country by Income Group')
-plt.show()
+plt.title('Gross National Income for Each Country by Income Group', fontsize = 20)
 plt.savefig(output_folder / 'region by income group')
+plt.show()
+
 
 
 

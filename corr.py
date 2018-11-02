@@ -20,12 +20,15 @@ subset dataset
 """
 # low income worldwide
 low_income_world = world_data[world_data.income_group == 'Low income']
+low_income_world.reset_index(drop=True, inplace=True)
 
 # lower middle income worldwide
 lower_middle_income_world = world_data[world_data.income_group == 'Lower middle income']
+lower_middle_income_world.reset_index(drop=True, inplace=True)
 
 # upper middle income worldwide
 upper_middle_income_world = world_data[world_data.income_group == 'Upper middle income']
+upper_middle_income_world.reset_index(drop=True, inplace=True)
 
 # Central Africa 1
 df = clean_data[clean_data.Hult_Team_Regions == 'Central Africa 1']
@@ -398,6 +401,7 @@ check = (country_data.loc[:, ['avg_air_pollution', 'out_avg_air_pollution']].sor
 
 ### Kai Yi's part ###
 no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
+no_eg.reset_index(drop=True, inplace=True)
 ## exports_pct_gdp
 country_data[country_data['income_group'] == 'Low income']['exports_pct_gdp']
 """ flag: 30 is outlier threshold for low income country """
@@ -595,15 +599,19 @@ check = (country_data.loc[:, ['out_sum', 'out_access_to_electricity_rural', 'out
 
 # low income Central Africa 1 (CA)
 low_income_ca = country_data[country_data.income_group == 'Low income']
+low_income_ca.reset_index(drop=True, inplace=True)
 
 # lower middle income CA
 lower_middle_income_ca = country_data[country_data.income_group == 'Lower middle income']
+lower_middle_income_ca.reset_index(drop=True, inplace=True)
 
 # upper middle income CA
 upper_middle_income_ca = country_data[country_data.income_group == 'Upper middle income']
+upper_middle_income_ca.reset_index(drop=True, inplace=True)
 
 # no Equatorial Guinea
 no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
+no_eg.reset_index(drop=True, inplace=True)
 
 ###############################################################################
 # Correlation Matrix for all variables without flags
@@ -1466,3 +1474,149 @@ plt.ylabel('GNI (per capita)')
 plt.title('Gross National Income for Each Country by Income Group', fontsize=20)
 plt.savefig(output_folder / 'region by income group')
 plt.show()
+<<<<<<< Updated upstream
+=======
+
+"""
+Lower middle income)  
+higher urban population (%) correlates with less industry employment
+"""
+sns.pairplot(x_vars = ['urban_population_pct'],
+             y_vars = ['pct_industry_employment'],
+             data = lower_middle_income_ca,
+             kind ='reg',
+             size = 8)
+for line in range(0, lower_middle_income_ca.shape[0]):
+    plt.text(lower_middle_income_ca.urban_population_pct[line] - 2, 
+             lower_middle_income_ca.pct_industry_employment[line] + 1,
+             lower_middle_income_ca.country_name[line], 
+             horizontalalignment='left',
+             size='medium', 
+             color='black', 
+             weight='semibold')
+plt.title('Urban Population vs Industry Employment - Lower Middle Income Group', fontsize = 18)
+plt.xlabel('Urban population (% of total)')
+plt.ylabel('Employment in industry (% of total employment)')
+plt.tight_layout()
+plt.savefig(output_folder / 'Urban Population vs Industry Employment (lower middle).png')
+plt.show()
+
+"""
+Lower middle income
+Higher urban population (%) → Less female employment (%)
+"""
+sns.pairplot(x_vars = ['urban_population_pct'],
+             y_vars = ['pct_female_employment'],
+             data = lower_middle_income_ca,
+             kind ='reg',
+             size = 8)
+for line in range(0, lower_middle_income_ca.shape[0]):
+    plt.text(lower_middle_income_ca.urban_population_pct[line] - 1.5, 
+             lower_middle_income_ca.pct_female_employment[line] - 2,
+             lower_middle_income_ca.country_name[line], 
+             horizontalalignment='left',
+             size='medium', 
+             color='black', 
+             weight='semibold')
+plt.title('Urban Population vs Contributed Female Family Workers - Lower Middle Income Group', fontsize = 15)
+plt.xlabel('Urban population (% of total)')
+plt.ylabel('Contributing family workers, female')
+plt.tight_layout()
+plt.savefig(output_folder / 'Urban Population vs Female Family Workers (lower middle).png')
+plt.show()
+
+"""
+low income
+Higher air pollution 
+→ Higher HIV incidence
+GDP Growth (.79) 
+→ Higher air pollution (.79)
+
+"""
+plt.subplot(1, 2, 1)
+plt.scatter(x = 'gdp_growth_pct',
+            y = 'avg_air_pollution',
+            data = low_income_ca,
+            s = 200)
+plt.title('PM2.5 Air Pollution vs GDP Growth Rate', fontsize = 20)
+plt.xlabel('GDP Growth Rate')
+plt.ylabel('PM2.5 Air Pollution')
+plt.tight_layout()
+
+plt.subplot(1, 2, 2)
+plt.scatter(x = 'incidence_hiv',
+            y = 'avg_air_pollution',
+            data = low_income_ca,
+            s = 200)
+plt.title('PM2.5 Air Pollution vs Incidence of HIV', fontsize = 20)
+plt.xlabel('Incidence of HIV')
+plt.ylabel('PM2.5 Air Pollution')
+plt.tight_layout()
+
+plt.savefig(output_folder / 'Higher air pollution → Higher HIV incidence GDP Growth (.79) .png')
+plt.show()
+
+
+"""
+low income
+GDP Growth (.79) 
+→ Higher air pollution (.79)
+→ Less access to electricity
+"""
+plt.subplot(1, 2, 1)
+plt.scatter(x = 'gdp_growth_pct',
+            y = 'avg_air_pollution',
+            data = low_income_ca,
+            s = 200)
+plt.title('PM2.5 Air Pollution vs GDP Growth Rate', fontsize = 20)
+plt.xlabel('GDP Growth Rate')
+plt.ylabel('PM2.5 Air Pollution')
+plt.tight_layout()
+
+plt.subplot(1, 2, 2)
+plt.scatter(x = 'access_to_electricity_pop',
+            y = 'avg_air_pollution',
+            data = low_income_ca,
+            s = 200)
+plt.title('PM2.5 Air Pollution vs Access to electricity', fontsize = 20)
+plt.xlabel('Access to electricity (% of population)')
+plt.ylabel('PM2.5 Air Pollution')
+plt.tight_layout()
+
+plt.savefig(output_folder / 'Higher air pollution → Access to electricity GDP Growth (.79) .png')
+plt.show()
+
+"""
+Low income countries
+Increased urban population → Less access to electricity for everyone
+"""
+sns.pairplot(x_vars = ['urban_population_pct'],
+             y_vars = ['access_to_electricity_pop'],
+             data = low_income_ca,
+             kind ='reg',
+             size = 8)
+for line in range(0, low_income_ca.shape[0]):
+    plt.text(low_income_ca.urban_population_pct[line] - 2, 
+             low_income_ca.access_to_electricity_pop[line] + 1,
+             low_income_ca.country_name[line], 
+             horizontalalignment='left',
+             size='medium', 
+             color='black', 
+             weight='semibold')
+plt.title('Urban Population vs Access to Electricity - Low Income Group', fontsize = 18)
+plt.xlabel('Urban population (% of total)')
+plt.ylabel('Access to electricity (% of population)')
+plt.tight_layout()
+plt.savefig(output_folder / 'Urban Population vs FAccess to Electricity (low).png')
+plt.show()
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes

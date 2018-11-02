@@ -20,6 +20,9 @@ swarmplot_folder = Path('figs/swarm_plot')
 # import clean data
 clean_data = pd.read_excel(processed_folder / 'clean_data.xlsx', index='country_code')
 world_data = clean_data.iloc[:, 2:]
+
+world_data.loc[world_data.country_name == 'Congo, Dem. Rep.', 'income_group'] = 'Low income'
+world_data.loc[world_data.country_name == 'Congo, Rep.', 'income_group'] = 'Lower middle income'
 """
 subset dataset
 """
@@ -601,6 +604,13 @@ check = (country_data.loc[:, ['out_sum', 'out_access_to_electricity_rural', 'out
                               'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index',
                               'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(
     ['out_sum'], ascending=False))
+
+
+"""
+correct mislabeling: Congo anf Congo Dem
+"""
+country_data.loc[country_data.country_name == 'Congo, Dem. Rep.', 'income_group'] = 'Low income'
+country_data.loc[country_data.country_name == 'Congo, Rep.', 'income_group'] = 'Lower middle income'
 
 # low income Central Africa 1 (CA)
 low_income_ca = country_data[country_data.income_group == 'Low income']

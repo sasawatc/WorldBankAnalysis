@@ -538,6 +538,7 @@ plt.show()
 # Analyze Outliers
 ############################################################################### ---------->> take out removed columns
 
+<<<<<<< Updated upstream
 country_data['out_sum'] = (
             country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
             country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data[
@@ -564,6 +565,15 @@ check = (country_data.loc[:, ['out_sum', 'out_access_to_electricity_rural', 'out
                               'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index',
                               'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(
     ['out_sum'], ascending=False))
+=======
+country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
+
+check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
+
+country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
+
+check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
+>>>>>>> Stashed changes
 
 # low income Central Africa 1 (CA)
 low_income_ca = country_data[country_data.income_group == 'Low income']

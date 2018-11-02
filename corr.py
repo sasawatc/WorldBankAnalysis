@@ -1219,6 +1219,7 @@ sns.pairplot(data = low_income_ca,
              y_vars = ['access_to_electricity_rural'],
              size = 5,
              palette = 'plasma')
+plt.title('Urban Population % vs. Rural Access to Electricity')
 plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Access to Electricity, Rural (% of rural population)')
 plt.tight_layout()
@@ -1231,6 +1232,7 @@ sns.pairplot(data = low_income_ca,
              y_vars = ['access_to_electricity_pop'],
              size = 5,
              palette = 'plasma')
+plt.title('Urban Population Growth vs. Population Access to Electricity')
 plt.xlabel('Urban Population Growth (annual %)')
 plt.ylabel('Access to Electricity (% of population)')
 plt.tight_layout()
@@ -1243,6 +1245,7 @@ sns.pairplot(data = low_income_ca,
              y_vars = ['incidence_hiv'],
              size = 5,
              palette = 'plasma')
+plt.title('Air Pollution (mean) vs. HIV Incidence')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('HIV incidence (% of uninfected population ages 15-49)')
 plt.tight_layout()
@@ -1255,6 +1258,7 @@ sns.pairplot(data = low_income_ca,
              y_vars = ['access_to_electricity_urban'],
              size = 5,
              palette = 'plasma')
+plt.title('Air Pollution (mean) vs. Urban Access to Electricity')
 plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Access to Electricity, urban (% of urban population)')
 plt.tight_layout()
@@ -1313,30 +1317,4 @@ plt.ylabel('Employment in Industry (% of total employment)')
 plt.tight_layout()
 plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.png')
 plt.show()
-=======
-############################################################################
-# Compare urban population for Low Income Countries (Central Africa 1)
-#############################################################################
 
-# urban pop % vs. access to electricity (rural)
-sns.pairplot(data = central_africa1_df,
-             x_vars = ['urban_population_pct'],
-             y_vars = ['access_to_electricity_rural'],
-             palette = 'plasma')
->>>>>>> Stashed changes
-
-
-plt.tight_layout()
-plt.savefig('urban pop % vs. rural access to electricity.png')
-plt.show()   
-
-# urban pop growth vs. access to electricity (all)
-sns.pairplot(data = central_africa1_df,
-             x_vars = ['urban_population_growth_pct'],
-             y_vars = ['access_to_electricity_pop'],
-             palette = 'plasma')
-
-
-plt.tight_layout()
-plt.savefig('urban pop growth vs. all access to electricity.png')
-plt.show() 

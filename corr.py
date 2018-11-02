@@ -1487,13 +1487,3 @@ plt.ylabel('GNI (per capita)')
 plt.title('Gross National Income for Each Country by Income Group', fontsize = 20)
 plt.savefig(output_folder / 'region by income group')
 plt.show()
-
-
-
-
-
-
-
-
-
-

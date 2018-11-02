@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from pathlib import Path
+from handy_func import *
 
 # Import libraries and base dataset (og_file); then filter out/subset central africa 1
 
@@ -55,13 +56,15 @@ data_describe[['gdp_usd']].quantile(1.00)-data_describe['gdp_usd'].quantile(0.8)
 
 ###############################################################################
 # Plot boxplots for all indicators to find potential outliers
-###############################################################################   
+###############################################################################  
 for col in country_data.select_dtypes(include=['float64', 'int']):
     country_data.boxplot(column = col, by = 'income_group')
+    title = generate_title(str(col))
     plt.title(col)
     plt.suptitle("")
     plt.tight_layout()
     plt.show()
+    plt.savefig(f'{col}')
 
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 
@@ -457,7 +460,7 @@ sns.pairplot(x_vars=['fdi_pct_gdp'],
              size = 5)
 plt.axvline(x = fdi_pct_gdp_limit,
             label = 'Outlier Thresholds (low income countries)')
-plt.title('Foreign Derict Investment by Country')
+plt.title('Foreign Direct Investment by Country')
 plt.xlabel('Foreign Derict Investment (% of GDP)')
 plt.ylabel('')
 plt.show()
@@ -863,7 +866,7 @@ sns.lmplot(x = 'access_to_electricity_rural',
            hue = 'income_group')
 plt.xlabel('Access to electricity, rural (% of rural population)')
 plt.ylabel('GDP growth (annual %)')
-plt.title('Access to Electricity, Eural vs GDP Growth Rate')
+plt.title('Access to Electricity, Rural vs GDP Growth Rate')
 plt.show()
 
 # no EG
@@ -873,7 +876,7 @@ sns.lmplot(x = 'access_to_electricity_rural',
            hue = 'income_group')
 plt.xlabel('Access to electricity, rural (% of rural population)')
 plt.ylabel('GDP growth (annual %)')
-plt.title('Access to Electricity, Eural vs GDP Growth Rate (Equatorial Guinea excluded)')
+plt.title('Access to Electricity, Rural vs GDP Growth Rate (Equatorial Guinea excluded)')
 plt.show()
 
 """
@@ -966,7 +969,9 @@ for x in gni_x_list:
     sns.set(rc={'figure.figsize':(19.20,10.80)})
     sns.set_style('white')
     plt.ylabel('GNI Index')
-    plt.savefig(output_folder / f'{x} vs GNI.svg')
+    txt = generate_title(str(x) + ' vs ' + 'gni_index')
+    plt.title(txt)
+#    plt.savefig(output_folder / f'{x} vs GNI.svg')
     plt.show()
     
 """
@@ -1003,7 +1008,10 @@ for x_var in x_list:
                  hue = 'income_group',
                  size = 5)
     plt.ylabel('')
-    plt.savefig(output_folder / f'{x_var} by country.svg')
+#    plt.savefig(output_folder / f'{x_var} by country.svg')
+    txt = generate_title(str(x_var) + ' by ' + 'country_name')
+    plt.title(txt)
+    plt.tight_layout()
     plt.show()
     
 """
@@ -1021,7 +1029,10 @@ for x_v in corr_list:
                  size = 5,
                  hue = 'income_group')
     plt.ylabel('Unemployment Rate')
+    txt = generate_title(str(x_v) + ' vs ' + 'unemployment_pct')
+    plt.title(txt)
     plt.savefig(output_folder / f'{x_v} vs unemployment rate.svg')
+    plt.tight_layout()
     plt.show()
     
 
@@ -1334,7 +1345,7 @@ clean_no_high = clean_data[clean_data['income_group'] != 'High income']
 no_us = clean_no_high[clean_no_high['Hult_Team_Regions'] != 'Central Africa 1']
 
 
-fig, ax = plt.subplots(figsize=(10,10))
+fig, ax = plt.subplots(figsize=(10,10)) 
 sns.swarmplot(x = 'income_group',
               y = 'gni_index',
               data = no_us,
@@ -1350,6 +1361,7 @@ plt.xlabel('Income Group')
 plt.ylabel('GNI (per capita)')
 plt.title('Gross National Income for Each Country by Income Group')
 plt.show()
+plt.savefig(output_folder / 'ragion by income group')
 
 
 

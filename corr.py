@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from pathlib import Path
-from handy_func import *
 
 # Import libraries and base dataset (og_file); then filter out/subset central africa 1
 
@@ -18,10 +17,10 @@ world_data = clean_data.iloc[:, 2:]
 """
 subset dataset
 """
-# low income worldwide 
+# low income worldwide
 low_income_world = world_data[world_data.income_group == 'Low income']
 
-# lower middle income worldwide 
+# lower middle income worldwide
 lower_middle_income_world = world_data[world_data.income_group == 'Lower middle income']
 
 # upper middle income worldwide
@@ -56,15 +55,13 @@ data_describe[['gdp_usd']].quantile(1.00)-data_describe['gdp_usd'].quantile(0.8)
 
 ###############################################################################
 # Plot boxplots for all indicators to find potential outliers
-###############################################################################  
+###############################################################################
 for col in country_data.select_dtypes(include=['float64', 'int']):
     country_data.boxplot(column = col, by = 'income_group')
-    title = generate_title(str(col))
     plt.title(col)
     plt.suptitle("")
     plt.tight_layout()
     plt.show()
-    plt.savefig(f'{col}')
 
 country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 
@@ -104,12 +101,12 @@ plt.subplot(2,2,1)
 sns.distplot(country_data['pct_female_employment'], bins = 'fd', kde = False, rug = True, color = 'firebrick')
 plt.xlabel('Female Employment')
 
-## pct_male_employment 
+## pct_male_employment
 plt.subplot(2,2,2)
 sns.distplot(country_data['pct_male_employment'], bins = 'fd', kde = False, rug = True, color = 'forestgreen')
 plt.xlabel('Male Employment')
 
-## pct_services_employment 
+## pct_services_employment
 plt.subplot(2,2,3)
 sns.distplot(country_data['pct_services_employment'], bins = 'fd', kde = False, rug = True, color = 'cornflowerblue')
 plt.xlabel('Services Employment')
@@ -224,13 +221,13 @@ sns.distplot(country_data['pct_female_employment'], bins = 'fd', kde = False, ru
 plt.xlabel('Female Employment')
 plt.axvline(x = femploy_limit_hi, label = 'Outlier Threshold', linestyle = '--', color = 'y')
 
-## pct_male_employment 
+## pct_male_employment
 plt.subplot(2,2,2)
 sns.distplot(country_data['pct_male_employment'], bins = 'fd', kde = False, rug = True, color = 'forestgreen')
 plt.xlabel('Male Employment')
 plt.axvline(x = memploy_limit_hi, label = 'Outlier Threshold', linestyle = '--', color = 'b')
 
-## pct_services_employment 
+## pct_services_employment
 plt.subplot(2,2,3)
 sns.distplot(country_data['pct_services_employment'], bins = 'fd', kde = False, rug = True, color = 'cornflowerblue')
 plt.xlabel('Services Employment')
@@ -288,7 +285,7 @@ plt.subplot(2,1,2)
 sns.distplot(country_data['internet_usage_pct'], bins = 'fd', kde = False, rug = True, color = 'indigo')
 plt.xlabel('Individuals using the Internet (% of population)')
 plt.axvline(x = internet_usage_pct_up, label = 'Outlier Thresholds', linestyle = '--', color = 'r')
-plt.axvline(x = internet_usage_pct_low, label = 'Outlier Thresholds', linestyle = '--', color = 'r') 
+plt.axvline(x = internet_usage_pct_low, label = 'Outlier Thresholds', linestyle = '--', color = 'r')
 
 plt.tight_layout()
 plt.savefig(output_folder / 'FDI & Internet Histograms with cutoffs.svg')
@@ -339,7 +336,7 @@ for val in enumerate(country_data.loc[ : , 'pct_female_employment']):
 country_data['out_pct_female_employment'].abs().sum()
 check = (country_data.loc[ : , ['pct_female_employment', 'out_pct_female_employment']].sort_values('pct_female_employment', ascending = False))
 
-## pct_male_employment 
+## pct_male_employment
 country_data['out_pct_male_employment'] = 0
 
 for val in enumerate(country_data.loc[ : , 'pct_male_employment']):
@@ -349,7 +346,7 @@ for val in enumerate(country_data.loc[ : , 'pct_male_employment']):
 country_data['out_pct_male_employment'].abs().sum()
 check = (country_data.loc[ : , ['pct_male_employment', 'out_pct_male_employment']].sort_values('pct_male_employment', ascending = False))
 
-## pct_services_employment 
+## pct_services_employment
 country_data['out_pct_services_employment'] = 0
 
 for val in enumerate(country_data.loc[ : , 'pct_services_employment']):
@@ -410,10 +407,10 @@ for index, value in enumerate(country_data['exports_pct_gdp']):
         country_data.loc[index, 'out_exports_pct_gdp'] = 1
 
 # histogram
-sns.distplot(country_data['exports_pct_gdp']) 
+sns.distplot(country_data['exports_pct_gdp'])
 plt.show()
 
-# plot 
+# plot
 sns.pairplot(x_vars=['exports_pct_gdp'],
              y_vars=['country_name'],
              data = country_data,
@@ -449,10 +446,10 @@ for index, value in enumerate(country_data['fdi_pct_gdp']):
         country_data.loc[index, 'out_fdi_pct_gdp'] = 1
 
 # histogram
-sns.distplot(country_data['fdi_pct_gdp']) 
+sns.distplot(country_data['fdi_pct_gdp'])
 plt.show()
 
-# plot 
+# plot
 sns.pairplot(x_vars=['fdi_pct_gdp'],
              y_vars=['country_name'],
              data = country_data,
@@ -460,7 +457,7 @@ sns.pairplot(x_vars=['fdi_pct_gdp'],
              size = 5)
 plt.axvline(x = fdi_pct_gdp_limit,
             label = 'Outlier Thresholds (low income countries)')
-plt.title('Foreign Direct Investment by Country')
+plt.title('Foreign Derict Investment by Country')
 plt.xlabel('Foreign Derict Investment (% of GDP)')
 plt.ylabel('')
 plt.show()
@@ -475,12 +472,12 @@ for index, value in enumerate(country_data['internet_usage_pct']):
         country_data.loc[index, 'out_internet_usage_pct'] = 1
     elif value < internet_usage_pct_low and country_data.loc[index, 'income_group'] == 'Lower middle income':
         country_data.loc[index, 'out_internet_usage_pct'] = 1
-              
+
 # histogram
-sns.distplot(country_data['internet_usage_pct']) 
+sns.distplot(country_data['internet_usage_pct'])
 plt.show()
 
-# plot 
+# plot
 sns.pairplot(x_vars=['internet_usage_pct'],
              y_vars=['country_name'],
              data = country_data,
@@ -503,16 +500,16 @@ country_data[country_data['income_group'] == 'Low income']['gni_index']
 country_data['out_gni_index'] = 0
 for index, value in enumerate(country_data['gni_index']):
     if value > gni_index_limit and country_data.loc[index, 'income_group'] == 'Low income':
-        country_data.loc[index, 'out_gni_index'] = 1       
+        country_data.loc[index, 'out_gni_index'] = 1
 
 country_data['out_gni_index'].abs().sum()
 check = (country_data.loc[ : , ['gni_index', 'out_gni_index']].sort_values('gni_index', ascending = False))
-        
+
 # histogram
-sns.distplot(country_data['gni_index']) 
+sns.distplot(country_data['gni_index'])
 plt.show()
 
-# plot 
+# plot
 sns.pairplot(x_vars=['gni_index'],
              y_vars=['country_name'],
              data = country_data,
@@ -565,7 +562,7 @@ no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
 
 ###############################################################################
 # Correlation Matrix for all variables without flags
-###############################################################################    
+###############################################################################
 world_cor = world_data.loc[:,['access_to_electricity_pop',
                        'access_to_electricity_rural',
                        'access_to_electricity_urban',
@@ -589,7 +586,7 @@ world_cor = world_data.loc[:,['access_to_electricity_pop',
                        'urban_population_pct',
                        'urban_population_growth_pct',
                        'gni_index']].corr()
-world_lower_mid_cor = lower_middle_income_world.loc[:,['access_to_electricity_pop',
+world_lower_mid_cor = lower_middle_income_world.loc[: ,['access_to_electricity_pop',
                                                        'access_to_electricity_rural',
                                                        'access_to_electricity_urban',
                                                        'CO2_emissions_per_capita',
@@ -662,36 +659,36 @@ ca_lower_mid_cor = lower_middle_income_ca.loc[:,['access_to_electricity_pop',
 fig, ax = plt.subplots(figsize=(25,35))
 plt.subplot(2,2,1)
 # fig, ax = plt.subplots(figsize=(10,10))
-sns.heatmap(world_cor, 
-            cmap = 'coolwarm', 
-            yticklabels = True, 
+sns.heatmap(world_cor,
+            cmap = 'coolwarm',
+            yticklabels = True,
             xticklabels = True,
             linewidths = 1)
 plt.title('worldwide -- all')
 
 plt.subplot(2,2,2)
 # fig, ax = plt.subplots(figsize=(10,10))
-sns.heatmap(world_lower_mid_cor, 
+sns.heatmap(world_lower_mid_cor,
             cmap = 'coolwarm',
-            yticklabels = True, 
+            yticklabels = True,
             xticklabels = True,
             linewidths = 1)
 plt.title('worldwide -- lower middle income')
 
 plt.subplot(2,2,3)
 # fig, ax = plt.subplots(figsize=(10,10))
-sns.heatmap(central_africa_corr, 
-            cmap = 'coolwarm', 
-            yticklabels = True, 
+sns.heatmap(central_africa_corr,
+            cmap = 'coolwarm',
+            yticklabels = True,
             xticklabels = True,
             linewidths = 1)
 plt.xlabel('Central Africa 1 -- all')
-          
+
 plt.subplot(2,2,4)
 # fig, ax = plt.subplots(figsize=(10,10))
-sns.heatmap(ca_lower_mid_cor, 
+sns.heatmap(ca_lower_mid_cor,
             cmap = 'coolwarm',
-            yticklabels = True, 
+            yticklabels = True,
             xticklabels = True,
             linewidths = 1)
 plt.xlabel('Central Africa 1 -- lower middle income')
@@ -866,7 +863,7 @@ sns.lmplot(x = 'access_to_electricity_rural',
            hue = 'income_group')
 plt.xlabel('Access to electricity, rural (% of rural population)')
 plt.ylabel('GDP growth (annual %)')
-plt.title('Access to Electricity, Rural vs GDP Growth Rate')
+plt.title('Access to Electricity, Eural vs GDP Growth Rate')
 plt.show()
 
 # no EG
@@ -876,7 +873,7 @@ sns.lmplot(x = 'access_to_electricity_rural',
            hue = 'income_group')
 plt.xlabel('Access to electricity, rural (% of rural population)')
 plt.ylabel('GDP growth (annual %)')
-plt.title('Access to Electricity, Rural vs GDP Growth Rate (Equatorial Guinea excluded)')
+plt.title('Access to Electricity, Eural vs GDP Growth Rate (Equatorial Guinea excluded)')
 plt.show()
 
 """
@@ -969,11 +966,9 @@ for x in gni_x_list:
     sns.set(rc={'figure.figsize':(19.20,10.80)})
     sns.set_style('white')
     plt.ylabel('GNI Index')
-    txt = generate_title(str(x) + ' vs ' + 'gni_index')
-    plt.title(txt)
-#    plt.savefig(output_folder / f'{x} vs GNI.svg')
+    plt.savefig(output_folder / f'{x} vs GNI.svg')
     plt.show()
-    
+
 """
 scatter plot x variables with country
 """
@@ -1008,12 +1003,9 @@ for x_var in x_list:
                  hue = 'income_group',
                  size = 5)
     plt.ylabel('')
-#    plt.savefig(output_folder / f'{x_var} by country.svg')
-    txt = generate_title(str(x_var) + ' by ' + 'country_name')
-    plt.title(txt)
-    plt.tight_layout()
+    plt.savefig(output_folder / f'{x_var} by country.svg')
     plt.show()
-    
+
 """
 corr between unemployment and [pct_agriculture_employment', 'pct_industry_employment','pct_services_employment]
 """
@@ -1029,17 +1021,14 @@ for x_v in corr_list:
                  size = 5,
                  hue = 'income_group')
     plt.ylabel('Unemployment Rate')
-    txt = generate_title(str(x_v) + ' vs ' + 'unemployment_pct')
-    plt.title(txt)
     plt.savefig(output_folder / f'{x_v} vs unemployment rate.svg')
-    plt.tight_layout()
     plt.show()
-    
+
 
 """
 air pollution for lower middle income group
 """
-### compulsory education year 
+### compulsory education year
 # worldwide
 sns.pairplot(x_vars = ['compulsory_edu_yrs'],
              y_vars = ['avg_air_pollution'],
@@ -1056,7 +1045,7 @@ sns.pairplot(x_vars = ['compulsory_edu_yrs'],
              size = 5)
 plt.title('Education (year) vs Air Pollution. Central Africa 1 Lower Middle Income Country')
 plt.show()
-    
+
 ### male empolyment
 sns.pairplot(x_vars = ['pct_male_employment'],
              y_vars = ['avg_air_pollution'],
@@ -1073,7 +1062,7 @@ sns.pairplot(x_vars = ['pct_male_employment'],
              size = 5)
 plt.title('Male Employment Rate vs Air Pollution. Central Africa 1 Lower Middle Income Country')
 plt.show()
-  
+
 """
 women in parliament for lower middle income group
 """
@@ -1139,7 +1128,7 @@ plt.scatter(x = 'gni_index',
             color = 'blue')
 t = '''
 Median GNI of 
-Lower Middle Income coutries'''
+Lower Middle Income countries'''
 plt.annotate(t,
              xy = (1600, 'Comoros'),
              xytext = (2000, 'Rwanda'),
@@ -1231,25 +1220,33 @@ sns.pairplot(data = low_income_ca,
              y_vars = ['access_to_electricity_rural'],
              size = 5,
              palette = 'plasma')
+for line in range(0, low_income_ca.shape[0]):
+    plt.text(low_income_ca.urban_population_pct[line]+0.2, low_income_ca.access_to_electricity_rural[line], low_income_ca.country_name[line], horizontalalignment='left',
+            size='medium', color='black', weight='semibold')
 plt.title('Urban Population % vs. Rural Access to Electricity')
 plt.xlabel('Urban Population (% of total)')
 plt.ylabel('Access to Electricity, Rural (% of rural population)')
 plt.tight_layout()
-plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.svg')
-plt.show()   
+plt.subplots_adjust(right=0.65)
+# plt.savefig(output_folder / 'low - urban pop % vs. rural access to electricity.svg')
+plt.show()
 
 # higher urban pop growth vs. lesser access to electricity (population)
 sns.pairplot(data = low_income_ca,
              x_vars = ['urban_population_growth_pct'],
              y_vars = ['access_to_electricity_pop'],
-             size = 5,
+             size = 6,
              palette = 'plasma')
+for line in range(0, low_income_ca.shape[0]):
+    plt.text(low_income_ca.urban_population_growth_pct[line]-0.15, low_income_ca.access_to_electricity_pop[line]+1, low_income_ca.country_name[line], horizontalalignment='left',
+            size='medium', color='black', weight='semibold')
+# plt.subplots_adjust(right=0.65)
 plt.title('Urban Population Growth vs. Population Access to Electricity')
 plt.xlabel('Urban Population Growth (annual %)')
 plt.ylabel('Access to Electricity (% of population)')
 plt.tight_layout()
 plt.savefig(output_folder / 'low - urban pop growth vs. population access to electricity.svg')
-plt.show() 
+plt.show()
 
 # higher air pollution = higher hiv incidence
 sns.pairplot(data = low_income_ca,
@@ -1262,7 +1259,7 @@ plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('HIV incidence (% of uninfected population ages 15-49)')
 plt.tight_layout()
 plt.savefig(output_folder/ 'low - avg air pollution vs. HIV incidence.svg')
-plt.show() 
+plt.show()
 
 # higher air pollution % vs. lesser access to electricity (urban)
 sns.pairplot(data = low_income_ca,
@@ -1275,7 +1272,7 @@ plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Access to Electricity, urban (% of urban population)')
 plt.tight_layout()
 plt.savefig(output_folder / 'low - avg air pollution % vs. urban access to electricity.svg')
-plt.show() 
+plt.show()
 
 
 ############################################################################
@@ -1293,7 +1290,7 @@ plt.ylabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.title('Compulsory Education vs Air Pollution')
 plt.tight_layout()
 plt.savefig(output_folder / 'lowmid - compulsory edu yrs % vs. air pollution.svg')
-plt.show() 
+plt.show()
 
 # higher urban pop = lesser female employment
 sns.pairplot(data = lower_middle_income_ca,
@@ -1306,7 +1303,7 @@ plt.ylabel('Female Employment (% of female population)')
 plt.tight_layout()
 plt.title('Urban Population vs Female Employment')
 plt.savefig(output_folder / 'lowmid - Urban pop vs. female employment.svg')
-plt.show() 
+plt.show()
 
 #  higher air pollution = lesser male employment
 sns.pairplot(data = lower_middle_income_ca,
@@ -1345,7 +1342,7 @@ clean_no_high = clean_data[clean_data['income_group'] != 'High income']
 no_us = clean_no_high[clean_no_high['Hult_Team_Regions'] != 'Central Africa 1']
 
 
-fig, ax = plt.subplots(figsize=(10,10)) 
+fig, ax = plt.subplots(figsize=(10,10))
 sns.swarmplot(x = 'income_group',
               y = 'gni_index',
               data = no_us,
@@ -1361,7 +1358,6 @@ plt.xlabel('Income Group')
 plt.ylabel('GNI (per capita)')
 plt.title('Gross National Income for Each Country by Income Group')
 plt.show()
-plt.savefig(output_folder / 'ragion by income group')
 
 
 

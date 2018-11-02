@@ -1474,8 +1474,6 @@ plt.ylabel('GNI (per capita)')
 plt.title('Gross National Income for Each Country by Income Group', fontsize=20)
 plt.savefig(output_folder / 'region by income group')
 plt.show()
-<<<<<<< Updated upstream
-=======
 
 """
 Lower middle income)  
@@ -1609,14 +1607,3 @@ plt.ylabel('Access to electricity (% of population)')
 plt.tight_layout()
 plt.savefig(output_folder / 'Urban Population vs FAccess to Electricity (low).png')
 plt.show()
-
-
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes

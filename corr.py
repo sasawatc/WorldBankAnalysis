@@ -68,16 +68,7 @@ country_data.boxplot(column=['gdp_usd'], by = 'income_group')
 country_data.boxplot(column=['gni_index'], by = 'income_group')
 """Use gni instead of gdp because gni correlates more with the corresponding income groups; it has less extreme outliers"""
 
-# ------> homicides boxplot
-# country_data.boxplot(column = 'homicides_per_100k', by = 'income_group')
-# plt.show()
 
-###############################################################################
-# Create variables for country_data excluding Equatorial Guinea (possibly doesn't belong in Central Africa 1)
-###############################################################################
-
-
-###############################################################################
 # Distplots (without cutoffs)
 ###############################################################################
 ## access_to_electricity_rural
@@ -547,7 +538,7 @@ plt.ylabel('')
 plt.show()
 ###############################################################################
 # Analyze Outliers
-###############################################################################
+############################################################################### ---------->> take out removed columns
 
 country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] + country_data['out_CO2_emissions_per_capita'] + country_data['out_pct_female_employment'] + country_data['out_pct_male_employment'] + country_data['out_pct_services_employment'] + country_data['out_exports_pct_gdp'] + country_data['out_fdi_pct_gdp'] + country_data['out_gni_index'] + country_data['out_gdp_usd'] + country_data['out_internet_usage_pct'] + country_data['out_avg_air_pollution'])
 
@@ -704,35 +695,26 @@ plt.xlabel('Central Africa 1 -- lower middle income')
 plt.show()
 
 ###############################################################################
-# Creating separate datasets for each income group
-###############################################################################
-
-low_income_df = country_data[country_data['income_group'] == 'Low income']
-
-lowmid_income_df = country_data[country_data['income_group'] == 'Lower middle income']
-
-upmid_income_df = country_data[country_data['income_group'] == 'Upper middle income']
-
-###############################################################################
 # Correlation Matrix for all variables without flags
-###############################################################################    
+##############################################################################
+#-------> remove flags for cleaner correlation matrix
 
 #low income group correlations
-low_income_corr =low_income_df.corr().round(2)
-print(low_income_corr)
+low_income_ca_corr =low_income_ca.corr().round(2)
+print(low_income_ca_corr)
 
 fig, ax = plt.subplots(figsize=(8,8))
-sns.heatmap(low_income_corr, cmap='Blues',square = True,
+sns.heatmap(low_income_ca_corr, cmap='Blues',square = True,
             annot = False,
             linecolor = 'black',
             linewidths = 0.5)
 
 #lower middle income group correlations
-lowmid_income_corr =lowmid_income_df.corr().round(2)
-print(lowmid_income_corr)
+lower_middle_income_corr =lower_middle_income_ca.corr().round(2)
+print(lower_middle_income_corr)
 
 fig, ax = plt.subplots(figsize=(8,8))
-sns.heatmap(lowmid_income_corr, cmap='Blues',square = True,
+sns.heatmap(lower_middle_income_corr, cmap='Blues',square = True,
             annot = False,
             linecolor = 'black',
             linewidths = 0.5)
@@ -1053,6 +1035,7 @@ sns.pairplot(x_vars = ['compulsory_edu_yrs'],
 plt.title('Education (year) vs Air Pollution. Worldwide Lower Middle Income Country')
 plt.show()
 
+<<<<<<< Updated upstream
 
 # central Africa 1
 sns.pairplot(x_vars = ['compulsory_edu_yrs'],
@@ -1330,5 +1313,30 @@ plt.ylabel('Employment in Industry (% of total employment)')
 plt.tight_layout()
 plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.png')
 plt.show()
+=======
+############################################################################
+# Compare urban population for Low Income Countries (Central Africa 1)
+#############################################################################
+
+# urban pop % vs. access to electricity (rural)
+sns.pairplot(data = central_africa1_df,
+             x_vars = ['urban_population_pct'],
+             y_vars = ['access_to_electricity_rural'],
+             palette = 'plasma')
+>>>>>>> Stashed changes
 
 
+plt.tight_layout()
+plt.savefig('urban pop % vs. rural access to electricity.png')
+plt.show()   
+
+# urban pop growth vs. access to electricity (all)
+sns.pairplot(data = central_africa1_df,
+             x_vars = ['urban_population_growth_pct'],
+             y_vars = ['access_to_electricity_pop'],
+             palette = 'plasma')
+
+
+plt.tight_layout()
+plt.savefig('urban pop growth vs. all access to electricity.png')
+plt.show() 

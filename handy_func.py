@@ -22,6 +22,7 @@
 # output = pd.merge(gni_2014_df, clean_df, left_on='Country Code', right_on='country_code')
 
 import pandas as pd
+import re
 
 
 def extract_mdg_indicator(indicator_code: str, index_col: str, indicator_title: str, mdg_file_path: str,
@@ -84,3 +85,15 @@ def replace_na_skewness_by_group(df: pd.DataFrame, by: str, skew_threshold: floa
             each_df.loc[:, col] = replace_na_skewness(col_series=each_df.loc[:, col])
 
     return pd.concat(grouped_df_lst, ignore_index=True)
+
+
+def generate_title(txt: str) -> str:
+    special_txt = {'pct': '%', 'vs': 'vs', 'hiv': 'HIV', 'gni': 'GNI', 'co2': 'CO2', 'gdp': 'GDP', 'usd': 'USD',
+                   'fdi': 'FDI', 'avg': 'AVG'}
+    txt = txt.replace('_', ' ')
+    txt = txt.title()
+
+    pattern = re.compile('|'.join(special_txt.keys()))
+    result = pattern.sub(lambda x: special_txt[x.group()], txt.lower())
+
+    return result

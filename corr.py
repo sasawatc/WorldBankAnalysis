@@ -396,6 +396,9 @@ check = (country_data.loc[:, ['avg_air_pollution', 'out_avg_air_pollution']].sor
 # country_data['out_tax_revenue_pct_gdp'].abs().sum()
 # check = (country_data.loc[ : , ['tax_revenue_pct_gdp', 'out_tax_revenue_pct_gdp']].sort_values('tax_revenue_pct_gdp', ascending = False))
 
+
+
+
 ### Kai Yi's part ###
 no_eg = country_data[country_data['country_name'] != 'Equatorial Guinea']
 ## exports_pct_gdp
@@ -537,7 +540,37 @@ plt.show()
 ###############################################################################
 # Analyze Outliers
 ############################################################################### ---------->> take out removed columns
+# count outliers
+country_data['out_total'] = country_data[['out_avg_air_pollution',
+                                                 'out_gdp_usd', 
+                                                 'out_pct_services_employment',
+                                                 'out_pct_male_employment',
+                                                 'out_pct_female_employment',
+                                                 'out_CO2_emissions_per_capita',
+                                                 'out_access_to_electricity_urban',
+                                                 'out_access_to_electricity_rural',
+                                                 'out_gni_index',
+                                                 'out_internet_usage_pct',
+                                                 'out_fdi_pct_gdp',
+                                                 'out_exports_pct_gdp']].sum(axis=1)
 
+# plot outliers
+sns.pairplot(x_vars = ['out_total'],
+             y_vars = ["country_name"],
+             data = country_data,
+             hue = 'income_group',
+             size = 6,
+             plot_kws={"s": 100})
+plt.xticks([0, 1, 2, 3, 4])
+plt.xlabel('Total Outliers')
+plt.ylabel('')
+plt.title("Total Outliers by Country", fontsize = 15)
+plt.tight_layout()
+plt.savefig(output_folder / 'total outlier layout.png')
+plt.show()
+
+
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 country_data['out_sum'] = (
             country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
@@ -574,6 +607,8 @@ country_data['out_sum'] = (country_data['out_access_to_electricity_rural'] + cou
 
 check = (country_data.loc[ : , ['out_sum', 'out_access_to_electricity_rural', 'out_access_to_electricity_urban', 'out_CO2_emissions_per_capita', 'out_pct_female_employment',  'out_pct_male_employment', 'out_pct_services_employment', 'out_exports_pct_gdp', 'out_fdi_pct_gdp', 'out_gni_index', 'out_gdp_usd', 'out_internet_usage_pct', 'out_avg_air_pollution']].sort_values(['out_sum'], ascending = False))
 >>>>>>> Stashed changes
+=======
+>>>>>>> master
 
 # low income Central Africa 1 (CA)
 low_income_ca = country_data[country_data.income_group == 'Low income']

@@ -88,12 +88,12 @@ def replace_na_skewness_by_group(df: pd.DataFrame, by: str, skew_threshold: floa
 
 
 def generate_title(txt: str) -> str:
-    special_txt = {'pct': '%', 'vs': 'vs', 'hiv': 'HIV', 'gni': 'GNI', 'co2': 'CO2', 'gdp': 'GDP', 'usd': 'USD',
-                   'fdi': 'FDI', 'avg': 'AVG'}
+    special_txt = {'Pct': '%', 'Vs': 'vs', 'Hiv': 'HIV', 'Gni': 'GNI', 'Co2': 'CO2', 'Gdp': 'GDP', 'Usd': 'USD',
+                   'Fdi': 'FDI', 'Avg': 'AVG'}
     txt = txt.replace('_', ' ')
     txt = txt.title()
 
     pattern = re.compile('|'.join(special_txt.keys()))
-    result = pattern.sub(lambda x: special_txt[x.group()], txt.lower())
+    result = pattern.sub(lambda x: special_txt[x.group()], txt)
 
     return result

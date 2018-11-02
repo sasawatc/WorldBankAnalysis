@@ -68,7 +68,7 @@ for col in country_data.select_dtypes(include=['float64', 'int']):
     plt.suptitle("")
     plt.tight_layout()
     plt.savefig(boxplot_folder / f'{col}')
-    plt.show()
+    # plt.show()
 
 country_data.boxplot(column=['gdp_usd'], by='income_group')
 
@@ -100,7 +100,7 @@ plt.xlabel('Avg Air Pollution')
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'electricity & pollution Histograms without cutoffs.png')
-plt.show()
+# plt.show()
 
 # pct_female_employment
 plt.subplot(2, 2, 1)
@@ -124,7 +124,7 @@ plt.xlabel('Services Employment')
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'Employment & Literacy Histograms without cutoffs.png')
-plt.show()
+# plt.show()
 
 # tax_revenue_pct_gdp
 # plt.subplot(2,2,1)
@@ -149,7 +149,7 @@ plt.xlabel('Exports')
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'Money Histograms without cutoffs.png')
-plt.show()
+# plt.show()
 
 # fdi_pct_gdp
 plt.subplot(1, 2, 1)
@@ -162,7 +162,7 @@ sns.distplot(country_data['internet_usage_pct'], bins='fd', kde=False, rug=True,
 plt.xlabel('Individuals using the Internet (% of population)')
 
 plt.savefig(distplot_folder / 'FDI & Internet Histograms without cutoffs.png')
-plt.show()
+# plt.show()
 
 ###############################################################################
 # outlier cutoffs
@@ -215,7 +215,7 @@ plt.axvline(x=airpoll_limit_lo, label='Outlier Thresholds', linestyle='--', colo
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'electricity & pollution Histograms with cutoffs.png')
-plt.show()
+# plt.show()
 
 # pct_female_employment
 plt.subplot(2, 2, 1)
@@ -243,7 +243,7 @@ plt.axvline(x=servemploy_lo, label='Outlier Thresholds', linestyle='--', color='
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'Employment & Literacy Histograms with cutoffs.png')
-plt.show()
+# plt.show()
 
 # tax_revenue_pct_gdp
 # plt.subplot(2,2,1)
@@ -274,7 +274,7 @@ plt.axvline(x=exports_pct_gdp_limit, label='Outlier Thresholds', linestyle='--',
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'Money Histograms with cutoffs.png')
-plt.show()
+# plt.show()
 
 # fdi_pct_gdp
 plt.subplot(2, 1, 1)
@@ -291,7 +291,7 @@ plt.axvline(x=internet_usage_pct_low, label='Outlier Thresholds', linestyle='--'
 
 plt.tight_layout()
 plt.savefig(distplot_folder / 'FDI & Internet Histograms with cutoffs.png')
-plt.show()
+# plt.show()
 
 ###############################################################################
 # Flagging Outliers
@@ -416,7 +416,7 @@ for index, value in enumerate(country_data['exports_pct_gdp']):
 
 # histogram
 sns.distplot(country_data['exports_pct_gdp'])
-plt.show()
+# plt.show()
 
 # plot
 sns.pairplot(x_vars=['exports_pct_gdp'],
@@ -429,7 +429,7 @@ plt.axvline(x=exports_pct_gdp_limit,
 plt.title('Export of Goods and Services by Country')
 plt.xlabel('Export of Goods and Services (% of GDP)')
 plt.ylabel('')
-plt.show()
+# plt.show()
 
 # no Equatorial Guinea
 sns.pairplot(x_vars=['exports_pct_gdp'],
@@ -442,7 +442,7 @@ plt.axvline(x=exports_pct_gdp_limit,
 plt.title('Export of Goods and Services by Country (Equatorial Guinea excluded)')
 plt.xlabel('Export of Goods and Services (% of GDP)')
 plt.ylabel('')
-plt.show()
+# plt.show()
 
 # fdi_pct_gdp
 # country_data[country_data['income_group'] == 'Low income']['fdi_pct_gdp']
@@ -454,7 +454,7 @@ for index, value in enumerate(country_data['fdi_pct_gdp']):
 
 # histogram
 sns.distplot(country_data['fdi_pct_gdp'])
-plt.show()
+# plt.show()
 
 # plot
 sns.pairplot(x_vars=['fdi_pct_gdp'],
@@ -467,7 +467,7 @@ plt.axvline(x=fdi_pct_gdp_limit,
 plt.title('Foreign Direct Investment by Country')
 plt.xlabel('Foreign Derict Investment (% of GDP)')
 plt.ylabel('')
-plt.show()
+# plt.show()
 
 # internet_usage_pct
 # country_data[country_data['income_group'] == 'Lower middle income']['internet_usage_pct']
@@ -481,7 +481,7 @@ for index, value in enumerate(country_data['internet_usage_pct']):
 
 # histogram
 sns.distplot(country_data['internet_usage_pct'])
-plt.show()
+# plt.show()
 
 # plot
 sns.pairplot(x_vars=['internet_usage_pct'],
@@ -498,7 +498,7 @@ plt.axvline(x=internet_usage_pct_low,
 plt.title('Internet Usage by Country')
 plt.xlabel('Internet Usage')
 plt.ylabel('')
-plt.show()
+# plt.show()
 
 # gni_index
 # country_data[country_data['income_group'] == 'Low income']['gni_index']
@@ -513,7 +513,7 @@ check = (country_data.loc[:, ['gni_index', 'out_gni_index']].sort_values('gni_in
 
 # histogram
 sns.distplot(country_data['gni_index'])
-plt.show()
+# plt.show()
 
 # plot
 sns.pairplot(x_vars=['gni_index'],
@@ -527,7 +527,7 @@ plt.axvline(x=gni_index_limit,
 plt.title('Gross National Income by Country')
 plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
-plt.show()
+# plt.show()
 
 # no EG
 sns.pairplot(x_vars=['gni_index'],
@@ -541,7 +541,7 @@ plt.axvline(x=gni_index_limit,
 plt.title('Gross National Income by Country (Equatorial Guinea excluded)')
 plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
-plt.show()
+# plt.show()
 ###############################################################################
 # Analyze Outliers
 ###############################################################################
@@ -573,7 +573,7 @@ plt.ylabel('')
 plt.title("Total Outliers by Country", fontsize=15)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'total outlier layout.png')
-plt.show()
+# plt.show()
 
 country_data['out_sum'] = (
         country_data['out_access_to_electricity_rural'] + country_data['out_access_to_electricity_urban'] +
@@ -750,7 +750,7 @@ sns.heatmap(ca_lower_mid_cor,
             xticklabels=True,
             linewidths=1)
 plt.xlabel('Central Africa 1 -- lower middle income')
-plt.show()
+# plt.show()
 
 ###############################################################################
 # Correlation Matrix for all variables without flags
@@ -791,7 +791,7 @@ sns.lmplot(x='gni_index',
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
 plt.title('GNI vs CO2 Emissions')
-plt.show()
+# plt.show()
 
 # no EG
 sns.lmplot(x='gni_index',
@@ -801,7 +801,7 @@ sns.lmplot(x='gni_index',
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
 plt.title('GNI vs CO2 Emissions (Equatorial Guinea excluded)')
-plt.show()
+# plt.show()
 
 # just low income
 sns.lmplot(x='gni_index',
@@ -811,7 +811,7 @@ sns.lmplot(x='gni_index',
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
 plt.title('GNI vs CO2 Emissions for Low Income Group')
-plt.show()
+# plt.show()
 
 # just lower middle income
 sns.lmplot(x='gni_index',
@@ -821,7 +821,7 @@ sns.lmplot(x='gni_index',
 plt.xlabel('Gross National Income')
 plt.ylabel('CO2 Emissions (per capita)')
 plt.title('GNI vs CO2 Emissions for Lower Middle Income Group')
-plt.show()
+# plt.show()
 
 """
 female vs male employment
@@ -834,7 +834,7 @@ sns.lmplot(x='pct_female_employment',
 plt.xlabel('Female employment')
 plt.ylabel('Male employment')
 plt.title('Female vs Male Employment')
-plt.show()
+# plt.show()
 
 # no EG
 # sns.lmplot(x = 'pct_female_employment',
@@ -844,7 +844,7 @@ plt.show()
 # plt.xlabel('Female employment')
 # plt.ylabel('Male employment')
 # plt.title('Female vs Male Employment (Equatorial Guinea excluded)')
-# plt.show()
+# # plt.show()
 
 """
 service vs agriculture
@@ -856,7 +856,7 @@ sns.lmplot(x='pct_agriculture_employment',
 plt.xlabel('Agriculture Employment')
 plt.ylabel('Services employment')
 plt.title('Agriculture vs Services Employment')
-plt.show()
+# plt.show()
 
 # no EG
 sns.lmplot(x='pct_agriculture_employment',
@@ -866,7 +866,7 @@ sns.lmplot(x='pct_agriculture_employment',
 plt.xlabel('Agriculture Employment')
 plt.ylabel('Services employment')
 plt.title('Agriculture vs Services Employment (Equatorial Guinea excluded)')
-plt.show()
+# plt.show()
 
 """
 urban pop vs export gdp
@@ -878,7 +878,7 @@ sns.lmplot(x='urban_population_pct',
 plt.xlabel('Urban Population (% of total population)')
 plt.ylabel('Export (% of GDP)')
 plt.title('Urban Population vs Export')
-plt.show()
+# plt.show()
 
 # no EG
 sns.lmplot(x='urban_population_pct',
@@ -888,7 +888,7 @@ sns.lmplot(x='urban_population_pct',
 plt.xlabel('Urban Population (% of total population)')
 plt.ylabel('Export (% of GDP)')
 plt.title('Urban Population vs Export (Equatorial Guinea excluded)')
-plt.show()
+# plt.show()
 
 """
 HIV vs GNI
@@ -900,7 +900,7 @@ sns.lmplot(x='gni_index',
 plt.xlabel('Gross National Income')
 plt.ylabel('Incidence of HIV')
 plt.title('GNI vs Incidence of HIV')
-plt.show()
+# plt.show()
 
 # no EG
 sns.lmplot(x='gni_index',
@@ -910,7 +910,7 @@ sns.lmplot(x='gni_index',
 plt.xlabel('Gross National Income')
 plt.ylabel('Incidence of HIV')
 plt.title('GNI vs Incidence of HIV (Equatorial Guinea excluded)')
-plt.show()
+# plt.show()
 
 """
 electricty rural vs GDP growth rate
@@ -922,7 +922,7 @@ sns.lmplot(x='access_to_electricity_rural',
 plt.xlabel('Access to electricity, rural (% of rural population)')
 plt.ylabel('GDP growth (annual %)')
 plt.title('Access to Electricity, Rural vs GDP Growth Rate')
-plt.show()
+# plt.show()
 
 # no EG
 sns.lmplot(x='access_to_electricity_rural',
@@ -932,7 +932,7 @@ sns.lmplot(x='access_to_electricity_rural',
 plt.xlabel('Access to electricity, rural (% of rural population)')
 plt.ylabel('GDP growth (annual %)')
 plt.title('Access to Electricity, Rural vs GDP Growth Rate (Equatorial Guinea excluded)')
-plt.show()
+# plt.show()
 
 """
 electricty pop vs internet usage
@@ -944,7 +944,7 @@ sns.lmplot(x='access_to_electricity_pop',
 plt.xlabel('Access to electricity, population (% of population)')
 plt.ylabel('Individuals using the Internet (% of population)')
 plt.title('Access to Electricity, Population vs Individuals Using the Internet')
-plt.show()
+# plt.show()
 
 # no EG
 sns.lmplot(x='access_to_electricity_pop',
@@ -954,7 +954,7 @@ sns.lmplot(x='access_to_electricity_pop',
 plt.xlabel('Access to electricity, population (% of population)')
 plt.ylabel('Individuals using the Internet (% of population)')
 plt.title('Access to Electricity, Population vs Individuals Using the Internet (Equatorial Guinea excluded)')
-plt.show()
+# plt.show()
 
 """
 fdi vs tax revenue
@@ -966,7 +966,7 @@ fdi vs tax revenue
 # plt.xlabel('Access to electricity, population (% of population)')
 # plt.ylabel('Foreign direct investment (% of GDP)')
 # plt.title('Foreign Direct Investment vs Tax Revenue')
-# plt.show()
+# # plt.show()
 #
 # no EG
 # sns.lmplot(x = 'fdi_pct_gdp',
@@ -976,7 +976,7 @@ fdi vs tax revenue
 # plt.xlabel('Access to electricity, population (% of population)')
 # plt.ylabel('Foreign direct investment (% of GDP)')
 # plt.title('Foreign Direct Investment vs Tax revenue (Equatorial Guinea excluded)')
-# plt.show()
+# # plt.show()
 
 
 ###############################################################################
@@ -987,7 +987,7 @@ sns.violinplot(x='income_group',
                data=no_eg,
                orient='v')
 
-plt.show()
+# plt.show()
 
 """
 scatter plot countries with GNI by income group
@@ -1027,7 +1027,7 @@ for x in gni_x_list:
     txt = generate_title(str(x) + ' vs ' + 'gni_index')
     plt.title(txt)
     plt.savefig(pairplot_folder / f'{x} vs GNI.png')
-    plt.show()
+    # plt.show()
 
 """
 scatter plot x variables with country
@@ -1067,7 +1067,7 @@ for x_var in x_list:
     plt.title(txt)
     plt.tight_layout()
     plt.savefig(pairplot_folder / f'{x_var} by country.png')
-    plt.show()
+    # plt.show()
 
 """
 corr between unemployment and [pct_agriculture_employment', 'pct_industry_employment','pct_services_employment]
@@ -1088,7 +1088,7 @@ for x_v in corr_list:
     plt.title(txt)
     plt.savefig(pairplot_folder / f'{x_v} vs unemployment rate.png')
     plt.tight_layout()
-    plt.show()
+    # plt.show()
 
 """
 air pollution for lower middle income group
@@ -1100,7 +1100,7 @@ sns.pairplot(x_vars=['compulsory_edu_yrs'],
              data=lower_middle_income_world,
              size=5)
 plt.title('Education (year) vs Air Pollution. Worldwide Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 # central Africa 1
 sns.pairplot(x_vars=['compulsory_edu_yrs'],
@@ -1108,7 +1108,7 @@ sns.pairplot(x_vars=['compulsory_edu_yrs'],
              data=lower_middle_income_ca,
              size=5)
 plt.title('Education (year) vs Air Pollution. Central Africa 1 Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 ### male empolyment
 sns.pairplot(x_vars=['pct_male_employment'],
@@ -1116,7 +1116,7 @@ sns.pairplot(x_vars=['pct_male_employment'],
              data=lower_middle_income_world,
              size=5)
 plt.title('Male Employment Rate vs Air Pollution. Worldwide Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 # central Africa 1
 sns.pairplot(x_vars=['pct_male_employment'],
@@ -1124,7 +1124,7 @@ sns.pairplot(x_vars=['pct_male_employment'],
              data=lower_middle_income_ca,
              size=5)
 plt.title('Male Employment Rate vs Air Pollution. Central Africa 1 Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 """
 women in parliament for lower middle income group
@@ -1136,7 +1136,7 @@ sns.pairplot(x_vars=['gdp_growth_pct'],
              data=lower_middle_income_world,
              size=5)
 plt.title('GDP Growth Rate vs Women in Parliament (%). Worldwide Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 # central Africa 1
 sns.pairplot(x_vars=['gdp_growth_pct'],
@@ -1144,7 +1144,7 @@ sns.pairplot(x_vars=['gdp_growth_pct'],
              data=lower_middle_income_ca,
              size=5)
 plt.title('GDP Growth Rate vs Women in Parliament (%). Central Africa 1 Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 ### unemployment rate
 # worldwide
@@ -1153,7 +1153,7 @@ sns.pairplot(x_vars=['unemployment_pct'],
              data=lower_middle_income_world,
              size=5)
 plt.title('Unemployment Rate vs Women in Parliament (%). Worldwide Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 # central Africa 1
 sns.pairplot(x_vars=['unemployment_pct'],
@@ -1161,7 +1161,7 @@ sns.pairplot(x_vars=['unemployment_pct'],
              data=lower_middle_income_ca,
              size=5)
 plt.title('Unemployment Rate vs Women in Parliament (%). Central Africa 1 Lower Middle Income Country')
-plt.show()
+# plt.show()
 
 """
 Congo Rep
@@ -1205,7 +1205,7 @@ plt.xlabel('Gross National Income ($ per capita)')
 plt.ylabel('')
 plt.tight_layout()
 plt.savefig(scatterplot_folder / 'GNI for congo.png')
-plt.show()
+# plt.show()
 
 # Foreign direct investment
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -1243,7 +1243,7 @@ plt.xlabel('Foreign direct investment (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
 plt.savefig(scatterplot_folder / 'Foreign direct investment for congo.png')
-plt.show()
+# plt.show()
 
 # Exports of goods and services
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -1279,7 +1279,7 @@ plt.xlabel('Exports of Goods and Services (% of GDP)')
 plt.ylabel('')
 plt.tight_layout
 plt.savefig(scatterplot_folder / 'Exports of goods and services for congo.png')
-plt.show()
+# plt.show()
 
 """
 Equatorial Guinea
@@ -1306,7 +1306,7 @@ plt.title("Public Spending by Country", fontsize=20)
 plt.annotate('Equatorial Guinea',
              xy=(6.2, 0.48))
 plt.savefig(scatterplot_folder / 'Public Spending for Equatorial Guinea.png')
-plt.show()
+# plt.show()
 
 # gni
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -1327,7 +1327,7 @@ plt.xlabel('Gross National Income ($ per capita)')
 plt.title("Gross National Income by Country", fontsize=20)
 plt.tight_layout()
 plt.savefig(scatterplot_folder / 'GNI for Equatorial Guinea.png')
-plt.show()
+# plt.show()
 
 ############################################################################
 # Interesting Correlations for Low Income Countries (Central Africa 1)
@@ -1351,7 +1351,7 @@ plt.ylabel('Access to Electricity, Rural (% of rural population)')
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'low - urban pop % vs. rural access to electricity.png')
-plt.show()
+# plt.show()
 
 # higher urban pop growth vs. lesser access to electricity (population)
 sns.pairplot(data=low_income_ca,
@@ -1371,7 +1371,7 @@ plt.ylabel('Access to Electricity (% of population)')
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'low - urban pop growth vs. population access to electricity.png')
-plt.show()
+# plt.show()
 
 # higher air pollution = higher hiv incidence
 sns.pairplot(data=low_income_ca,
@@ -1384,7 +1384,7 @@ plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('HIV incidence (% of uninfected population ages 15-49)')
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'low - avg air pollution vs. HIV incidence.png')
-plt.show()
+# plt.show()
 
 # higher air pollution % vs. lesser access to electricity (urban)
 sns.pairplot(data=low_income_ca,
@@ -1397,7 +1397,7 @@ plt.xlabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.ylabel('Access to Electricity, urban (% of urban population)')
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'low - avg air pollution % vs. urban access to electricity.png')
-plt.show()
+# plt.show()
 
 ############################################################################
 # Interesting Correlations for Lower Middle Income Countries (Central Africa 1)
@@ -1414,7 +1414,7 @@ plt.ylabel('Air Pollution, mean annual exposure (micrograms per cubic meter)')
 plt.title('Compulsory Education vs Air Pollution')
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'lowmid - compulsory edu yrs % vs. air pollution.png')
-plt.show()
+# plt.show()
 
 # higher urban pop = lesser female employment
 sns.pairplot(data=lower_middle_income_ca,
@@ -1427,7 +1427,7 @@ plt.ylabel('Female Employment (% of female population)')
 plt.tight_layout()
 plt.title('Urban Population vs Female Employment')
 plt.savefig(pairplot_folder / 'lowmid - Urban pop vs. female employment.png')
-plt.show()
+# plt.show()
 
 #  higher air pollution = lesser male employment
 sns.pairplot(data=lower_middle_income_ca,
@@ -1440,7 +1440,7 @@ plt.ylabel('Male Employment (% of male population)')
 plt.title('Air Pollution vs Male Employment')
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'lowmid - Air pollution vs male employment.png')
-plt.show()
+# plt.show()
 
 # higher urban pop = lower industry employment
 sns.pairplot(data=lower_middle_income_ca,
@@ -1453,7 +1453,7 @@ plt.ylabel('Employment in Industry (% of total employment)')
 plt.title('Employment in Industry vs Urban Population')
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'lowmid - Urban pop vs. industry employment.png')
-plt.show()
+# plt.show()
 
 """"
 GNI group by income group
@@ -1486,6 +1486,7 @@ plt.savefig(output_folder / 'region by income group')
 <<<<<<< HEAD
 =======
 plt.savefig(swarmplot_folder / 'region by income group')
+<<<<<<< HEAD
 >>>>>>> master
 plt.show()
 <<<<<<< HEAD
@@ -1497,6 +1498,9 @@ plt.show()
 <<<<<<< Updated upstream
 =======
 =======
+>>>>>>> master
+=======
+# plt.show()
 >>>>>>> master
 
 """
@@ -1523,7 +1527,7 @@ plt.ylabel('Employment in industry (% of total employment)', fontsize=14)
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'Urban Population vs Industry Employment (lower middle).png')
-plt.show()
+# plt.show()
 
 """
 Lower middle income
@@ -1549,7 +1553,7 @@ plt.ylabel('Contributing family workers, female', fontsize=14)
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'Urban Population vs Female Family Workers (lower middle).png')
-plt.show()
+# plt.show()
 
 """
 low income
@@ -1580,7 +1584,7 @@ plt.ylabel('PM2.5 Air Pollution')
 plt.tight_layout()
 
 plt.savefig(scatterplot_folder / 'Higher air pollution → Higher HIV incidence GDP Growth (.79) .png')
-plt.show()
+# plt.show()
 
 """
 low income
@@ -1609,7 +1613,7 @@ plt.ylabel('PM2.5 Air Pollution')
 plt.tight_layout()
 
 plt.savefig(scatterplot_folder / 'Higher air pollution → Access to electricity GDP Growth (.79) .png')
-plt.show()
+# plt.show()
 
 """
 Low income countries
@@ -1635,6 +1639,7 @@ plt.ylabel('Access to electricity (% of population)', fontsize=14)
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'Urban Population growth vs Access to Electricity (low).png')
+<<<<<<< HEAD
 plt.show()
 <<<<<<< HEAD
 
@@ -1654,4 +1659,7 @@ plt.show()
 
 >>>>>>> master
 =======
+>>>>>>> master
+=======
+# plt.show()
 >>>>>>> master

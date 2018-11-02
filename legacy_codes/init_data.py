@@ -135,7 +135,7 @@ central_africa1_df = central_africa1_df.drop(columns=['Country Code'])
 # fill in the remaining NAs with mean/median based on skewness
 
 for col in central_africa1_df.columns:
-    central_africa1_df[col] = replace_na_mean_median(col_series=central_africa1_df[col])
+    central_africa1_df[col] = replace_na_skewness(col_series=central_africa1_df[col])
 
 
 ##############################################################################################

@@ -963,6 +963,8 @@ for x in gni_x_list:
                  data = country_data,
                  hue = 'income_group',
                  size = 5)
+    sns.set(rc={'figure.figsize':(19.20,10.80)})
+    sns.set_style('white')
     plt.ylabel('GNI Index')
     plt.savefig(output_folder / f'{x} vs GNI.svg')
     plt.show()
@@ -1320,4 +1322,40 @@ plt.title('Employment in Industry vs Urban Population')
 plt.tight_layout()
 plt.savefig(output_folder / 'lowmid - Urban pop vs. industry employment.svg')
 plt.show()
+
+
+""""
+GNI group by income group
+"""
+low_median = low_income_world['gni_index'].median()
+lower_middle_median = lower_middle_income_world['gni_index'].median()
+upper_middle_median = upper_middle_income_world['gni_index'].median()
+clean_no_high = clean_data[clean_data['income_group'] != 'High income']
+no_us = clean_no_high[clean_no_high['Hult_Team_Regions'] != 'Central Africa 1']
+
+
+fig, ax = plt.subplots(figsize=(10,10))
+sns.swarmplot(x = 'income_group',
+              y = 'gni_index',
+              data = no_us,
+              hue = 'Hult_Team_Regions',
+              cmap = 'summer',
+              alpha = 0.2)
+sns.swarmplot(x = 'income_group',
+              y = 'gni_index',
+              data = country_data,
+              color = 'red')
+
+plt.xlabel('Income Group')
+plt.ylabel('GNI (per capita)')
+plt.title('Gross National Income for Each Country by Income Group')
+plt.show()
+
+
+
+
+
+
+
+
 

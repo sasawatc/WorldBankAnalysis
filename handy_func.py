@@ -56,15 +56,14 @@ def replace_na(main_df: pd.DataFrame, sub_df: pd.DataFrame, target_main: str, ta
     return main_df_copy
 
 
-def replace_na_mean_median(col_series: pd.Series, mode: str = 'auto') -> pd.Series:
-
+def replace_na_skewness(col_series: pd.Series, skew_threshold: float = 0.2, mode: str = 'auto') -> pd.Series:
     if mode == 'auto':
-        print("Skewness:", col_series.skew())
-        if -0.2 <= col_series.skew() <= 0.2:
-            print("Using MEAN")
+        # print("Skewness:", col_series.skew())
+        if -skew_threshold <= col_series.skew() <= skew_threshold:
+            # print("Using MEAN")
             return col_series.fillna(col_series.mean())
         else:
-            print("Using MEDIAN")
+            # print("Using MEDIAN")
             return col_series.fillna(col_series.median())
     elif mode == 'mean':
         return col_series.fillna(col_series.mean())
@@ -72,3 +71,16 @@ def replace_na_mean_median(col_series: pd.Series, mode: str = 'auto') -> pd.Seri
         return col_series.fillna(col_series.median())
     else:
         raise ValueError("invalid mode: only accepts 'auto', 'mean', 'median'")
+
+
+def replace_na_skewness_by_group(df: pd.DataFrame, by: str, skew_threshold: float = 0.2,
+                                 mode: str = 'auto') -> pd.DataFrame:
+    grouped_df_lst = list()
+    for group in df[by].unique():
+        grouped_df_lst.append(df[df[by] == group].copy())
+
+    for each_df in grouped_df_lst:
+        for col in each_df.select_dtypes(include=['float64', 'int']).columns:
+            each_df.loc[:, col] = replace_na_skewness(col_series=each_df.loc[:, col])
+
+    return pd.concat(grouped_df_lst, ignore_index=True)

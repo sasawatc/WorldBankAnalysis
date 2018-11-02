@@ -7,7 +7,7 @@ For initializing datasets
 
 from pandas import DataFrame
 
-__version__ = '0.6.6'
+__version__ = '0.7.0'
 __author__ = ('Joshua Thang, Kaiyi Zou, Khuyen Yu, '
               'Kristian Nielsen, Sasawat Chanate, Ying Li')
 
@@ -63,18 +63,10 @@ data_set = pd.merge(extracted_df, data_set,
 data_set = data_set.drop(columns=['Country Code'])
 
 ##############################################################################################
-# separate by income_group
-# data_set.income_group.unique()
-#
-# for group in data_set.income_group.unique():
-#     group_df = data_set[data_set.income_group == group]
+# separate by income_group and replace NA by mean/median according to skewness
 
-# for col in data_set.select_dtypes(include=['float64', 'int']).columns:
-#     data_set[col] = replace_na_mean_median(col_series=data_set[col])
-
-# fill in the remaining NAs in numeric columns with mean/median based on skewness
-for col in data_set.select_dtypes(include=['float64', 'int']).columns:
-    data_set[col] = replace_na_mean_median(col_series=data_set[col])
+data_set = replace_na_skewness_by_group(df=data_set,
+                                        by='income_group').copy()
 
 ##############################################################################################
 # reorder gni_index to be right before gdp_usd

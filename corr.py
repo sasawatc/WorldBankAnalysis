@@ -2,6 +2,7 @@ from adjustText import adjust_text  # requires package installation (conda insta
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
 from pathlib import Path
 from handy_func import *
@@ -10,6 +11,7 @@ from handy_func import *
 
 base_folder = Path('data/base')
 processed_folder = Path('data/processed')
+output_folder = Path('output')
 figs_folder = Path('figs')
 boxplot_folder = Path('figs/box_plot')
 distplot_folder = Path('figs/dist_plot')
@@ -1631,3 +1633,126 @@ adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'Urban Population growth vs Access to Electricity (low).png')
 # plt.show()
+
+
+"""
+HIV
+"""
+
+# lower Middle income: internet usage
+sns.pairplot(x_vars=['incidence_hiv'],
+             y_vars=['internet_usage_pct'],
+             data=lower_middle_income_ca,
+             kind='reg',
+             size=8)
+texts = []
+for line in range(0, lower_middle_income_ca.shape[0]):
+    texts.append(plt.text(lower_middle_income_ca.incidence_hiv[line],
+                          lower_middle_income_ca.internet_usage_pct[line],
+                          lower_middle_income_ca.country_name[line],
+                          horizontalalignment='left',
+                          size='large',
+                          color='black',
+                          weight='semibold'))
+plt.title('Incidence of HIV vs Individuals using the Internet \n Lower Middle Income Group', fontsize=16)
+plt.xlabel('Incidence of HIV', fontsize=14)
+plt.ylabel('Individuals using the Internet (% of population)', fontsize=14)
+adjust_text(texts)
+plt.tight_layout()
+plt.savefig(output_folder / 'Incidence of HIV vs Individuals using the Internet (lower mid).png')
+plt.show()
+
+
+# low income: air pollution
+sns.pairplot(x_vars='incidence_hiv',
+             y_vars='avg_air_pollution',
+             data=low_income_ca,
+             kind = 'reg',
+             size=8)
+#for line in range(0, lower_middle_income_ca.shape[0]):
+#    texts.append(plt.text(lower_middle_income_ca.incidence_hiv[line],
+#                          lower_middle_income_ca.internet_usage_pct[line]+1,
+#                          lower_middle_income_ca.country_name[line],
+#                          horizontalalignment='left',
+#                          size='large',
+#                          color='black',
+#                          weight='semibold'))
+plt.title('PM2.5 Air Pollution vs Incidence of HIV', fontsize=20)
+plt.xlabel('Incidence of HIV (% of uninfected population ages 15-49)', fontsize = 14)
+plt.ylabel('PM2.5 Air Pollution', fontsize = 14)
+plt.tight_layout()
+plt.savefig(scatterplot_folder / 'Higher air pollution → Higher HIV incidence GDP Growth (.79) .png')
+plt.show()
+
+# lower middle income: ccess to electricity
+sns.pairplot(x_vars=['incidence_hiv'],
+             y_vars=['access_to_electricity_pop'],
+             data=lower_middle_income_ca,
+             kind='reg',
+             size=8)
+texts = []
+for line in range(0, lower_middle_income_ca.shape[0]):
+    texts.append(plt.text(lower_middle_income_ca.incidence_hiv[line],
+                          lower_middle_income_ca.access_to_electricity_pop[line],
+                          lower_middle_income_ca.country_name[line],
+                          horizontalalignment='left',
+                          size='large',
+                          color='black',
+                          weight='semibold'))
+plt.title('Incidence of HIV vs Access to Electricity \n Lower Middle Income Group', fontsize=16)
+plt.xlabel('Incidence of HIV', fontsize=14)
+plt.ylabel('Access to electricity (% of population)', fontsize=14)
+adjust_text(texts)
+plt.tight_layout()
+plt.savefig(scatterplot_folder / 'Incidence of HIV vs Access to electricity (low).png')
+plt.show()
+
+
+# lower middle income: Higher percentage of agriculture employment
+sns.pairplot(x_vars=['incidence_hiv'],
+             y_vars=['pct_agriculture_employment'],
+             data=lower_middle_income_ca,
+             kind='reg',
+             size=8)
+texts = []
+for line in range(0, lower_middle_income_ca.shape[0]):
+    texts.append(plt.text(lower_middle_income_ca.incidence_hiv[line],
+                          lower_middle_income_ca.pct_agriculture_employment[line],
+                          lower_middle_income_ca.country_name[line],
+                          horizontalalignment='left',
+                          size='large',
+                          color='black',
+                          weight='semibold'))
+plt.title('Incidence of HIV vs Employment in agriculture \n Lower Middle Income Group', fontsize=16)
+plt.xlabel('Incidence of HIV', fontsize=14)
+plt.ylabel('Employment in agriculture (% of total employment)', fontsize=14)
+adjust_text(texts)
+plt.tight_layout()
+plt.savefig(scatterplot_folder / 'Incidence of HIV vs Employment in agriculture (lower mid).png')
+plt.show()
+
+# lower middle income: Higher percentage of service employment
+sns.pairplot(x_vars=['incidence_hiv'],
+             y_vars=['pct_services_employment'],
+             data=lower_middle_income_ca,
+             kind='reg',
+             size=8)
+texts = []
+for line in range(0, lower_middle_income_ca.shape[0]):
+    texts.append(plt.text(lower_middle_income_ca.incidence_hiv[line],
+                          lower_middle_income_ca.pct_services_employment[line],
+                          lower_middle_income_ca.country_name[line],
+                          horizontalalignment='left',
+                          size='large',
+                          color='black',
+                          weight='semibold'))
+plt.title('Incidence of HIV vs Employment in services \n Lower Middle Income Group', fontsize=16)
+plt.xlabel('Incidence of HIV', fontsize=14)
+plt.ylabel('Employment in services (% of total employment)', fontsize=14)
+adjust_text(texts)
+plt.tight_layout()
+plt.savefig(scatterplot_folder / 'Incidence of HIV vs Employment in agriculture (lower mid).png')
+plt.show()
+
+
+

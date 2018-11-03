@@ -1,4 +1,4 @@
 # WorldBankAnalysis
 
-Please run 'main.py' from a terminal.
+Please run '__main__.py' from a terminal.
 Sorry for the inconvenience.

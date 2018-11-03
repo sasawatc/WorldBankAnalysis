@@ -1493,8 +1493,27 @@ sns.swarmplot(x='income_group',
 plt.xlabel('Income Group')
 plt.ylabel('GNI (per capita)')
 plt.title('Gross National Income for Each Country by Income Group', fontsize=20)
+<<<<<<< HEAD
+plt.savefig(output_folder / 'region by income group')
+<<<<<<< HEAD
+=======
 plt.savefig(swarmplot_folder / 'region by income group')
+<<<<<<< HEAD
+>>>>>>> master
+plt.show()
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+plt.show()
+>>>>>>> master
+=======
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> master
+=======
 # plt.show()
+>>>>>>> master
 
 """
 Lower middle income)  
@@ -1632,7 +1651,30 @@ plt.ylabel('Access to electricity (% of population)', fontsize=14)
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'Urban Population growth vs Access to Electricity (low).png')
+<<<<<<< HEAD
+plt.show()
+<<<<<<< HEAD
+
+
+
+
+
+
+
+
+
+
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+>>>>>>> master
+=======
+
+>>>>>>> master
+=======
+>>>>>>> master
+=======
 # plt.show()
+>>>>>>> master
 
 
 """

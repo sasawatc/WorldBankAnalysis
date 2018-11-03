@@ -28,6 +28,10 @@ def main():
     print("Running correlation...")
     corr()
 
+    print()
+    print()
+    print()
+
     print("Process complete: please check output figures in figs/ directory...")
 
 

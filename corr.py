@@ -11,7 +11,6 @@ from handy_func import *
 
 base_folder = Path('data/base')
 processed_folder = Path('data/processed')
-output_folder = Path('output')
 figs_folder = Path('figs')
 boxplot_folder = Path('figs/box_plot')
 distplot_folder = Path('figs/dist_plot')
@@ -1651,30 +1650,7 @@ plt.ylabel('Access to electricity (% of population)', fontsize=14)
 adjust_text(texts)
 plt.tight_layout()
 plt.savefig(pairplot_folder / 'Urban Population growth vs Access to Electricity (low).png')
-<<<<<<< HEAD
 plt.show()
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
->>>>>>> Stashed changes
->>>>>>> master
-=======
-
->>>>>>> master
-=======
->>>>>>> master
-=======
-# plt.show()
->>>>>>> master
 
 
 """
